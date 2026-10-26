@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Get Started with 167 Hours</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one calm column, a checklist of numbered setup steps (a real sequence), each step a card you tick off. Same Sage & Coral system as 167hours.app, single light theme by choice. */
+:root {
+  --cream: #FAF6EF; --paper: #FFFFFF; --sage-wash: #E6EDE4; --sage: #6E8B74; --sage-deep: #3F5A46;
+  --coral: #C9623F; --coral-deep: #A94E30; --coral-wash: #F7E3DA;
+  --ink: #2B2A28; --ink-soft: #4A4744; --line: #E3DDD2;
+  --display: 'DM Serif Display', Georgia, serif;
+  --body: 'Figtree', 'Helvetica Neue', Arial, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+a { color: var(--coral-deep); font-weight: 600; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--sage); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { padding-block: 28px 8px; }
+.brand { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; text-decoration: none; color: var(--ink); }
+.brand b { font-family: var(--display); font-weight: 400; font-size: 1.6rem; }
+.brand span { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--sage-deep); font-weight: 600; }
+.hero { padding-block: 28px 8px; display: flex; flex-direction: column; gap: 14px; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.1rem, 6vw, 3rem); line-height: 1.08; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 400; font-size: 1.55rem; line-height: 1.2; margin: 0; text-wrap: balance; }
+h3 { font-size: 1.12rem; margin: 0; line-height: 1.3; }
+p { margin: 0; }
+.lede { font-size: 1.12rem; color: var(--ink-soft); max-width: 60ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .95rem; color: var(--ink-soft); }
+.meta strong { color: var(--ink); }
+
+.rule { margin-top: 26px; background: var(--sage-deep); color: #F3F1EA; border-radius: 20px; padding: 22px 24px; display: flex; flex-direction: column; gap: 6px; }
+.rule .eyebrow { color: #CFE0CF; }
+.rule p { color: #E4E9E1; }
+.eyebrow { font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--sage-deep); }
+
+section { padding-block: 34px 0; display: flex; flex-direction: column; gap: 16px; }
+.need { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.need li { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; font-size: .98rem; }
+.need li::before { content: ""; flex: 0 0 8px; height: 8px; margin-top: .55em; border-radius: 50%; background: var(--sage); }
+
+.progress { display: flex; align-items: center; gap: 12px; font-size: .95rem; color: var(--ink-soft); }
+.bar { flex: 1; height: 8px; background: var(--sage-wash); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--sage); transition: width .3s ease; }
+
+ol.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; counter-reset: s; }
+.step { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: grid; grid-template-columns: 44px 1fr; gap: 4px 16px; counter-increment: s; }
+.step.done { background: var(--sage-wash); border-color: transparent; }
+.num { grid-row: span 2; width: 44px; height: 44px; border-radius: 50%; background: var(--coral-wash); color: var(--coral-deep); display: grid; place-items: center; font-family: var(--display); font-size: 1.35rem; }
+.num::before { content: counter(s); }
+.step.done .num { background: var(--sage); color: #fff; }
+.step.done .num::before { content: "\2713"; font-family: var(--body); font-weight: 700; font-size: 1.1rem; }
+.step-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; }
+.time { font-size: .85rem; color: var(--ink-soft); }
+.step-body { grid-column: 2; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.step-body ul { margin: 0; padding-left: 1.15em; display: flex; flex-direction: column; gap: 6px; }
+.where { font-size: .92rem; color: var(--ink-soft); background: var(--cream); border-radius: 10px; padding: 8px 12px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 2px; }
+.btn { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 20px; border-radius: 999px; font: 600 .98rem var(--body); text-decoration: none; cursor: pointer; border: 1.5px solid transparent; }
+.btn.primary { background: var(--coral); color: #fff; }
+.btn.primary:hover { background: var(--coral-deep); }
+.btn.ghost { background: transparent; color: var(--sage-deep); border-color: var(--sage); }
+.btn.ghost:hover { background: var(--sage-wash); }
+.step.done .btn.ghost { background: var(--paper); }
+
+.copy { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
+.copy code { flex: 1 1 240px; min-width: 0; background: var(--cream); border: 1px dashed var(--sage); border-radius: 10px; padding: 10px 12px; font-family: var(--mono); font-size: .92rem; color: var(--ink); overflow-wrap: anywhere; user-select: all; }
+.copy button { min-height: 44px; padding: 0 16px; border-radius: 10px; border: 0; background: var(--sage-deep); color: #fff; font: 600 .92rem var(--body); cursor: pointer; }
+
+.say { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.say div { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.say q { font-weight: 700; quotes: "\201C" "\201D"; }
+.say p { font-size: .95rem; color: var(--ink-soft); }
+
+.help { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 20px; }
+details + details { border-top: 1px solid var(--line); }
+summary { cursor: pointer; font-weight: 600; padding-block: 12px; min-height: 44px; display: flex; align-items: center; }
+details p { padding-bottom: 12px; color: var(--ink-soft); }
+
+footer { margin-top: 44px; background: var(--sage-wash); }
+footer .wrap { padding-block: 22px 32px; display: flex; flex-direction: column; gap: 6px; font-size: .95rem; color: var(--ink-soft); }
+footer strong { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+</style>
+</head>
+<body>
+<header class="wrap">
+  <a class="brand" href="/"><b>167 Hours</b><span>Between Sessions</span></a>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <span class="eyebrow">Tester setup</span>
+    <h1>Let's get you set up.</h1>
+    <p class="lede">Thanks for testing 167 Hours. You'll do this once, on a computer. After that, you just talk to Claude, from your phone or anywhere.</p>
+    <div class="meta"><span><strong>About 15 minutes</strong></span><span><strong>6 steps</strong></span><span>Claude does the technical parts for you</span></div>
+  </div>
+
+  <div class="rule">
+    <span class="eyebrow">The one rule</span>
+    <h2 style="color:#fff">You need a therapist.</h2>
+    <p>167 Hours supports the therapy you already have. It never replaces it.</p>
+  </div>
+
+  <section aria-labelledby="need-h">
+    <h2 id="need-h">Before you start</h2>
+    <ul class="need">
+      <li>You're 18 or older</li>
+      <li>You're seeing a therapist right now</li>
+      <li>A paid Claude plan (Pro or higher). If you were given a 167 Hours card, use it for this.</li>
+      <li>A computer for setup, on the web or the Claude desktop app</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="steps-h">
+    <h2 id="steps-h">Setup</h2>
+    <div class="progress"><div class="bar"><i id="bar"></i></div><span id="count">0 of 6 done</span></div>
+
+    <ol class="steps">
+      <li class="step" data-step="supabase">
+        <div class="num" aria-hidden="true"></div>
+        <div class="step-head"><h3>Make a free Supabase account</h3><span class="time">3 min</span></div>
+        <div class="step-body">
+          <p>Supabase is where your journal is stored. It's your own private account, so nobody else can see what's in it, including us.</p>
+          <ul>
+            <li>Click <strong>Start your project</strong> and sign up with Google, GitHub, or email.</li>
+            <li>If it asks you to create an organization, name it anything (your first name is fine) and pick the <strong>Free</strong> plan.</li>
+            <li>Stop there. You don't need to create anything else. Claude will do it.</li>
+          </ul>
+          <div class="actions">
+            <a class="btn primary" href="https://supabase.com/dashboard/sign-up" target="_blank" rel="noopener">Open Supabase</a>
+            <button class="btn ghost" type="button" data-done>Mark done</button>
+          </div>
+        </div>
+      </li>
+
+      <li class="step" data-step="download">
+        <div class="num" aria-hidden="true"></div>
+        <div class="step-head"><h3>Download the 167 Hours plugin</h3><span class="time">1 min</span></div>
+        <div class="step-body">
+          <p>This small file teaches Claude how 167 Hours works. Save it somewhere easy to find, like your Downloads folder.</p>
+          <p class="where">If the button doesn't download anything, ask the person who invited you to send you the file. It's called <strong>167-hours.plugin</strong>.</p>
+          <div class="actions">
+            <a class="btn primary" href="/167-hours.plugin" download>Download plugin</a>
+            <button class="btn ghost" type="button" data-done>Mark done</button>
+          </div>
+        </div>
+      </li>
+
+      <li class="step" data-step="install">
+        <div class="num" aria-hidden="true"></div>
+        <div class="step-head"><h3>Add the plugin to Claude</h3><span class="time">2 min</span></div>
+        <div class="step-body">
+          <ul>
+            <li>Open Claude and sign in.</li>
+            <li>In the left sidebar, click <strong>Customize</strong>, then the <strong>Plugins</strong> tab.</li>
+            <li>Choose the option to <strong>upload</strong> a plugin, and pick the <strong>167-hours.plugin</strong> file you just downloaded.</li>
+          </ul>
+          <p class="where">If it asks you to connect Supabase while adding the plugin, go ahead and click Connect. That takes care of step 4.</p>
+          <div class="actions">
+            <a class="btn primary" href="https://claude.ai" target="_blank" rel="noopener">Open Claude</a>
+            <button class="btn ghost" type="button" data-done>Mark done</button>
+          </div>
+        </div>
+      </li>
+
+      <li class="step" data-step="connect">
+        <div class="num" aria-hidden="true"></div>
+        <div class="step-head"><h3>Connect Supabase to Claude</h3><span class="time">2 min</span></div>
+        <div class="step-body">
+          <ul>
+            <li>In Claude, click your name in the bottom left, then <strong>Settings</strong>, then <strong>Connectors</strong>.</li>
+            <li>Find <strong>Supabase</strong> and click <strong>Connect</strong>.</li>
+            <li>A Supabase window opens. Click <strong>Authorize</strong>.</li>
+          </ul>
+          <div class="actions">
+            <a class="btn primary" href="https://claude.ai/settings/connectors" target="_blank" rel="noopener">Open Connectors</a>
+            <button class="btn ghost" type="button" data-done>Mark done</button>
+          </div>
+        </div>
+      </li>
+
+      <li class="step" data-step="setup">
+        <div class="num" aria-hidden="true"></div>
+        <div class="step-head"><h3>Let Claude set everything up</h3><span class="time">5 min</span></div>
+        <div class="step-body">
+          <p>Start a new chat in Claude and send this message. Claude builds your private journal, asks a few questions about you and your therapy schedule, and offers to make a safety plan.</p>
+          <div class="copy"><code id="c1">set up 167 Hours</code><button type="button" data-copy="c1">Copy</button></div>
+          <div class="actions"><button class="btn ghost" type="button" data-done>Mark done</button></div>
+        </div>
+      </li>
+
+      <li class="step" data-step="project">
+        <div class="num" aria-hidden="true"></div>
+        <div class="step-head"><h3>Make a 167 Hours project</h3><span class="time">2 min</span></div>
+        <div class="step-body">
+          <p>This keeps all your journal chats in one place.</p>
+          <ul>
+            <li>In Claude, click <strong>Projects</strong>, then <strong>New project</strong>. Name it <strong>167 Hours</strong>.</li>
+            <li>Paste this into the project's instructions:</li>
+          </ul>
+          <div class="copy"><code id="c2">Use the 167 Hours skills for everything in this project. Journal what I share.</code><button type="button" data-copy="c2">Copy</button></div>
+          <p>From now on, start your journal chats inside this project.</p>
+          <div class="actions"><button class="btn ghost" type="button" data-done>Mark done</button></div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="use-h">
+    <h2 id="use-h">Using it</h2>
+    <p class="lede">Just talk. Type or use voice, any time, about anything: a rough morning, an argument, an urge, a win, how you slept. The important parts are saved quietly in the background.</p>
+    <div class="say">
+      <div><q>Keep that private</q><p>Keeps something out of your therapist's summary.</p></div>
+      <div><q>Debrief my session</q><p>Right after therapy, captures what you covered and any homework.</p></div>
+      <div><q>Build my report</q><p>Before your session. You see it first and send it yourself.</p></div>
+      <div><q>Show my safety plan</q><p>Any time you need it.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="help-h">
+    <h2 id="help-h">If you get stuck</h2>
+    <div class="help">
+      <details>
+        <summary>How do I use the 167 Hours card?</summary>
+        <p>If you were sent card details for testing, use them to pay for Claude Pro. In Claude, open Settings, then Billing (or click Upgrade), choose the Pro plan billed monthly, and enter the card. It covers three months. After that, you can switch to your own card in the same place or cancel. The card only works for Claude, so it won't go through anywhere else.</p>
+      </details>
+      <details>
+        <summary>I don't see Plugins or Customize in Claude</summary>
+        <p>Plugins need a paid Claude plan. Check that you're signed in to the paid account, and try the Claude website or desktop app rather than the phone app for setup.</p>
+      </details>
+      <details>
+        <summary>Claude says Supabase isn't connected</summary>
+        <p>Redo step 4, then start a brand-new chat and send "set up 167 Hours" again. New connections show up in new chats.</p>
+      </details>
+      <details>
+        <summary>Supabase says I've hit my free limit</summary>
+        <p>Free Supabase accounts allow two active projects. If you already use Supabase for something else, tell the person who invited you to test and we'll sort it out.</p>
+      </details>
+      <details>
+        <summary>Something else went wrong</summary>
+        <p>Take a screenshot of what you see and send it to the person who invited you. You can also just tell Claude what happened and ask it to help.</p>
+      </details>
+      <details>
+        <summary>Who can see what I write?</summary>
+        <p>Your entries are stored in your own Supabase account, not a shared database. The 167 Hours team can't see them. Your therapist sees only the summaries you choose to send.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>167 Hours is not a crisis service.</strong> If you're in danger or thinking about harming yourself, call or text <strong>988</strong> (Suicide and Crisis Lifeline, US), or call <strong>911</strong>.</p>
+    <p>167 Hours: Between Sessions. Early tester version.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var KEY = '167h-setup-done';
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { done = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} }
+  function render() {
+    var n = 0;
+    steps.forEach(function (s) {
+      var d = !!done[s.dataset.step];
+      s.classList.toggle('done', d);
+      var b = s.querySelector('[data-done]');
+      if (b) b.textContent = d ? 'Done. Undo' : 'Mark done';
+      if (d) n++;
+    });
+    document.getElementById('count').textContent = n + ' of ' + steps.length + ' done';
+    document.getElementById('bar').style.width = (n / steps.length * 100) + '%';
+  }
+  steps.forEach(function (s) {
+    var b = s.querySelector('[data-done]');
+    if (b) b.addEventListener('click', function () { done[s.dataset.step] = !done[s.dataset.step]; save(); render(); });
+  });
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.dataset.copy);
+      var text = el.textContent;
+      function ok() { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1800); }
+      function fallback() { var r = document.createRange(); r.selectNodeContents(el); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); btn.textContent = 'Selected. Press Ctrl+C'; }
+      try { navigator.clipboard.writeText(text).then(ok, fallback); } catch (e) { fallback(); }
+    });
+  });
+  render();
+})();
+</script>
+
+</body>
+</html>

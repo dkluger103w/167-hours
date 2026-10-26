@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>167 Hours</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="167 Hours: Between Sessions. There are 167 hours between therapy sessions. This is for them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one calm scrolling page; a sage "week" motif (167 open hours, 1 coral hour) recurs from the hero down. Single light brand look, chosen deliberately. */
+:root {
+  --cream: #FAF6EF;
+  --paper: #FFFFFF;
+  --sage-wash: #E6EDE4;
+  --sage: #6E8B74;
+  --sage-deep: #3F5A46;
+  --coral: #C9623F;
+  --coral-deep: #A94E30;
+  --ink: #2B2A28;
+  --ink-soft: #4A4744;
+  --line: #E3DDD2;
+  --display: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --body: "Figtree", "Helvetica Neue", Arial, sans-serif;
+  --wrap: 1120px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--cream); }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; color: var(--ink); }
+h1 { font-size: clamp(2.5rem, 6vw, 4.1rem); line-height: 1.04; }
+h2 { font-size: clamp(1.9rem, 4vw, 2.7rem); line-height: 1.1; }
+h3 { font-size: 1.45rem; line-height: 1.2; }
+p { margin: 0; max-width: 64ch; }
+a { color: var(--coral-deep); }
+.eyebrow { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--sage-deep); }
+.lede { font-size: 1.2rem; color: var(--ink-soft); }
+.muted { color: var(--ink-soft); }
+section { padding-block: 84px; }
+.stack { display: flex; flex-direction: column; gap: 18px; }
+:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; border-radius: 6px; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; border-radius: 999px; font-weight: 600; font-size: 1rem; text-decoration: none; border: 1.5px solid transparent; cursor: pointer; font-family: var(--body); transition: background .15s ease, border-color .15s ease; }
+.btn-primary { background: var(--coral); color: #FFFFFF; }
+.btn-primary:hover { background: var(--coral-deep); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--sage); }
+.btn-ghost:hover { background: var(--sage-wash); }
+.btns { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Header */
+header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--cream); border-bottom: 1px solid var(--line); }
+header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: baseline; gap: 10px; text-decoration: none; color: var(--ink); }
+.brand b { font-family: var(--display); font-weight: 400; font-size: 1.7rem; }
+.brand span { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sage-deep); font-weight: 700; }
+nav.links { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+nav.links a { color: var(--ink); text-decoration: none; font-weight: 500; font-size: 0.97rem; }
+nav.links a:hover { color: var(--coral-deep); }
+nav.links .btn { min-height: 44px; padding: 0 20px; color: #FFFFFF; }
+@media (max-width: 760px) { nav.links a:not(.btn) { display: none; } }
+
+/* Hero */
+.hero { padding-block: 72px 84px; }
+.hero-grid { display: flex; flex-wrap: wrap; gap: 48px; align-items: center; }
+.hero-copy { flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 22px; }
+.loop { font-family: var(--display); font-style: italic; font-size: 1.45rem; color: var(--sage-deep); }
+.week { flex: 1 1 300px; background: var(--sage-wash); border-radius: 28px; padding: 36px 30px; display: flex; flex-direction: column; gap: 18px; }
+.week-title { font-family: var(--display); font-size: 1.5rem; color: var(--sage-deep); }
+.grid168 { display: grid; grid-template-columns: 2.2em repeat(24, minmax(0, 1fr)); gap: 3px; align-items: center; padding-top: 34px; }
+.grid168 .day { font-size: .7rem; font-weight: 700; letter-spacing: .06em; color: var(--sage-deep); text-transform: uppercase; }
+.grid168 i { aspect-ratio: 1; border-radius: 2px; background: #C9D6C6; display: block; }
+.grid168 i.session { background: var(--coral); position: relative; transform: scale(1.9); border-radius: 3px; box-shadow: 0 0 0 1.5px var(--sage-wash); z-index: 1; }
+.grid168 .bubble { position: absolute; right: -2px; bottom: calc(100% + 5px); transform: scale(.526); transform-origin: bottom right; white-space: nowrap; background: var(--coral); color: #FFFFFF; font-family: var(--body); font-style: normal; font-size: .8rem; font-weight: 600; padding: 5px 10px; border-radius: 8px; }
+.legend { display: flex; flex-direction: column; gap: 12px; border-top: 1px solid #C8D4C5; padding-top: 16px; }
+.legend-row { display: flex; gap: 12px; align-items: flex-start; }
+.legend-row p { margin: 0; color: var(--ink-soft); font-size: .95rem; line-height: 1.45; }
+.legend-row strong { display: block; color: var(--ink); font-size: 1.05rem; }
+.key { width: 16px; height: 16px; border-radius: 3px; background: #C9D6C6; flex: 0 0 16px; margin-top: 4px; display: block; }
+.key-session { background: var(--coral); }
+
+/* Bands */
+.band-sage { background: var(--sage-wash); }
+.band-ink { background: var(--sage-deep); color: #F3F1EA; }
+.band-ink h2, .band-ink h3 { color: #FFFFFF; }
+.band-ink .eyebrow { color: #CFE0CF; }
+.band-ink p { color: #E4E9E1; }
+
+.two-col { display: flex; flex-wrap: wrap; gap: 48px; }
+.two-col > * { flex: 1 1 380px; min-width: 0; }
+
+/* Steps */
+.steps { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 36px; }
+.step { flex: 1 1 280px; background: var(--paper); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px; }
+.step .n { font-family: var(--display); font-size: 2.2rem; line-height: 1; color: var(--coral); }
+
+/* Therapist-first */
+.therapist-first { margin: 0; align-self: flex-start; font-size: clamp(1.1rem, 2.4vw, 1.35rem); color: var(--sage-deep); background: var(--sage-wash); border: 1.5px solid var(--sage); border-radius: 999px; padding: 8px 20px; line-height: 1.35; }
+.therapist-first strong { color: var(--ink); }
+.rule-band { padding-block: 96px; }
+.rule-top { display: flex; flex-direction: column; gap: 18px; max-width: 46rem; }
+.rule-band h2 { font-size: clamp(2.8rem, 8vw, 5.2rem); line-height: 1.02; margin: 0; }
+.rule-lede { font-size: clamp(1.15rem, 2.2vw, 1.35rem); line-height: 1.55; margin: 0; }
+.rule-points { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 44px; }
+.rule-points > div { flex: 1 1 240px; min-width: 0; border-top: 2px solid #8FAE96; padding-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+.rule-points h3 { margin: 0; font-size: 1.15rem; }
+.rule-points p { margin: 0; }
+.rule-note { margin: 40px 0 0; font-family: var(--display); font-size: clamp(1.3rem, 3vw, 1.7rem); line-height: 1.3; color: #FFFFFF !important; }
+
+/* Rule callout */
+.rule { background: var(--paper); border: 2px solid var(--sage); border-radius: 24px; padding: 36px; display: flex; flex-wrap: wrap; gap: 28px; align-items: center; }
+.rule > div { flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.rule .badge { flex: 1 1 160px; font-family: var(--display); font-size: 1.6rem; color: var(--sage-deep); line-height: 1.15; }
+
+/* Stats */
+.stats { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 36px; }
+.stat { flex: 1 1 280px; border-top: 2px solid #8FAE96; padding-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+.stat strong { font-family: var(--display); font-weight: 400; font-size: 3.4rem; line-height: 1; color: #FFFFFF; }
+.stat small { font-size: .82rem; color: #CFE0CF; }
+.stat small a { color: #CFE0CF; }
+.facts { display: flex; flex-wrap: wrap; gap: 28px 24px; margin-top: 40px; }
+.fact { flex: 1 1 280px; min-width: 0; border-top: 2px solid var(--sage); padding-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+.fact strong { font-family: var(--display); font-weight: 400; font-size: 3.2rem; line-height: 1; color: var(--coral-deep); }
+.fact p { color: var(--ink-soft); }
+.fact a { font-size: .8rem; color: var(--sage-deep); }
+.approaches { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 40px; }
+.approach { flex: 1 1 240px; min-width: 0; background: var(--paper); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+.approach .how { color: var(--ink-soft); font-size: .97rem; }
+.approach .gap { font-size: .95rem; color: var(--ink); border-top: 1px solid var(--line); padding-top: 12px; }
+.approach .gap span { display: block; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--coral-deep); margin-bottom: 4px; }
+.ours { margin-top: 24px; background: var(--paper); border: 2px solid var(--sage); border-radius: 22px; padding: 30px; display: flex; flex-wrap: wrap; gap: 28px; }
+.ours > .stack { flex: 1 1 260px; min-width: 0; }
+.ours > ul { flex: 999 1 420px; min-width: 0; }
+.cite { display: block; margin-top: 4px; font-size: .8rem; color: var(--sage-deep); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Concepts */
+.concepts { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 36px; }
+.concept { flex: 1 1 300px; background: var(--paper); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px; }
+.concept .tag { align-self: flex-start; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--coral-deep); background: #F7E3DA; padding: 4px 10px; border-radius: 999px; }
+.feature { margin-top: 20px; background: var(--paper); border: 2px solid var(--coral); border-radius: 22px; padding: 30px; display: flex; flex-wrap: wrap; gap: 28px; }
+.feature > .stack { flex: 1 1 260px; min-width: 0; }
+.feature > .body { flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.feature .tag { align-self: flex-start; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--coral-deep); background: #F7E3DA; padding: 4px 10px; border-radius: 999px; }
+.feature .note { font-size: .92rem; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 12px; }
+.loopline { margin-top: 36px; font-family: var(--display); font-size: clamp(1.6rem, 3.5vw, 2.3rem); line-height: 1.2; color: var(--sage-deep); text-align: left; }
+
+/* Lists */
+ul.clean { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+ul.clean li { padding-left: 28px; position: relative; max-width: 60ch; }
+ul.clean li::before { content: ""; position: absolute; left: 0; top: .55em; width: 12px; height: 12px; border-radius: 3px; background: var(--sage); }
+
+/* FAQ */
+details { background: var(--paper); border-radius: 16px; padding: 18px 22px; }
+details + details { margin-top: 12px; }
+summary { cursor: pointer; font-weight: 600; font-size: 1.05rem; list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-family: var(--display); font-size: 1.6rem; color: var(--coral); line-height: 1; }
+details[open] summary::after { content: "\2212"; }
+details p { margin-top: 10px; color: var(--ink-soft); }
+
+/* Form */
+form { display: flex; flex-direction: column; gap: 16px; background: var(--paper); border-radius: 24px; padding: 30px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+label { font-weight: 600; font-size: .95rem; }
+input, select, textarea { font: inherit; color: var(--ink); background: var(--cream); border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px; min-height: 48px; width: 100%; }
+textarea { min-height: 110px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: 3px solid #E9B7A3; border-color: var(--coral); }
+.note { font-size: .88rem; color: var(--ink-soft); }
+.thanks { background: var(--sage-wash); border-radius: 14px; padding: 14px 16px; color: var(--sage-deep); font-weight: 500; }
+
+/* Footer */
+footer { padding-block: 48px; border-top: 1px solid var(--line); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; }
+.crisis { background: #F7E3DA; color: var(--ink); border-radius: 14px; padding: 14px 18px; font-size: .95rem; max-width: 560px; }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top"><b>167 Hours</b><span>Between Sessions</span></a>
+    <nav class="links" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#therapists">For therapists</a>
+      <a href="#faq">Questions</a>
+      <a class="btn btn-primary" href="#involved">Get involved</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="therapist-first"><strong>For people in therapy.</strong> Never a replacement for it.</p>
+        <h1>There are 167 hours between sessions. This is for them.</h1>
+        <p class="loop">The AI extends the human's reach. The human improves the AI.</p>
+        <p class="lede">Talk the way you already do, whenever something comes up. Your therapist walks into your next session already knowing your real week.</p>
+        <div class="btns">
+          <a class="btn btn-primary" href="#involved">Join the early group</a>
+          <a class="btn btn-ghost" href="#how">How it works</a>
+        </div>
+      </div>
+      <div class="week" role="img" aria-label="One week, drawn as 168 hours from Monday to Sunday. One hour is your weekly therapy visit. The other 167 hours have no support.">
+        <p class="week-title">Your week, hour by hour</p>
+        <div class="grid168" aria-hidden="true" id="grid168"></div>
+        <div class="legend">
+          <div class="legend-row"><i class="key key-session"></i><p><strong>1 hour</strong> Your weekly therapy visit</p></div>
+          <div class="legend-row"><i class="key"></i><p><strong>167 hours</strong> Everything else, with no support. This is where 167 Hours helps.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-ink rule-band" id="rule">
+    <div class="wrap">
+      <div class="rule-top">
+        <span class="eyebrow">The one rule</span>
+        <h2>You need a therapist.</h2>
+        <p class="rule-lede">167 Hours is not therapy, and it never replaces it. It's built for people who already have a real, licensed therapist, and everything it does exists to make that relationship stronger.</p>
+      </div>
+      <div class="rule-points">
+        <div><h3>Your therapist leads</h3><p>Your care, your treatment, and every clinical decision stay with the person you already see.</p></div>
+        <div><h3>We fill the gap</h3><p>167 Hours is there for the hours in between, when your therapist can't be.</p></div>
+        <div><h3>It all goes back to them</h3><p>What matters from your week reaches your therapist, so your next session starts where your life actually is.</p></div>
+      </div>
+      <p class="rule-note">Not seeing anyone yet? Finding a therapist is the first step, and it's worth taking.</p>
+    </div>
+  </section>
+
+  <section class="band-sage" id="how">
+    <div class="wrap">
+      <div class="stack">
+        <span class="eyebrow">What it does</span>
+        <h2>You talk. It listens. Your therapist gets the picture.</h2>
+        <p class="lede">A quick check-in, a rant, a two-minute "I'm not okay." No exercises, no forms, no prompts telling you how to feel.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><h3>Talk</h3><p class="muted">By voice or text, whenever something comes up. A sentence or a ten-minute vent.</p></div>
+        <div class="step"><span class="n">2</span><h3>It captures what matters</h3><p class="muted">The moments, the people, the patterns, the urges and what got you through them, in your own words.</p></div>
+        <div class="step"><span class="n">3</span><h3>Your therapist gets the picture</h3><p class="muted">Before each session, a clear summary of your real week, sent only with your OK.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="problem">
+    <div class="wrap">
+      <div class="two-col">
+        <div class="stack">
+          <span class="eyebrow">The problem</span>
+          <h2>The most honest conversations never reach your therapist.</h2>
+        </div>
+        <div class="stack">
+          <p class="lede">People are already turning to AI when things get hard. The research shows how many people are doing it, and how little of it ever reaches a professional.</p>
+        </div>
+      </div>
+      <div class="facts">
+        <div class="fact"><strong>1 in 6</strong><p>American adults turned to AI for mental health advice in the past year.</p><a href="https://www.kff.org/public-opinion/kff-tracking-poll-on-health-information-and-trust-use-of-ai-for-health-information-and-advice/" target="_blank" rel="noopener">KFF Health Tracking Poll, March 2026</a></div>
+        <div class="fact"><strong>1 in 4+</strong><p>adults under 30 did the same.</p><a href="https://www.kff.org/public-opinion/kff-tracking-poll-on-health-information-and-trust-use-of-ai-for-health-information-and-advice/" target="_blank" rel="noopener">KFF Health Tracking Poll, March 2026</a></div>
+        <div class="fact"><strong>42%</strong><p>of them later followed up with a mental health professional. Most never did.</p><a href="https://www.kff.org/public-opinion/kff-tracking-poll-on-health-information-and-trust-use-of-ai-for-health-information-and-advice/" target="_blank" rel="noopener">KFF Health Tracking Poll, March 2026</a></div>
+        <div class="fact"><strong>87%</strong><p>of adults who use AI for mental health support have been in therapy before.</p><a href="https://sentio.org/ai-research/ai-survey" target="_blank" rel="noopener">Sentio University, published by the APA, 2025</a></div>
+        <div class="fact"><strong>63%</strong><p>of young people who asked a chatbot for help when they were struggling hadn't told anyone.</p><a href="https://www.rand.org/news/press/2026/06/nearly-1-in-5-us-adolescents-and-young-adults-use-ai.html" target="_blank" rel="noopener">RAND, June 2026</a></div>
+        <div class="fact"><strong>1M+</strong><p>people a week show signs of suicidal planning or intent in their ChatGPT conversations.</p><a href="https://techcrunch.com/2025/10/27/openai-says-over-a-million-people-talk-to-chatgpt-about-suicide-weekly" target="_blank" rel="noopener">OpenAI, via TechCrunch, October 2025</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-sage" id="different">
+    <div class="wrap">
+      <div class="two-col">
+        <div class="stack">
+          <span class="eyebrow">Capture, not coaching</span>
+          <h2>Most tools ask you to talk their way. We start with how you already talk.</h2>
+        </div>
+        <div class="stack">
+          <p>When people reach for AI in a hard moment, they don't open a worksheet. They type or say whatever is on their mind, in their own words, often in pieces across a whole week. A two-line check-in on Monday. A long vent on Thursday night. One sentence in the car.</p>
+          <p>Most mental health apps are built around a different idea: that you'll come to them, follow their structure, and fill in their format.</p>
+        </div>
+      </div>
+      <div class="approaches">
+        <div class="approach">
+          <h3>Guided journals</h3>
+          <p class="how">You answer daily prompts, fill in templates, and rate your mood. Some produce a report you can share.</p>
+          <p class="gap"><span>What's missing</span>It feels like homework. Most people don't journal on a schedule, and the moments that matter rarely arrive on time.</p>
+        </div>
+        <div class="approach">
+          <h3>Exercise programs</h3>
+          <p class="how">A chatbot walks you through structured exercises, like reframing a thought or a breathing routine, often assigned as modules.</p>
+          <p class="gap"><span>What's missing</span>Useful practice, but it steers the conversation. It answers the question it was built for, not the one you came with.</p>
+        </div>
+        <div class="approach">
+          <h3>AI "therapists"</h3>
+          <p class="how">An AI positioned as the therapy itself, always available. Some remember you between chats, but the conversations often feel scripted, guiding you through the app's own session format.</p>
+          <p class="gap"><span>What's missing</span>Nothing reaches a real clinician. When things get serious, there's no one in the loop.</p>
+        </div>
+        <div class="approach">
+          <h3>Closed networks</h3>
+          <p class="how">Online therapy services, health plans, and large provider groups are adding AI between visits, some with clinicians supervising. The closest to what we believe in.</p>
+          <p class="gap"><span>What's missing</span>It's a closed system. It only works if you're their client, seeing their therapist, under their plan. If your therapist is outside it, you're out of luck.</p>
+        </div>
+      </div>
+      <div class="ours">
+        <div class="stack">
+          <span class="eyebrow">167 Hours</span>
+          <h3>Your words, your therapist, no plan required.</h3>
+        </div>
+        <ul class="clean">
+          <li><strong>Natural conversation.</strong> Talk however you want, whenever you want. No prompts, no forms, no modules.</li>
+          <li><strong>It remembers your story.</strong> The people in your life, your patterns, your history, kept together and growing over time, so nothing starts from zero.</li>
+          <li><strong>Captured, not steered.</strong> We pull out what matters after the fact, instead of guiding you toward an exercise.</li>
+          <li><strong>Organized the way therapists think.</strong> Every moment is tagged and sorted: what set it off, what you thought, how you felt, how strong it was, what you did, and who was involved. That structure follows the thought record from cognitive behavioral therapy, a framework clinicians already use.</li>
+          <li><strong>Shaped by real therapists.</strong> Clinicians help decide what's worth pulling out and how it's presented, so your therapist sees what actually matters. It gets sharper as the product matures.</li>
+          <li><strong>Any therapist.</strong> Works with the therapist you already see, not just one inside a network.</li>
+          <li><strong>Anyone in therapy.</strong> No health system, insurer, or employer plan needed to get in.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="band-ink">
+    <div class="wrap two-col">
+      <div class="stack">
+        <span class="eyebrow">You're not the only one</span>
+        <h2>If you've ever poured your heart out to a chatbot at 2am, you're in good company.</h2>
+        <p>Using AI between sessions doesn't mean you're doing therapy wrong.</p>
+      </div>
+      <div class="stack">
+        <p>Millions of people already talk to AI about what they're going through. It isn't strange, and it's nothing to hide. When things get hard, people reach for whatever is there, and late at night that's usually the phone in their hand.</p>
+        <p>Here's the honest reality: this technology is here, and it isn't going anywhere. People are going to use it whether anyone approves or not. We think that's okay. Talking things through, even with an AI, can genuinely help.</p>
+        <p>If your therapist were available around the clock, you'd just talk to them. But no therapist can be there 24 hours a day. So the conversations happen anyway, and then they disappear. The thing you finally put into words on Thursday night. The urge you got through on Saturday. The pattern you started to notice. Your therapist never hears any of it.</p>
+        <p>We're not here to police what you say or steer the conversation. Talk about whatever you need to, the way you already do. 167 Hours pulls out what matters and gets it to the person who can actually help you work through it.</p>
+        <p><strong>The AI is there at 2am. Your therapist is who helps you make sense of it.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap two-col">
+      <div class="stack">
+        <span class="eyebrow">Built for the moments that matter</span>
+        <h2>Urges don't wait for your appointment.</h2>
+      </div>
+      <div class="stack">
+        <p>Because people talk to it in the moment, it catches what's really happening: the trigger, the time of day, whether you acted on it, and what helped.</p>
+        <p>Over a few weeks, that shows which hours are hardest and which tools actually work. That makes it especially powerful for people in recovery.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-sage">
+    <div class="wrap">
+      <div class="stack">
+        <span class="eyebrow">Where we're headed</span>
+        <h2>A hybrid model, built with clinicians.</h2>
+        <p class="lede">These are the concepts we're building toward.</p>
+      </div>
+      <div class="concepts">
+        <div class="concept"><span class="tag">Concept</span><h3>The loop</h3><p class="muted">Other tools give therapists a window into the AI. We're building toward a loop. The AI is there in the 167 hours your therapist can't be, and clinicians help shape and improve it over time.</p></div>
+        <div class="concept"><span class="tag">Concept</span><h3>Two human layers</h3><p class="muted">Your therapist knows you and receives your summaries. Behind the AI, a team of clinical specialists reviews how it's working and coaches it. They're also the people who step in when you raise your hand. They stay anonymous and never know who you are.</p></div>
+      </div>
+      <div class="feature">
+        <div class="stack">
+          <span class="tag">Concept</span>
+          <h3>Raise your hand</h3>
+          <p class="lede">A real person when you need one, without waiting for your next session.</p>
+        </div>
+        <div class="body">
+          <p>Once a week doesn't always feel like enough. But a therapist on call for every person, 24 hours a day, isn't possible. If 10,000 people each needed one-to-one coverage around the clock, the cost would put it out of reach for almost everyone.</p>
+          <p>So we're building something different: a shared team of clinical specialists, on shift around the clock. Most of the time, nobody needs them. When someone does, one of them can step in.</p>
+          <ul class="clean">
+            <li><strong>You raise your hand.</strong> Something feels too big for a machine and you want a real person's take. A specialist reviews what you shared and joins the conversation. Maybe not in a minute, but you won't be waiting days for your next appointment.</li>
+            <li><strong>The system raises it for you.</strong> If a conversation shows signs of real concern, it's flagged to the team, and a specialist can step in.</li>
+            <li><strong>They don't know who you are.</strong> Specialists see the moment, not your name. They're anonymous to you, and you're anonymous to them.</li>
+            <li><strong>Your therapist stays your therapist.</strong> Online therapy services match you with one therapist and sell you their time. This doesn't replace your therapist or sell you more sessions. It adds a layer of human backup between visits, shared across everyone, which is what keeps it affordable.</li>
+          </ul>
+          <p class="note">Raise your hand is not an emergency service. If you're in crisis, call or text 988, or call 911.</p>
+        </div>
+      </div>
+      <p class="loopline">The AI extends the human's reach. The human improves the AI.</p>
+    </div>
+  </section>
+
+  <section id="therapists">
+    <div class="wrap two-col">
+      <div class="stack">
+        <span class="eyebrow">For therapists</span>
+        <h2>Start the session where it matters.</h2>
+      </div>
+      <div class="stack">
+        <p>Your clients are already talking to AI between sessions. Most of it never reaches you.</p>
+        <p>167 Hours gives you a short, structured summary before each session: what happened and when, what came up most, any urges and how they went, and what your client wants to talk about. It's not a clinical assessment and never makes a diagnosis. All clinical judgment stays with you.</p>
+        <p>We're looking for therapists to help shape it. Tell us what you'd want to see.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-sage">
+    <div class="wrap two-col">
+      <div class="stack">
+        <span class="eyebrow">Your privacy</span>
+        <h2>Your conversations belong to you.</h2>
+      </div>
+      <ul class="clean">
+        <li><strong>Stored securely, tied to your account.</strong> What you share lives in a protected database that belongs to your account, not in a chat log you'll never see again.</li>
+        <li><strong>You decide what your therapist sees.</strong> Say "keep this out of my notes," and it stays out. It's saved for you and never shared.</li>
+        <li><strong>The same goes for every clinician.</strong> Nothing reaches your therapist, or anyone else, without your OK.</li>
+        <li><strong>Anonymous by design.</strong> In our future model, clinical specialists who help improve the AI would never see who you are.</li>
+        <li><strong>Built toward end-to-end encryption</strong> and full health-privacy standards, so your words stay readable by you and the people you choose. We'll have these in place before any clinician works inside the platform.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap two-col">
+      <div class="stack">
+        <span class="eyebrow">Why we built this</span>
+        <h2>Therapy works. It just happens one hour a week.</h2>
+      </div>
+      <div class="stack">
+        <p>We saw a gap that kept showing up from both sides of the room. Clients are already turning to AI between sessions, often in their hardest moments, and none of it reaches the person trained to help. Therapists start each session catching up instead of moving forward.</p>
+        <p>167 Hours was designed to close that gap. It was shaped by years of experience on the client side of therapy, input from clinicians, including a therapist who ran his own practice, and a background in building technology people rely on every day. The goal from the start was to give the therapist the full picture, never to replace them.</p>
+        <p><strong>Help first.</strong> We're not building this to profit from people who are struggling. Our goal is to keep it affordable and accessible to anyone in therapy.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="band-sage">
+    <div class="wrap two-col">
+      <div class="stack">
+        <span class="eyebrow">Questions</span>
+        <h2>Good to know.</h2>
+      </div>
+      <div>
+        <details open>
+          <summary>Is this therapy?</summary>
+          <p>No. It supports the therapy you already have. You need a licensed therapist to use it.</p>
+        </details>
+        <details>
+          <summary>What if I'm in crisis?</summary>
+          <p>167 Hours is not a crisis service. If you're in danger or thinking about harming yourself, call or text 988 (Suicide and Crisis Lifeline, US) or call 911.</p>
+        </details>
+        <details>
+          <summary>How do I actually use it?</summary>
+          <p>You talk to it the same way you'd talk to ChatGPT or Claude: type or speak, whenever you want, about whatever is on your mind. It runs on the same leading AI models millions of people already use, so it will feel familiar. The difference is what happens after: what matters is organized and kept safe for your therapist. We're in early testing now, and our early group gets access first.</p>
+        </details>
+        <details>
+          <summary>Does the AI give advice, or just listen?</summary>
+          <p>It talks with you naturally, the way a good listener would. It won't run you through a program, assign exercises, or tell you what to do with your life. That's your therapist's role.</p>
+        </details>
+        <details>
+          <summary>Who can see what I write?</summary>
+          <p>You, and the therapist you choose to share with. You decide what goes into their summary. Our anonymous clinical specialists only get involved when you raise your hand or something is flagged as concerning, and they never see your name.</p>
+        </details>
+        <details>
+          <summary>Is my data used to train AI?</summary>
+          <p>We don't use your conversations to train AI models. We build on the business versions of leading AI services, which don't train on customer conversations by default.</p>
+        </details>
+        <details>
+          <summary>Will my therapist actually read it?</summary>
+          <p>It's designed to be read in a few minutes before a session: a short, structured summary, not a transcript. We're working with therapists now to make sure it shows what they actually want to see.</p>
+        </details>
+        <details>
+          <summary>Does my therapist have to sign up?</summary>
+          <p>Not to start. You can share your summary with any therapist you already see.</p>
+        </details>
+        <details>
+          <summary>What if I stop using it?</summary>
+          <p>Your story is yours. You'll be able to download everything you've shared or delete it completely.</p>
+        </details>
+        <details>
+          <summary>What does it cost?</summary>
+          <p>We're keeping it as affordable as possible. Pricing will be shared with our early group first.</p>
+        </details>
+        <details>
+          <summary>Who's behind this?</summary>
+          <p>A small team building this mission first: people who know what it's like to be the client, working alongside clinicians. Our goal is to help as many people as possible, not to maximize profit.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="involved">
+    <div class="wrap two-col">
+      <div class="stack">
+        <span class="eyebrow">Get involved</span>
+        <h2>Help shape what this becomes.</h2>
+        <p>We're looking for therapists and early users who want to try it and tell us what works.</p>
+      </div>
+      <form id="signup" name="signup" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="signup"><p hidden><label>Leave this empty <input name="bot-field"></label></p>
+        <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="f-role">I am</label>
+          <select id="f-role" name="role">
+            <option>In therapy and interested in trying it</option>
+            <option>A therapist or clinician</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="field"><label for="f-note">Anything you'd like us to know? (optional)</label><textarea id="f-note" name="note"></textarea></div>
+        <button class="btn btn-primary" type="submit">Count me in</button>
+                <p class="thanks" id="thanks" hidden>Thanks. You're on the list, and we'll be in touch.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="stack" style="gap:8px">
+      <span class="brand"><b>167 Hours</b><span>Between Sessions</span></span>
+      <p class="muted">Supports therapy. Never replaces it.</p>
+    </div>
+    <p class="crisis"><strong>In crisis?</strong> 167 Hours is not a crisis service. Call or text <strong>988</strong> (Suicide and Crisis Lifeline, US) or call <strong>911</strong>.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var g = document.getElementById('grid168');
+  if (g) {
+    var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    var html = '';
+    for (var d = 0; d < 7; d++) {
+      html += '<span class="day">' + days[d] + '</span>';
+      for (var h = 0; h < 24; h++) {
+        html += (d === 1 && h === 17) ? '<i class="session"><span class="bubble">Therapy visit</span></i>' : '<i></i>';
+      }
+    }
+    g.innerHTML = html;
+  }
+  var f = document.getElementById('signup');
+  if (f) f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    var body = new URLSearchParams(new FormData(f)).toString();
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
+      .then(function (r) { if (!r.ok) throw new Error(); f.querySelector('button[type=submit]').disabled = true; document.getElementById('thanks').hidden = false; })
+      .catch(function () { var t = document.getElementById('thanks'); t.textContent = 'That didn\'t go through. Please try again in a minute.'; t.hidden = false; });
+  });
+})();
+</script>
+
+</body>
+</html>
