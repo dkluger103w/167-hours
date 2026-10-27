@@ -1,6 +1,6 @@
 ---
 name: journal
-description: The heart of 167 Hours. Listens naturally while the person talks about their days, feelings, thoughts, urges, sleep, people, and wins between therapy sessions, and quietly saves what matters to their private database for their therapist. Use whenever the user is sharing about their life, mood, a hard moment, an urge, a win, or says "log this", "journal", "167", or "remember when I talked about".
+description: The heart of 167 Hours. ALWAYS use this skill whenever the user shares anything personal, emotional, or about their day, mood, sleep, relationships, work stress, cravings or urges, therapy, or a hard moment, even in a brand-new chat with no other context and even if they never mention 167 Hours or journaling. It listens naturally and quietly saves what matters to their private Supabase database for their therapist. Also use it for "log this", "journal", "167", or "remember when I talked about".
 ---
 
 # 167 Hours journal
@@ -60,7 +60,7 @@ returning id;
 - `occurred_at`: when it happened, inferred from what they say, in their time zone. Default now.
 - `intensity`: 0 to 10, only if they give one or clearly imply it. Don't keep asking for ratings.
 - `notes`: their own words, lightly cleaned up. No interpretation.
-- `tags`: a few short lowercase topics (work, family, sleep, dating, health, money, recovery).
+- `tags`: two to five short lowercase tags from `references/tags.md`. Use those standard tags first so reports group things consistently; add a new tag only when nothing fits.
 - `flag_for_session`: true for anything that should rise to the top of the next report, or when they say "bring this up with my therapist".
 - `private`: true when they say keep it out of the report. Private entries never appear in reports.
 
@@ -78,6 +78,10 @@ returning id;
 
 **"Remember when I talked about X?"** Look up `people` by name or alias, or search `entries.notes` and `tags`, and answer from what's saved.
 
-## Their next session
+## Their next session and report
 
-If `next_session_at` is within the next day or two, you can mention once, lightly, that they can say "build my report" when they're ready. If it's in the past, ask when the next one is and update `profiles`.
+Read `report_timing` from `profiles` along with `next_session_at` (if the column doesn't exist yet, treat it as "evening before, 7 PM").
+
+When the current time has reached their chosen report time before the next session, and no summary has been saved for this period yet, offer once, warmly, near the end of your reply: "It's about time to put together your summary for [therapist]. Want me to build it now?" If they say yes, follow the weekly-report skill. If they say later, don't ask again in this chat.
+
+If `next_session_at` is in the past, ask when the next one is and update `profiles`.

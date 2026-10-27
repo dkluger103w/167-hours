@@ -159,11 +159,12 @@ footer strong { color: var(--ink); }
         <div class="step-head"><h3>Add the plugin to Claude</h3><span class="time">2 min</span></div>
         <div class="step-body">
           <ul>
-            <li>Click <strong>Open Plugins page</strong> below. It takes you straight to the right place in Claude. Sign in if asked.</li>
-            <li>Choose the option to <strong>upload</strong> or add a plugin, and pick the <strong>167-hours.plugin</strong> file you just downloaded.</li>
+            <li>Click <strong>Open Plugins page</strong> below. It opens Claude's <strong>Customize</strong> page on the <strong>Plugins</strong> tab. Sign in if asked.</li>
+            <li>At the top right, click the <strong>+ Add</strong> button, then <strong>Upload plugin</strong>. (Skip the "Build for the Claude Directory" box; that's for publishing plugins.)</li>
+            <li>Click to choose a file, pick <strong>167-hours.plugin</strong> from your Downloads, then click <strong>Upload</strong>.</li>
+            <li>You'll see the <strong>167 hours</strong> plugin page with its switch turned on. That's it.</li>
           </ul>
           <p class="where"><strong>Don't see a Plugins page?</strong> Plugins only show up on a paid plan. If you just upgraded, refresh the page, or sign out and back in. You can also find it yourself: open the left sidebar (the icon at the top left), click <strong>Customize</strong>, then <strong>Plugins</strong>.</p>
-          <p class="where">If it asks you to connect Supabase while adding the plugin, click Connect and approve it. That takes care of step 4.</p>
           <div class="actions">
             <a class="btn primary" href="https://claude.ai/customize/plugins" target="_blank" rel="noopener">Open Plugins page</a>
             <button class="btn ghost" type="button" data-done>Mark done</button>
@@ -171,17 +172,17 @@ footer strong { color: var(--ink); }
         </div>
       </li>
 
-      <li class="step" data-step="connect">
+      <li class="step" data-step="settings">
         <div class="num" aria-hidden="true"></div>
-        <div class="step-head"><h3>Connect Supabase to Claude</h3><span class="time">2 min</span></div>
+        <div class="step-head"><h3>Turn on two Claude settings</h3><span class="time">1 min</span></div>
         <div class="step-body">
+          <p>These let Claude save your journal and make your therapist's summary without stopping to ask about every little thing.</p>
           <ul>
-            <li>In Claude, click your name in the bottom left, then <strong>Settings</strong>, then <strong>Connectors</strong>.</li>
-            <li>Find <strong>Supabase</strong> and click <strong>Connect</strong>.</li>
-            <li>A Supabase window opens. Click <strong>Authorize</strong>.</li>
+            <li>Click <strong>Open Capabilities</strong> below (or in Claude: your name in the bottom left, then <strong>Settings</strong>, then <strong>Capabilities</strong>). Under <strong>Visuals</strong>, make sure <strong>Artifacts</strong> is on. Under <strong>Code execution and file creation</strong>, make sure <strong>Run code in the cloud</strong> is on. These are what let 167 Hours work and make the summary PDF. Leave the other settings as they are.</li>
+            <li>Start a <strong>new chat</strong>. At the bottom of the chat box, next to the model name, there's a setting that says <strong>Manual</strong>. Click it and choose <strong>Auto</strong>. Without this, Claude asks permission for every step of setup.</li>
           </ul>
           <div class="actions">
-            <a class="btn primary" href="https://claude.ai/settings/connectors" target="_blank" rel="noopener">Open Connectors</a>
+            <a class="btn primary" href="https://claude.ai/settings/capabilities" target="_blank" rel="noopener">Open Capabilities</a>
             <button class="btn ghost" type="button" data-done>Mark done</button>
           </div>
         </div>
@@ -191,23 +192,32 @@ footer strong { color: var(--ink); }
         <div class="num" aria-hidden="true"></div>
         <div class="step-head"><h3>Let Claude set everything up</h3><span class="time">5 min</span></div>
         <div class="step-body">
-          <p>Start a new chat in Claude and send this message. Claude builds your private journal, asks a few questions about you and your therapy schedule, and offers to make a safety plan.</p>
+          <p>In that new chat (with <strong>Auto</strong> on), send this message:</p>
           <div class="copy"><code id="c1">set up 167 Hours</code><button type="button" data-copy="c1">Copy</button></div>
+          <p>Claude asks for your therapist's name and confirms you're 18 or older. Then here's what you'll see:</p>
+          <ul>
+            <li><strong>A Supabase card with a Connect button</strong> appears in the chat. Click <strong>Connect</strong>.</li>
+            <li><strong>An "Authorize Claude" page</strong> opens. Check that the <strong>Organization</strong> is the one you made in step 1, then click <strong>Authorize Claude</strong>. You'll come back to the chat.</li>
+            <li>If the card now says <strong>Connected</strong> with a <strong>Use</strong> button, click <strong>Use</strong>, then type <strong>"It's connected, go ahead."</strong></li>
+            <li>Claude builds your private journal on its own. This takes a minute or two.</li>
+            <li>It asks a few questions: what to call you, your time zone, when your sessions are, when you want your summary ready, your therapist's email, and which email you use. Then it offers to make a safety plan. "Later" is fine.</li>
+          </ul>
+          <p class="where">If a box pops up saying "Claude wants to use..." from Supabase, click <strong>Always allow</strong>. With Auto on, you shouldn't see many of these.</p>
           <div class="actions"><button class="btn ghost" type="button" data-done>Mark done</button></div>
         </div>
       </li>
 
       <li class="step" data-step="project">
         <div class="num" aria-hidden="true"></div>
-        <div class="step-head"><h3>Make a 167 Hours project</h3><span class="time">2 min</span></div>
+        <div class="step-head"><h3>Pin your journal chat</h3><span class="time">1 min</span></div>
         <div class="step-body">
-          <p>This keeps all your journal chats in one place.</p>
+          <p>The chat where you just did setup is now your journal. Keep using that one chat, every time, on your phone or computer. That way 167 Hours is always on.</p>
           <ul>
-            <li>In Claude, click <strong>Projects</strong>, then <strong>New project</strong>. Name it <strong>167 Hours</strong>.</li>
-            <li>Paste this into the project's instructions:</li>
+            <li>Rename it <strong>167 Hours</strong>: tap or click the chat's title at the top (or the <strong>...</strong> menu) and choose <strong>Rename</strong>.</li>
+            <li>Pin it: in the same menu, choose <strong>Pin</strong>, so it stays at the top of your chat list.</li>
+            <li>From now on, open the pinned <strong>167 Hours</strong> chat whenever you want to talk. Long chats are fine; Claude condenses older parts on its own.</li>
           </ul>
-          <div class="copy"><code id="c2">Use the 167 Hours skills for everything in this project. Journal what I share.</code><button type="button" data-copy="c2">Copy</button></div>
-          <p>From now on, start your journal chats inside this project.</p>
+          <p class="where">Started a different chat by accident? Just say "save this to 167 Hours" and it will.</p>
           <div class="actions"><button class="btn ghost" type="button" data-done>Mark done</button></div>
         </div>
       </li>
@@ -220,7 +230,7 @@ footer strong { color: var(--ink); }
     <div class="say">
       <div><q>Keep that private</q><p>Keeps something out of your therapist's summary.</p></div>
       <div><q>Debrief my session</q><p>Right after therapy, captures what you covered and any homework.</p></div>
-      <div><q>Build my report</q><p>Before your session. You see it first and send it yourself.</p></div>
+      <div><q>Build my report</q><p>Before your session. You see it first. If you connect Gmail or Outlook, it's saved as a ready-to-send draft to your therapist. 167 Hours never sends anything; you always press send.</p></div>
       <div><q>Show my safety plan</q><p>Any time you need it.</p></div>
     </div>
   </section>
@@ -238,7 +248,7 @@ footer strong { color: var(--ink); }
       </details>
       <details>
         <summary>Claude says Supabase isn't connected</summary>
-        <p>Redo step 4, then start a brand-new chat and send "set up 167 Hours" again. New connections show up in new chats.</p>
+        <p>In Claude, go to Settings, then Connectors, find Supabase, and click Connect. Then start a brand-new chat (with Auto on) and send "set up 167 Hours" again. New connections show up in new chats.</p>
       </details>
       <details>
         <summary>Supabase says I've hit my free limit</summary>

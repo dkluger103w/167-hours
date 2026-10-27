@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Between-Session Summary, {{SESSION_DATE_SHORT}}</title>
+<!--
+  167 Hours report template. Fill every {{PLACEHOLDER}}. Keep the section order,
+  headings, class names and styling exactly as they are. Remove a whole section
+  (from its <section> to </section>) when there is nothing for it this period,
+  except "The week in brief", "Suggested starting points" and the footer, which
+  always appear. Never invent content. Use the person's own words in quotes.
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+@page { size: Letter; margin: 0.75in 0.8in 0.8in; }
+:root { --ink: #1f2a2b; --muted: #5b6766; --line: #d9dfdb; --accent: #2f6b66; --accent-soft: #e8f1ef; --warn: #7a4319; --warn-soft: #f7eee6;
+  --display: "Newsreader", Georgia, serif; --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif; }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; color: var(--ink); font-family: var(--body); font-size: 10.5pt; line-height: 1.5; background: #fff; }
+h1, h2, h3 { font-family: var(--display); font-weight: 500; margin: 0; }
+h1 { font-size: 24pt; line-height: 1.1; }
+h2 { font-size: 14pt; color: var(--accent); padding-bottom: 4px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+h3 { font-size: 11.5pt; font-weight: 600; margin-bottom: 3px; }
+p { margin: 0 0 6px; }
+ul, ol { margin: 0 0 6px; padding-left: 1.15rem; }
+li { margin-bottom: 4px; }
+section { margin-bottom: 18px; break-inside: auto; }
+.keep { break-inside: avoid; }
+.brand { display: flex; justify-content: space-between; align-items: baseline; font-size: 8.5pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--accent); padding-bottom: 6px; margin-bottom: 18px; }
+.brand b { color: var(--accent); letter-spacing: 0.14em; }
+.meta { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; font-size: 9.5pt; margin: 12px 0 6px; }
+.meta span b { display: inline-block; min-width: 92px; color: var(--muted); font-weight: 500; }
+.disclaimer { font-size: 8.5pt; color: var(--muted); margin-top: 8px; }
+.note { background: var(--accent-soft); border-radius: 6px; padding: 12px 14px; margin: 16px 0 20px; }
+.note p:last-child { margin: 0; }
+.picks { counter-reset: pick; display: grid; gap: 10px; }
+.pick { border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 4px; padding: 10px 12px; break-inside: avoid; }
+.pick h3::before { counter-increment: pick; content: counter(pick) ". "; color: var(--accent); }
+.pick p { margin: 0 0 4px; }
+.pick .why { color: var(--muted); font-size: 9.5pt; margin: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+th, td { text-align: left; vertical-align: top; padding: 5px 8px; border-bottom: 1px solid var(--line); }
+th { font-size: 8pt; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+td:first-child { white-space: nowrap; }
+.day { font-weight: 600; margin: 8px 0 3px; }
+.t { color: var(--muted); font-variant-numeric: tabular-nums; }
+.callout { background: var(--warn-soft); border-radius: 6px; padding: 12px 14px; break-inside: avoid; }
+.callout h2 { color: var(--warn); border-color: #ead9c9; }
+q { quotes: "\201C" "\201D"; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+.footer { margin-top: 22px; padding-top: 8px; border-top: 1px solid var(--line); font-size: 8pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="brand"><b>Between Sessions</b><span>Confidential · Prepared for {{THERAPIST_NAME}}</span></div>
+
+<h1>Between-session summary</h1>
+<div class="meta">
+  <span><b>Client</b>{{CLIENT_NAME}}</span>
+  <span><b>Next session</b>{{NEXT_SESSION}}</span>
+  <span><b>Period</b>{{PERIOD}}</span>
+  <span><b>Entries logged</b>{{ENTRY_COUNT}}, {{PRIVATE_NOTE}}</span>
+</div>
+<p class="disclaimer">Prepared with an AI assistant (Claude, by Anthropic) from what {{FIRST_NAME}} said in conversation during the week, and reviewed by {{FIRST_NAME}} before sending. It is not a clinical assessment and contains no diagnosis. All clinical judgment is yours.</p>
+
+<div class="note">
+  <p><strong>A note before you read.</strong> {{NOTE_BEFORE_YOU_READ}}</p>
+  <!-- Three to five sentences: the shape of the week in plain words, and that
+       the suggested starting points below are ranked and only suggestions. -->
+</div>
+
+<section>
+  <h2>The week in brief</h2>
+  <p>{{WEEK_IN_BRIEF}}</p>
+  <!-- One paragraph, in time order. Descriptive, not interpretive. Mention
+       drinking or using only as the person described it. -->
+</section>
+
+<section>
+  <h2>Suggested starting points</h2>
+  <p class="disclaimer">Ranked by how often and how strongly each came up. For your judgment.</p>
+  <div class="picks">
+    <!-- Up to three, ranked by how often and how strongly each came up. -->
+    <div class="pick">
+      <h3>{{PICK_1_TITLE}}</h3>
+      <p>{{PICK_1_BODY}}</p>
+      <p class="why">Why it may be first: {{PICK_1_WHY}}</p>
+    </div>
+    <div class="pick">
+      <h3>{{PICK_2_TITLE}}</h3>
+      <p>{{PICK_2_BODY}}</p>
+      <p class="why">Why it may matter: {{PICK_2_WHY}}</p>
+    </div>
+    <div class="pick">
+      <h3>{{PICK_3_TITLE}}</h3>
+      <p>{{PICK_3_BODY}}</p>
+      <p class="why">Why it may matter: {{PICK_3_WHY}}</p>
+    </div>
+  </div>
+  <p class="disclaimer"><em>Also present, if there's room: {{ALSO_PRESENT}}</em></p>
+</section>
+
+<section>
+  <h2>What {{FIRST_NAME}} wants to bring up</h2>
+  <ul>
+    <!-- Everything flagged for the session, each as:
+         <li><strong>Short title.</strong> Their words in quotes, one or two lines.</li> -->
+    {{BRING_UP_ITEMS}}
+  </ul>
+</section>
+
+<section class="keep">
+  <h2>Patterns this week</h2>
+  <table>
+    <thead><tr><th>Pattern</th><th>How it showed up</th></tr></thead>
+    <tbody>
+      <!-- <tr><td><strong>Pattern name</strong></td><td>When and how, with a short quote.</td></tr> -->
+      {{PATTERN_ROWS}}
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Timeline</h2>
+  <!-- One block per day:
+       <p class="day">Tuesday, Oct 20</p>
+       <ul><li><span class="t">9:21 pm</span> What happened, one line.</li></ul>
+       Use a clock time when known, otherwise Morning, Afternoon or Evening. -->
+  {{TIMELINE_DAYS}}
+</section>
+
+<section class="keep">
+  <h2>Urges</h2>
+  <table>
+    <thead><tr><th>When</th><th>Urge</th><th>Acted on it?</th></tr></thead>
+    <tbody>
+      <!-- <tr><td>Thu 10:30 am</td><td>The urge, in their words where possible</td><td>No, and what they did instead</td></tr> -->
+      {{URGE_ROWS}}
+    </tbody>
+  </table>
+  <p class="disclaimer">{{SUBSTANCE_NOTE}}</p>
+  <!-- For example "No talk of drinking or using came up this week." Only state
+       what was or wasn't said. -->
+</section>
+
+<section>
+  <h2>Sleep and physical</h2>
+  <ul>{{SLEEP_PHYSICAL_ITEMS}}</ul>
+</section>
+
+<section class="callout">
+  <h2>Anger and safety</h2>
+  <p>{{ANGER_SAFETY}}</p>
+  <!-- Include ONLY when there was rage, thoughts of harming others, self-harm,
+       not wanting to be here, or danger. Report exactly what was said and
+       whether anything was acted on, without softening or dramatizing. End with
+       "These are recorded as [name] said them, for your judgment." Remove this
+       whole section when none of that came up. -->
+</section>
+
+<section>
+  <h2>Strengths and what helped</h2>
+  <ul>{{STRENGTHS_ITEMS}}</ul>
+  <!-- Concrete moments they handled well and coping tools that helped. -->
+</section>
+
+<section>
+  <h2>A note on how {{FIRST_NAME}} used AI this week</h2>
+  <p>{{AI_USE_NOTE}}</p>
+  <!-- Two or three sentences: how often and how they used the assistant
+       (journaling, drafting messages, talking through feelings, by voice or
+       text). Neutral and factual. -->
+</section>
+
+<section>
+  <h2>{{FIRST_NAME}}'s questions for you</h2>
+  <ul>{{QUESTIONS_ITEMS}}</ul>
+  <!-- Questions they want help with, phrased in first person as they'd ask them. -->
+</section>
+
+<div class="footer">Confidential. Shared by {{CLIENT_NAME_SHORT}} with their treating clinician. Prepared with an AI assistant from client-reported conversation; not a clinical record or assessment. If you'd prefer a different format or length, {{FIRST_NAME}} is glad to adjust.<br><br>{{FEEDBACK_NOTE}}</div>
+
+</body>
+</html>

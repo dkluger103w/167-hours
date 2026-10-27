@@ -9,7 +9,7 @@ Build a summary the therapist can read in about five minutes before the session.
 
 ## Find the database
 
-Use the Supabase tools: project named `167-hours`; `select id, display_name, therapist_name, timezone, next_session_at from public.profiles limit 1;`. Set `user_id` explicitly. If the database isn't there, offer to run setup.
+Use the Supabase tools: project named `167-hours`; `select * from public.profiles limit 1;` (includes `report_timing`, when they like the report ready). Set `user_id` explicitly. If the database isn't there, offer to run setup.
 
 ## Pick the period
 
@@ -22,23 +22,28 @@ The period runs from the end of the last report (`select max(period_end) from pu
 - `tool_uses` in the period with tool names.
 - Patterns linked to entries in the period.
 
-## Report structure
+## Report structure: always use the template
 
-Write it in this order and keep it tight. Omit any section with nothing in it.
+The report has one fixed format, the same one used for real clients so far. Read `references/report-template.html` from this skill and fill it in. Do not invent a different layout, change the section order, rename headings, or restyle it. Its comments explain what goes in each part.
 
-1. **Header**: "Between-session summary for [therapist name]", the person's first name, the date range, and the date of the upcoming session.
-2. **What [name] wants to talk about**: everything with `flag_for_session = true`, first and in their words.
-3. **The week at a glance**: three to five plain bullets on what came up most. Descriptive, not interpretive ("Work stress came up on four days", not "shows signs of burnout").
-4. **Timeline**: by day, with times, one line per meaningful entry. Trigger, thought, feeling and intensity, what they did, as available.
-5. **Urges**: each urge, its strength, whether they acted on it, and what helped.
-6. **Mood by time of day**: average intensity for morning (5 to 12), afternoon (12 to 17), evening (17 to 22), night (22 to 5), in their time zone, and counts by entry type.
-7. **Sleep**: nights logged and hours.
-8. **Patterns**: any linked this week, with status.
-9. **Last session's homework**: what it was and anything they said about how it went.
-10. **What helped**: tools used and how much they helped.
-11. **Footer**: "Prepared by [name] with 167 Hours. This summary reflects what [name] chose to share between sessions. It is not a clinical record." Then the therapist feedback note from `references/feedback.md`.
+Sections, in order:
 
-Use their own words wherever possible. Don't soften or dramatize.
+1. **Header and details**: therapist, client name, next session, period, number of entries and whether any were kept private, and the AI disclaimer.
+2. **A note before you read**: three to five sentences on the shape of the week, and that the starting points are ranked suggestions.
+3. **The week in brief**: one paragraph in time order. Descriptive, not interpretive.
+4. **Suggested starting points**: up to three, ranked by how often and how strongly each came up, each with a short "why it may matter". Then "Also present, if there's room" for the rest.
+5. **What [name] wants to bring up**: everything with `flag_for_session = true`, in their words.
+6. **Patterns this week**: from `patterns` linked to entries in the period.
+7. **Timeline**: by day, with times.
+8. **Urges**: when, the urge, and whether they acted on it. Add one plain line about drinking or using, only as they described it.
+9. **Sleep and physical**.
+10. **Anger and safety**: only when there was rage, thoughts of harming someone, self-harm, not wanting to be here, or danger. Report exactly what was said and whether anything was acted on.
+11. **Strengths and what helped**: concrete moments they handled well, and tools that helped.
+12. **A note on how [name] used AI this week**: neutral, two or three sentences.
+13. **[Name]'s questions for you**: in first person, as they'd ask them.
+14. **Footer**, then the therapist feedback note from `references/feedback.md`.
+
+Leave out any section with nothing in it, except the note, the week in brief, the starting points, and the footer. Use their own words in quotes wherever possible. Don't soften or dramatize. Never include entries marked private.
 
 ## Review with the person first
 
@@ -55,7 +60,9 @@ Only after they approve:
    values ('<user_id>', '<start>', '<end>', 'Between-session summary, <dates>', '<markdown>')
    returning id;
    ```
-2. Make a clean, printable file for them to send. If you can create files, produce a PDF named like `Between-Session-Summary-Oct-20.pdf` with a simple, calm layout (generous margins, clear headings, no logos needed). If you can't create files, give the final version as clean formatted text they can copy into an email.
-3. Offer a short, ready-to-send email they can paste, addressed to their therapist, saying the summary is attached and they're looking forward to the session.
+2. Make the PDF from the filled template. Save the filled HTML, then convert it to a PDF named like `Between-Session-Summary-Oct-27.pdf` (the session date), using whatever is available (for example a headless browser's print to PDF, or a Python HTML-to-PDF library), keeping the template's styling. Give them the PDF to download. If a PDF truly can't be made, give them the HTML file, which opens in any browser and can be printed to PDF. Also save the filled HTML in `session_summaries.report_html` and the file name in `pdf_filename`.
+3. Write a short, warm email to their therapist (use `therapist_email` and `therapist_name` from `profiles`): a line saying here's this week's summary ahead of the session, then the summary itself in the body.
+4. **If Gmail or Outlook is connected**, save it as a **draft** addressed to the therapist, with the subject "Between-session summary, <dates>". Attach the PDF if the email tool supports attachments; if not, keep the summary in the body and tell them to attach the PDF before sending. Then tell them: "Your draft is ready in [Gmail/Outlook]. Look it over and hit send when you're ready."
+5. **If no email is connected**, show the email text so they can copy it into their own email, and attach the PDF themselves.
 
-The person always sends it themselves. Never email anyone directly unless they explicitly ask you to and an email tool is connected; even then, show the exact email first and wait for an OK.
+Never send an email. Only create drafts. The person always reviews and sends it themselves.

@@ -71,8 +71,20 @@ Ask, one at a time and conversationally:
 - What they'd like to be called.
 - Their time zone (offer a guess from what they've said; store an IANA name like `America/Chicago`).
 - When their next therapy session is, and whether it's usually weekly. Store `next_session_at` as a timestamp in their time zone and `session_cycle_days` (7 for weekly, 14 for every other week).
+- When they'd like their therapist's summary ready. Suggest the evening before the session (around 7 PM) as the default, since it gives them time to review it and gives their therapist time to read it. Store their answer in plain words in `report_timing` (for example "evening before, 7 PM" or "morning of, 9 AM"). Explain that you'll remind them when it's time, and they always review it and send it themselves.
 
-Save with an `update public.profiles set display_name = ..., therapist_name = ..., timezone = ..., next_session_at = ..., session_cycle_days = ... where id = '<user_id>';`
+- Their therapist's email address, so the summary can be addressed to them. Optional: if they'd rather not share it, skip it.
+
+Save with an `update public.profiles set display_name = ..., therapist_name = ..., therapist_email = ..., timezone = ..., next_session_at = ..., session_cycle_days = ..., report_timing = ... where id = '<user_id>';`
+
+Before saving, make sure these columns exist (databases set up with an earlier version won't have them): `alter table public.profiles add column if not exists report_timing text, add column if not exists therapist_email text;`
+
+## Step 6b: Email drafts (optional)
+
+Ask which email they use (Gmail, Outlook, or something else). Explain: if they connect it, 167 Hours will put each summary into a ready-to-send **draft** addressed to their therapist. Nothing is ever sent automatically; they open the draft, look it over, and press send themselves.
+
+- If they use Gmail or Outlook and want this, check whether that connector is available. If not, show them the connector so they can click Connect (search the connector directory for it), and tell them to approve it.
+- If they use something else, or would rather not connect email, that's fine: the report will give them text to copy and paste instead.
 
 ## Step 7: Safety plan (offer, don't push)
 
@@ -82,7 +94,8 @@ Say: therapists often help clients make a short safety plan for really hard mome
 
 Finish with a short, friendly explanation:
 
-- **Recommended:** create a Claude Project called "167 Hours", and in its instructions write: "Use the 167 Hours skills for everything in this project. Journal what I share." Then do all their journaling in chats inside that project.
+- **This chat is now your journal.** Ask them to rename this chat "167 Hours" and pin it, then come back to this same chat every time, on the phone or computer. Explain how: tap or click the chat's title (or the "..." menu) to rename it and pin it, so it stays at the top of the chat list. One chat, used over and over, means the journal is always on. Long chats are fine; Claude condenses older parts automatically.
+- If they ever start a different chat by accident and want it saved, they can just say "save this to 167 Hours".
 - Just talk. Type or use voice, any time, about anything. The important parts get saved quietly in the background.
 - Say "keep that private" about anything they don't want in their therapist's summary.
 - After a session, say "debrief my session" to capture what they covered.

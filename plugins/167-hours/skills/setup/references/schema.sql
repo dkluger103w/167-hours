@@ -27,9 +27,11 @@ create table public.profiles (
   id uuid primary key references auth.users (id) on delete cascade,
   display_name text,
   therapist_name text,
+  therapist_email text,
   next_session_at timestamptz,
   session_cycle_days int not null default 7 check (session_cycle_days between 1 and 60),
   timezone text not null default 'America/New_York',
+  report_timing text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
