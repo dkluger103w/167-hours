@@ -8,22 +8,22 @@
 <meta name="description" content="167 Hours: Between Sessions. There are 167 hours between therapy sessions. This is for them.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: one calm scrolling page; a sage "week" motif (167 open hours, 1 coral hour) recurs from the hero down. Single light brand look, chosen deliberately. */
 :root {
-  --cream: #FAF6EF;
+  --cream: #FFFFFF;
   --paper: #FFFFFF;
-  --sage-wash: #E6EDE4;
-  --sage: #6E8B74;
-  --sage-deep: #3F5A46;
-  --coral: #C9623F;
-  --coral-deep: #A94E30;
-  --ink: #2B2A28;
-  --ink-soft: #4A4744;
-  --line: #E3DDD2;
-  --display: "DM Serif Display", Georgia, "Times New Roman", serif;
-  --body: "Figtree", "Helvetica Neue", Arial, sans-serif;
+  --sage-wash: #EEF2F7;
+  --sage: #6B7F99;
+  --sage-deep: #13233A;
+  --coral: #13233A;
+  --coral-deep: #0A1626;
+  --ink: #13233A;
+  --ink-soft: #4E5D70;
+  --line: #D8E0EA;
+  --display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
   --wrap: 1120px;
   color-scheme: light;
 }
@@ -33,7 +33,7 @@ html { scroll-behavior: smooth; }
 body { background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--cream); }
 .wrap { max-width: var(--wrap); margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; color: var(--ink); }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; margin: 0; text-wrap: balance; color: var(--ink); }
 h1 { font-size: clamp(2.5rem, 6vw, 4.1rem); line-height: 1.04; }
 h2 { font-size: clamp(1.9rem, 4vw, 2.7rem); line-height: 1.1; }
 h3 { font-size: 1.45rem; line-height: 1.2; }
@@ -58,12 +58,24 @@ section { padding-block: 84px; }
 header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--cream); border-bottom: 1px solid var(--line); }
 header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; flex-wrap: wrap; }
 .brand { display: flex; align-items: baseline; gap: 10px; text-decoration: none; color: var(--ink); }
-.brand b { font-family: var(--display); font-weight: 400; font-size: 1.7rem; }
+.brand b { font-family: var(--display); font-weight: 700; font-size: 1.7rem; }
 .brand span { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sage-deep); font-weight: 700; }
 nav.links { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
 nav.links a { color: var(--ink); text-decoration: none; font-weight: 500; font-size: 0.97rem; }
 nav.links a:hover { color: var(--coral-deep); }
 nav.links .btn { min-height: 44px; padding: 0 20px; color: #FFFFFF; }
+nav.links .btn-portal { background: transparent; color: var(--sage-deep); border-color: var(--sage); }
+nav.links .btn-portal:hover { background: var(--sage-wash); color: var(--sage-deep); }
+@media (max-width: 480px) { nav.links .btn { padding: 0 14px; font-size: .9rem; } }
+.portal-card { margin-top: 40px; background: var(--sage-deep); color: #EEF2F7; border-radius: 24px; padding: 32px; display: flex; flex-wrap: wrap; gap: 24px 40px; align-items: center; }
+.portal-card > .stack { flex: 999 1 420px; min-width: 0; }
+.portal-card h3 { font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem, 3.4vw, 2.1rem); color: #FFFFFF; line-height: 1.15; margin: 0; }
+.portal-card p { color: #C9D3E0; margin: 0; }
+.portal-card .eyebrow { color: #FFE04A; }
+.portal-card ul { margin: 0; padding-left: 1.1rem; color: #C9D3E0; display: flex; flex-direction: column; gap: 4px; }
+.portal-card .go { flex: 1 1 220px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.portal-card .go .btn { white-space: nowrap; }
+.portal-card .go small { color: #FFE04A; font-size: .85rem; }
 @media (max-width: 760px) { nav.links a:not(.btn) { display: none; } }
 
 /* Hero */
@@ -75,22 +87,22 @@ nav.links .btn { min-height: 44px; padding: 0 20px; color: #FFFFFF; }
 .week-title { font-family: var(--display); font-size: 1.5rem; color: var(--sage-deep); }
 .grid168 { display: grid; grid-template-columns: 2.2em repeat(24, minmax(0, 1fr)); gap: 3px; align-items: center; padding-top: 34px; }
 .grid168 .day { font-size: .7rem; font-weight: 700; letter-spacing: .06em; color: var(--sage-deep); text-transform: uppercase; }
-.grid168 i { aspect-ratio: 1; border-radius: 2px; background: #C9D6C6; display: block; }
+.grid168 i { aspect-ratio: 1; border-radius: 2px; background: #D5DDE8; display: block; }
 .grid168 i.session { background: var(--coral); position: relative; transform: scale(1.9); border-radius: 3px; box-shadow: 0 0 0 1.5px var(--sage-wash); z-index: 1; }
 .grid168 .bubble { position: absolute; right: -2px; bottom: calc(100% + 5px); transform: scale(.526); transform-origin: bottom right; white-space: nowrap; background: var(--coral); color: #FFFFFF; font-family: var(--body); font-style: normal; font-size: .8rem; font-weight: 600; padding: 5px 10px; border-radius: 8px; }
-.legend { display: flex; flex-direction: column; gap: 12px; border-top: 1px solid #C8D4C5; padding-top: 16px; }
+.legend { display: flex; flex-direction: column; gap: 12px; border-top: 1px solid #C9D3E0; padding-top: 16px; }
 .legend-row { display: flex; gap: 12px; align-items: flex-start; }
 .legend-row p { margin: 0; color: var(--ink-soft); font-size: .95rem; line-height: 1.45; }
 .legend-row strong { display: block; color: var(--ink); font-size: 1.05rem; }
-.key { width: 16px; height: 16px; border-radius: 3px; background: #C9D6C6; flex: 0 0 16px; margin-top: 4px; display: block; }
+.key { width: 16px; height: 16px; border-radius: 3px; background: #D5DDE8; flex: 0 0 16px; margin-top: 4px; display: block; }
 .key-session { background: var(--coral); }
 
 /* Bands */
 .band-sage { background: var(--sage-wash); }
-.band-ink { background: var(--sage-deep); color: #F3F1EA; }
+.band-ink { background: var(--sage-deep); color: #EEF2F7; }
 .band-ink h2, .band-ink h3 { color: #FFFFFF; }
-.band-ink .eyebrow { color: #CFE0CF; }
-.band-ink p { color: #E4E9E1; }
+.band-ink .eyebrow { color: #FFE04A; }
+.band-ink p { color: #C9D3E0; }
 
 .two-col { display: flex; flex-wrap: wrap; gap: 48px; }
 .two-col > * { flex: 1 1 380px; min-width: 0; }
@@ -108,7 +120,7 @@ nav.links .btn { min-height: 44px; padding: 0 20px; color: #FFFFFF; }
 .rule-band h2 { font-size: clamp(2.8rem, 8vw, 5.2rem); line-height: 1.02; margin: 0; }
 .rule-lede { font-size: clamp(1.15rem, 2.2vw, 1.35rem); line-height: 1.55; margin: 0; }
 .rule-points { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 44px; }
-.rule-points > div { flex: 1 1 240px; min-width: 0; border-top: 2px solid #8FAE96; padding-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+.rule-points > div { flex: 1 1 240px; min-width: 0; border-top: 2px solid #8A9BB3; padding-top: 18px; display: flex; flex-direction: column; gap: 8px; }
 .rule-points h3 { margin: 0; font-size: 1.15rem; }
 .rule-points p { margin: 0; }
 .rule-note { margin: 40px 0 0; font-family: var(--display); font-size: clamp(1.3rem, 3vw, 1.7rem); line-height: 1.3; color: #FFFFFF !important; }
@@ -120,13 +132,13 @@ nav.links .btn { min-height: 44px; padding: 0 20px; color: #FFFFFF; }
 
 /* Stats */
 .stats { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 36px; }
-.stat { flex: 1 1 280px; border-top: 2px solid #8FAE96; padding-top: 18px; display: flex; flex-direction: column; gap: 8px; }
-.stat strong { font-family: var(--display); font-weight: 400; font-size: 3.4rem; line-height: 1; color: #FFFFFF; }
-.stat small { font-size: .82rem; color: #CFE0CF; }
-.stat small a { color: #CFE0CF; }
+.stat { flex: 1 1 280px; border-top: 2px solid #8A9BB3; padding-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+.stat strong { font-family: var(--display); font-weight: 700; font-size: 3.4rem; line-height: 1; color: #FFFFFF; }
+.stat small { font-size: .82rem; color: #FFE04A; }
+.stat small a { color: #FFE04A; }
 .facts { display: flex; flex-wrap: wrap; gap: 28px 24px; margin-top: 40px; }
 .fact { flex: 1 1 280px; min-width: 0; border-top: 2px solid var(--sage); padding-top: 16px; display: flex; flex-direction: column; gap: 6px; }
-.fact strong { font-family: var(--display); font-weight: 400; font-size: 3.2rem; line-height: 1; color: var(--coral-deep); }
+.fact strong { font-family: var(--display); font-weight: 700; font-size: 3.2rem; line-height: 1; color: var(--coral-deep); }
 .fact p { color: var(--ink-soft); }
 .fact a { font-size: .8rem; color: var(--sage-deep); }
 .approaches { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 40px; }
@@ -142,11 +154,11 @@ nav.links .btn { min-height: 44px; padding: 0 20px; color: #FFFFFF; }
 /* Concepts */
 .concepts { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 36px; }
 .concept { flex: 1 1 300px; background: var(--paper); border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px; }
-.concept .tag { align-self: flex-start; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--coral-deep); background: #F7E3DA; padding: 4px 10px; border-radius: 999px; }
+.concept .tag { align-self: flex-start; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--coral-deep); background: #FFF1B3; padding: 4px 10px; border-radius: 999px; }
 .feature { margin-top: 20px; background: var(--paper); border: 2px solid var(--coral); border-radius: 22px; padding: 30px; display: flex; flex-wrap: wrap; gap: 28px; }
 .feature > .stack { flex: 1 1 260px; min-width: 0; }
 .feature > .body { flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
-.feature .tag { align-self: flex-start; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--coral-deep); background: #F7E3DA; padding: 4px 10px; border-radius: 999px; }
+.feature .tag { align-self: flex-start; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--coral-deep); background: #FFF1B3; padding: 4px 10px; border-radius: 999px; }
 .feature .note { font-size: .92rem; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 12px; }
 .loopline { margin-top: 36px; font-family: var(--display); font-size: clamp(1.6rem, 3.5vw, 2.3rem); line-height: 1.2; color: var(--sage-deep); text-align: left; }
 
@@ -170,14 +182,26 @@ form { display: flex; flex-direction: column; gap: 16px; background: var(--paper
 label { font-weight: 600; font-size: .95rem; }
 input, select, textarea { font: inherit; color: var(--ink); background: var(--cream); border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px; min-height: 48px; width: 100%; }
 textarea { min-height: 110px; resize: vertical; }
-input:focus, select:focus, textarea:focus { outline: 3px solid #E9B7A3; border-color: var(--coral); }
+input:focus, select:focus, textarea:focus { outline: 3px solid #FFE48A; border-color: var(--coral); }
 .note { font-size: .88rem; color: var(--ink-soft); }
 .thanks { background: var(--sage-wash); border-radius: 14px; padding: 14px 16px; color: var(--sage-deep); font-weight: 500; }
 
 /* Footer */
 footer { padding-block: 48px; border-top: 1px solid var(--line); }
 footer .wrap { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; }
-.crisis { background: #F7E3DA; color: var(--ink); border-radius: 14px; padding: 14px 18px; font-size: .95rem; max-width: 560px; }
+.crisis { background: #FFF1B3; color: var(--ink); border-radius: 14px; padding: 14px 18px; font-size: .95rem; max-width: 560px; }
+
+/* 167 Hours brand: navy + marker highlighter */
+mark{background:none;background-repeat:no-repeat;background-size:100% 74%;background-position:0 88%;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .16em;margin:0 -.08em;color:inherit}
+mark.h1{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%2062%22%20preserveAspectRatio%3D%22none%22%3E%0A%3Cdefs%3E%0A%3Cfilter%20id%3D%22e%22%20x%3D%22-3%25%22%20y%3D%22-15%25%22%20width%3D%22106%25%22%20height%3D%22130%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.02%200.25%22%20numOctaves%3D%222%22%20seed%3D%224%22%20result%3D%22n%22/%3E%3CfeDisplacementMap%20in%3D%22SourceGraphic%22%20in2%3D%22n%22%20scale%3D%223.5%22%20xChannelSelector%3D%22R%22%20yChannelSelector%3D%22G%22/%3E%3C/filter%3E%0A%3Cfilter%20id%3D%22s%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.002%200.35%22%20numOctaves%3D%221%22%20seed%3D%2211%22/%3E%3CfeColorMatrix%20values%3D%220%200%200%200%201%20%200%200%200%200%201%20%200%200%200%200%201%20%200%200%200%20-1.4%200.95%22/%3E%3CfeComposite%20in2%3D%22SourceGraphic%22%20operator%3D%22in%22/%3E%3C/filter%3E%0A%3CclipPath%20id%3D%22c%22%3E%3Cpath%20d%3D%22M20%2013.5%20L%20392%206.5%20L%20380%2048.5%20L%206%2055.5%20Z%22/%3E%3C/clipPath%3E%0A%3C/defs%3E%0A%3Cg%20filter%3D%22url%28%23e%29%22%3E%0A%3Cpath%20d%3D%22M20%2013.5%20L%20392%206.5%20L%20380%2048.5%20L%206%2055.5%20Z%22%20fill%3D%22%23FFE04A%22%20fill-opacity%3D%220.9%22/%3E%0A%3Cpath%20d%3D%22M28%2017.5%20L%20384%2010.5%20L%20374%2044.5%20L%2016%2051.5%20Z%22%20fill%3D%22%23FFD83A%22%20fill-opacity%3D%220.32%22/%3E%0A%3Cpath%20d%3D%22M12%2015.5%20L%2032%2014.5%20L%2020%2054.5%20L%204%2055.5%20Z%22%20fill%3D%22%23F7C41E%22%20fill-opacity%3D%220.35%22/%3E%0A%3Cpath%20d%3D%22M392%206.5%20L%20374%207.5%20L%20362%2048.5%20L%20380%2048.5%20Z%22%20fill%3D%22%23F7C41E%22%20fill-opacity%3D%220.3%22/%3E%0A%3C/g%3E%0A%3Crect%20width%3D%22400%22%20height%3D%2262%22%20fill%3D%22%23fff%22%20clip-path%3D%22url%28%23c%29%22%20filter%3D%22url%28%23s%29%22%20opacity%3D%220.42%22/%3E%0A%3C/svg%3E")} mark.h2{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%2062%22%20preserveAspectRatio%3D%22none%22%3E%0A%3Cdefs%3E%0A%3Cfilter%20id%3D%22e%22%20x%3D%22-3%25%22%20y%3D%22-15%25%22%20width%3D%22106%25%22%20height%3D%22130%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.02%200.25%22%20numOctaves%3D%222%22%20seed%3D%2211%22%20result%3D%22n%22/%3E%3CfeDisplacementMap%20in%3D%22SourceGraphic%22%20in2%3D%22n%22%20scale%3D%223.5%22%20xChannelSelector%3D%22R%22%20yChannelSelector%3D%22G%22/%3E%3C/filter%3E%0A%3Cfilter%20id%3D%22s%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.002%200.35%22%20numOctaves%3D%221%22%20seed%3D%2218%22/%3E%3CfeColorMatrix%20values%3D%220%200%200%200%201%20%200%200%200%200%201%20%200%200%200%200%201%20%200%200%200%20-1.4%200.95%22/%3E%3CfeComposite%20in2%3D%22SourceGraphic%22%20operator%3D%22in%22/%3E%3C/filter%3E%0A%3CclipPath%20id%3D%22c%22%3E%3Cpath%20d%3D%22M22%2010.5%20L%20392%209.5%20L%20378%2051.5%20L%206%2052.5%20Z%22/%3E%3C/clipPath%3E%0A%3C/defs%3E%0A%3Cg%20filter%3D%22url%28%23e%29%22%3E%0A%3Cpath%20d%3D%22M22%2010.5%20L%20392%209.5%20L%20378%2051.5%20L%206%2052.5%20Z%22%20fill%3D%22%23FFE04A%22%20fill-opacity%3D%220.9%22/%3E%0A%3Cpath%20d%3D%22M30%2014.5%20L%20384%2013.5%20L%20372%2047.5%20L%2016%2048.5%20Z%22%20fill%3D%22%23FFD83A%22%20fill-opacity%3D%220.32%22/%3E%0A%3Cpath%20d%3D%22M14%2012.5%20L%2034%2011.5%20L%2020%2051.5%20L%204%2052.5%20Z%22%20fill%3D%22%23F7C41E%22%20fill-opacity%3D%220.35%22/%3E%0A%3Cpath%20d%3D%22M392%209.5%20L%20374%2010.5%20L%20360%2051.5%20L%20378%2051.5%20Z%22%20fill%3D%22%23F7C41E%22%20fill-opacity%3D%220.3%22/%3E%0A%3C/g%3E%0A%3Crect%20width%3D%22400%22%20height%3D%2262%22%20fill%3D%22%23fff%22%20clip-path%3D%22url%28%23c%29%22%20filter%3D%22url%28%23s%29%22%20opacity%3D%220.42%22/%3E%0A%3C/svg%3E")} mark.h3{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%2062%22%20preserveAspectRatio%3D%22none%22%3E%0A%3Cdefs%3E%0A%3Cfilter%20id%3D%22e%22%20x%3D%22-3%25%22%20y%3D%22-15%25%22%20width%3D%22106%25%22%20height%3D%22130%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.02%200.25%22%20numOctaves%3D%222%22%20seed%3D%2223%22%20result%3D%22n%22/%3E%3CfeDisplacementMap%20in%3D%22SourceGraphic%22%20in2%3D%22n%22%20scale%3D%223.5%22%20xChannelSelector%3D%22R%22%20yChannelSelector%3D%22G%22/%3E%3C/filter%3E%0A%3Cfilter%20id%3D%22s%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.002%200.35%22%20numOctaves%3D%221%22%20seed%3D%2230%22/%3E%3CfeColorMatrix%20values%3D%220%200%200%200%201%20%200%200%200%200%201%20%200%200%200%200%201%20%200%200%200%20-1.4%200.95%22/%3E%3CfeComposite%20in2%3D%22SourceGraphic%22%20operator%3D%22in%22/%3E%3C/filter%3E%0A%3CclipPath%20id%3D%22c%22%3E%3Cpath%20d%3D%22M19%2013%20L%20392%207%20L%20381%2049%20L%206%2055%20Z%22/%3E%3C/clipPath%3E%0A%3C/defs%3E%0A%3Cg%20filter%3D%22url%28%23e%29%22%3E%0A%3Cpath%20d%3D%22M19%2013%20L%20392%207%20L%20381%2049%20L%206%2055%20Z%22%20fill%3D%22%23FFE04A%22%20fill-opacity%3D%220.9%22/%3E%0A%3Cpath%20d%3D%22M27%2017%20L%20384%2011%20L%20375%2045%20L%2016%2051%20Z%22%20fill%3D%22%23FFD83A%22%20fill-opacity%3D%220.32%22/%3E%0A%3Cpath%20d%3D%22M11%2015%20L%2031%2014%20L%2020%2054%20L%204%2055%20Z%22%20fill%3D%22%23F7C41E%22%20fill-opacity%3D%220.35%22/%3E%0A%3Cpath%20d%3D%22M392%207%20L%20374%208%20L%20363%2049%20L%20381%2049%20Z%22%20fill%3D%22%23F7C41E%22%20fill-opacity%3D%220.3%22/%3E%0A%3C/g%3E%0A%3Crect%20width%3D%22400%22%20height%3D%2262%22%20fill%3D%22%23fff%22%20clip-path%3D%22url%28%23c%29%22%20filter%3D%22url%28%23s%29%22%20opacity%3D%220.42%22/%3E%0A%3C/svg%3E")}
+h1, h2, h3, .brand b { letter-spacing: -0.015em; }
+.loop { font-style: normal; font-weight: 500 !important; }
+.grid168 i.session { background: #FFE04A; box-shadow: 0 0 0 1.5px #13233A; }
+.key-session { background: #FFE04A; box-shadow: 0 0 0 1.5px #13233A; }
+.band-ink mark, .portal-card mark, .rule-band mark { color: #13233A; background-size: 100% 100%; background-position: 0 55%; }
+.portal-card .btn-primary { background: #FFE04A; color: #13233A; }
+.portal-card .btn-primary:hover { background: #FFD21F; }
+.portal-card .go small { color: #C9D3E0; }
 </style>
 </head>
 <body>
@@ -188,7 +212,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space
       <a href="#how">How it works</a>
       <a href="#therapists">For therapists</a>
       <a href="#faq">Questions</a>
-      <a href="/portal/">Clinician portal</a>
+      <a class="btn btn-portal" href="/portal/">Clinician portal</a>
       <a class="btn btn-primary" href="#involved">Get involved</a>
     </nav>
   </div>
@@ -199,7 +223,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <p class="therapist-first"><strong>For people in therapy.</strong> Never a replacement for it.</p>
-        <h1>There are 167 hours between sessions. This is for them.</h1>
+        <h1>There are <mark class="h1">167 hours</mark> between sessions. This is for them.</h1>
         <p class="loop">The AI extends the human's reach. The human improves the AI.</p>
         <p class="lede">Talk the way you already do, whenever something comes up. Your therapist walks into your next session already knowing your real week.</p>
         <div class="btns">
@@ -222,7 +246,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space
     <div class="wrap">
       <div class="rule-top">
         <span class="eyebrow">The one rule</span>
-        <h2>You need a therapist.</h2>
+        <h2>You need a <mark class="h2">therapist</mark>.</h2>
         <p class="rule-lede">167 Hours is not therapy, and it never replaces it. It's built for people who already have a real, licensed therapist, and everything it does exists to make that relationship stronger.</p>
       </div>
       <div class="rule-points">
@@ -308,7 +332,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space
       <div class="ours">
         <div class="stack">
           <span class="eyebrow">167 Hours</span>
-          <h3>Your words, your therapist, no plan required.</h3>
+          <h3>Your words, your therapist, <mark class="h3">no plan required</mark>.</h3>
         </div>
         <ul class="clean">
           <li><strong>Natural conversation.</strong> Talk however you want, whenever you want. No prompts, no forms, no modules.</li>
@@ -396,9 +420,26 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space
       <div class="stack">
         <p>Your clients are already talking to AI between sessions. Most of it never reaches you.</p>
         <p>167 Hours gives you a short, structured summary before each session: what happened and when, what came up most, any urges and how they went, and what your client wants to talk about. It's not a clinical assessment and never makes a diagnosis. All clinical judgment stays with you.</p>
-        <p>We're also designing a secure portal where you can read each briefing and tag what you see, like core beliefs and thinking traps, and line up what you'd like to cover. Future briefings then highlight the themes you've identified. It's an early prototype, and we'd love your reaction.</p>
-        <p><a class="btn btn-ghost" href="/portal/">See the clinician portal prototype</a></p>
         <p>We're looking for therapists to help shape it. Tell us what you'd want to see.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="portal-card">
+        <div class="stack">
+          <span class="eyebrow">Prototype · Clinician portal</span>
+          <h3>See what <mark class="h3">you'd see</mark>.</h3>
+          <p>A secure place to read each client's weekly briefing before your session. Click through it with sample clients:</p>
+          <ul>
+            <li>Sign in with two-step verification</li>
+            <li>Read the week, and tag core beliefs and thinking traps</li>
+            <li>Line up what you'd like to cover, if your client isn't sure where to start</li>
+            <li>See trends across weeks, including sleep your client chooses to share</li>
+          </ul>
+        </div>
+        <div class="go">
+          <a class="btn btn-primary" href="/portal/">Open the portal prototype</a>
+          <small>Sample clients and made-up data. Nothing is saved.</small>
+        </div>
       </div>
     </div>
   </section>
