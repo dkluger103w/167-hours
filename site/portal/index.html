@@ -40,6 +40,9 @@ p { margin: 0; }
 
 .proto { background: var(--ink); color: #EEF2F7; font-size: .85rem; }
 .proto .wrap { padding-block: 8px; display: flex; flex-wrap: wrap; gap: 6px 16px; justify-content: space-between; }
+.backsite { font-weight: 600; font-size: .9rem; color: var(--ink-soft); text-decoration: none; padding: 8px 0; }
+.backsite:hover { color: var(--ink); text-decoration: underline; }
+#who:not([hidden]) ~ .backsite, header.top .wrap:has(#who:not([hidden])) .backsite { display: none; }
 .proto b { color: #FFE04A; }
 
 header.top { background: var(--paper); border-bottom: 1px solid var(--line); }
@@ -233,10 +236,11 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
   <symbol id="shield" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 9.6 8 11 4.6-1.4 8-6 8-11V5l-8-3zm-1.2 13.6-3.5-3.5 1.4-1.4 2.1 2.1 4.9-4.9 1.4 1.4-6.3 6.3z"/></symbol>
 </svg>
 
-<div class="proto"><div class="wrap"><span><b>Prototype.</b> A design concept for therapists to react to. Sample clients, made-up data. Nothing here is saved or sent.</span><span>167 Hours: Between Sessions</span></div></div>
+<div class="proto"><div class="wrap"><span><b>Prototype.</b> A design concept for therapists to react to. Sample clients, made-up data. Nothing here is saved or sent.</span><a href="/" style="color:inherit">&larr; Back to the 167 Hours website</a></div></div>
 
 <header class="top"><div class="wrap">
-  <div class="brand"><b>167 Hours</b><span>Clinician portal</span></div>
+  <a class="brand" href="/" style="text-decoration:none;color:inherit" title="Back to 167hours.app"><b>167 Hours</b><span>Clinician portal</span></a>
+  <a class="backsite" href="/">&larr; Back to 167hours.app</a>
   <div class="who" id="who" hidden>
     <span class="session"><svg class="lock"><use href="#lock"/></svg>Secure session · signs out in <span id="idle">15:00</span></span>
     <span class="avatar">AM</span><span>Dr. Alex Morgan</span>
@@ -268,7 +272,7 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
   <div class="card">
     <span class="step-label">Step 1 · Secure sign-in</span>
     <div class="shield" style="color:var(--secure)"><svg width="28" height="28"><use href="#shield"/></svg></div>
-    <h1>Sign in</h1>
+    <h1>Clinician portal login</h1>
     <div class="field"><label for="em">Email</label><input id="em" type="email" value="dr.morgan@example-practice.com" autocomplete="off"></div>
     <div class="field"><label for="pw">Password</label><input id="pw" type="password" value="sample-password" autocomplete="off"></div>
     <button class="btn secure" type="button" data-go="mfa">Continue</button>
