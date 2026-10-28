@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>167 Hours Clinician Portal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a clinician workspace. Left: the weekly briefing as a reading column of entries. Right: a sticky tag palette (CBT core beliefs, schemas, thinking traps) dragged or tapped onto entries. Same Sage & Coral system as 167hours.app, single light theme by choice. */
+:root {
+  --cream: #FAF6EF; --paper: #FFFFFF; --sage-wash: #E6EDE4; --sage: #6E8B74; --sage-deep: #3F5A46;
+  --coral: #C9623F; --coral-deep: #A94E30; --coral-wash: #F7E3DA;
+  --ink: #2B2A28; --ink-soft: #4A4744; --muted: #6B6760; --line: #E3DDD2;
+  --belief: #3F5A46; --belief-wash: #E6EDE4;
+  --schema: #6A4C8C; --schema-wash: #EEE7F5;
+  --trap: #A94E30; --trap-wash: #F7E3DA;
+  --secure: #2E5E8C; --secure-wash: #E7EFF7;
+  --display: 'DM Serif Display', Georgia, serif;
+  --body: 'Figtree', 'Helvetica Neue', Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body { background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+button { font: inherit; cursor: pointer; }
+a { color: var(--coral-deep); }
+:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; border-radius: 6px; }
+h1, h2, h3 { margin: 0; line-height: 1.2; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(1.8rem, 4vw, 2.4rem); text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 400; font-size: 1.4rem; color: var(--sage-deep); }
+h3 { font-size: 1rem; }
+p { margin: 0; }
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.muted { color: var(--muted); }
+.small { font-size: .88rem; }
+.lock { display: inline-block; width: 14px; height: 14px; flex: 0 0 14px; }
+
+.proto { background: var(--ink); color: #F3F1EA; font-size: .85rem; }
+.proto .wrap { padding-block: 8px; display: flex; flex-wrap: wrap; gap: 6px 16px; justify-content: space-between; }
+.proto b { color: #F7C9B6; }
+
+header.top { background: var(--paper); border-bottom: 1px solid var(--line); }
+header.top .wrap { padding-block: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; }
+.brand { display: flex; align-items: baseline; gap: 10px; }
+.brand b { font-family: var(--display); font-weight: 400; font-size: 1.5rem; }
+.brand span { font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--sage-deep); font-weight: 700; }
+.who { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; font-size: .9rem; color: var(--ink-soft); }
+.session { display: inline-flex; align-items: center; gap: 6px; background: var(--secure-wash); color: var(--secure); border-radius: 999px; padding: 4px 12px; font-size: .8rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--sage-wash); color: var(--sage-deep); display: grid; place-items: center; font-weight: 700; font-size: .85rem; }
+.linkbtn { align-self: flex-start; background: none; border: 0; color: var(--coral-deep); font-weight: 600; padding: 6px 4px; min-height: 40px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 22px; border-radius: 999px; font-weight: 600; border: 1.5px solid transparent; }
+.btn.primary { background: var(--coral); color: #fff; }
+.btn.primary:hover { background: var(--coral-deep); }
+.btn.secure { background: var(--secure); color: #fff; width: 100%; border-radius: 12px; }
+.btn.secure:hover { filter: brightness(.92); }
+
+.view[hidden] { display: none !important; }
+
+/* Email + sign-in */
+.center { min-height: calc(100vh - 130px); display: grid; place-items: center; padding-block: 36px; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 28px; width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 16px; }
+.email { max-width: 600px; }
+.email .hdr { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 12px; font-size: .9rem; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+.email .hdr span:nth-child(odd) { color: var(--muted); }
+.step-label { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--coral-deep); }
+.shield { width: 52px; height: 52px; border-radius: 14px; background: var(--secure-wash); display: grid; place-items: center; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 600; font-size: .9rem; }
+.field input { min-height: 46px; border: 1.5px solid var(--line); border-radius: 10px; padding: 0 14px; font: inherit; background: var(--cream); width: 100%; }
+.code { display: flex; gap: 8px; }
+.code input { width: 100%; max-width: 50px; min-height: 56px; text-align: center; font-size: 1.4rem; font-weight: 600; padding: 0; border: 1.5px solid var(--line); border-radius: 10px; background: var(--cream); font-variant-numeric: tabular-nums; }
+.code input.filled { border-color: var(--secure); background: var(--paper); }
+.timer { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ring { width: 22px; height: 22px; }
+.check { display: flex; gap: 8px; align-items: center; font-size: .9rem; }
+.check input { width: 20px; height: 20px; }
+.secure-list { list-style: none; margin: 0; padding: 12px 14px; background: var(--secure-wash); border-radius: 12px; display: flex; flex-direction: column; gap: 6px; font-size: .85rem; color: #234766; }
+.secure-list li { display: flex; gap: 8px; align-items: flex-start; }
+.secure-list .lock { margin-top: 3px; }
+.verifying { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--secure); }
+.spinner { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid var(--secure-wash); border-top-color: var(--secure); animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Caseload */
+.page { padding-block: 26px 64px; display: flex; flex-direction: column; gap: 20px; }
+.banner { display: flex; gap: 10px; align-items: flex-start; background: var(--secure-wash); color: #234766; border-radius: 12px; padding: 12px 14px; font-size: .9rem; }
+.banner .lock { margin-top: 3px; }
+.clients { display: flex; flex-direction: column; gap: 10px; }
+.client { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; text-align: left; width: 100%; color: inherit; }
+.client:hover { border-color: var(--sage); }
+.client .name { font-weight: 700; font-size: 1.05rem; min-width: 120px; }
+.client .meta { flex: 1 1 260px; min-width: 0; color: var(--ink-soft); font-size: .92rem; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: .75rem; font-weight: 700; letter-spacing: .04em; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.pill.new { background: var(--coral-wash); color: var(--coral-deep); }
+.pill.read { background: var(--sage-wash); color: var(--sage-deep); }
+.pill.hand { background: #FBEAEA; color: #9B2C2C; }
+
+/* Briefing */
+.conf { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 14px; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--sage-deep); padding-bottom: 6px; }
+.conf b { color: var(--sage-deep); }
+.brief-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
+.facts { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: .92rem; color: var(--ink-soft); }
+.layout { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+.main { flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 22px; }
+.side { flex: 1 1 300px; min-width: 0; position: sticky; top: 12px; display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 900px) { .side { position: static; order: -1; } }
+.block { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.note { background: var(--sage-wash); border-radius: 14px; padding: 16px 18px; }
+.picks { display: flex; flex-direction: column; gap: 10px; }
+.pick { border: 1px solid var(--line); border-left: 4px solid var(--sage-deep); border-radius: 8px; padding: 12px 14px; }
+.pick .why { color: var(--muted); font-size: .88rem; margin-top: 4px; }
+.pick { display: flex; gap: 10px; align-items: flex-start; background: var(--paper); }
+.pick.dragging { opacity: .55; }
+.pick.target { box-shadow: 0 -3px 0 var(--coral); }
+.pick-body { flex: 1; min-width: 0; }
+.pick-src { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.pick-src.mine { color: var(--secure); }
+.handle { flex: 0 0 auto; width: 32px; min-height: 44px; border: 0; background: var(--cream); border-radius: 8px; color: var(--muted); cursor: grab; touch-action: none; font-size: 1.1rem; line-height: 1; }
+.pick-ctrl { display: flex; flex-direction: column; gap: 4px; }
+.pick-ctrl button { width: 32px; height: 32px; border: 1px solid var(--line); background: var(--paper); border-radius: 8px; color: var(--ink-soft); font-weight: 700; }
+.pick-ctrl button:disabled { opacity: .35; cursor: default; }
+.first { display: flex; gap: 10px; align-items: flex-start; background: var(--coral-wash); color: var(--coral-deep); border-radius: 12px; padding: 10px 12px; font-size: .9rem; }
+.addplan { align-self: flex-start; background: var(--paper); border: 1px dashed var(--sage); color: var(--sage-deep); border-radius: 999px; padding: 2px 12px; min-height: 32px; font-size: .8rem; font-weight: 600; }
+.addplan.on { border-style: solid; background: var(--sage-wash); }
+textarea { width: 100%; min-height: 100px; border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; font-size: .95rem; resize: vertical; background: var(--cream); }
+
+.day { font-weight: 700; font-size: .95rem; color: var(--sage-deep); margin-top: 6px; }
+.entry { border: 1.5px solid var(--line); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; transition: border-color .15s, background .15s; }
+.entry.over { border-color: var(--coral); background: #FFF8F4; border-style: dashed; }
+.entry.armed { cursor: copy; }
+.entry.armed:hover { border-color: var(--coral); }
+.entry-top { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .85rem; color: var(--muted); }
+.type { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; background: var(--cream); color: var(--ink-soft); }
+.type.urge { background: var(--coral-wash); color: var(--coral-deep); }
+.type.win { background: var(--sage-wash); color: var(--sage-deep); }
+.flagged { color: var(--coral-deep); font-weight: 700; }
+.fields { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .86rem; color: var(--ink-soft); }
+.fields b { color: var(--muted); font-weight: 600; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { display: inline-flex; align-items: center; gap: 4px; font-size: .82rem; font-weight: 600; padding: 3px 4px 3px 10px; border-radius: 999px; border: 1.5px solid transparent; }
+.tag.belief { background: var(--belief-wash); color: var(--belief); }
+.tag.schema { background: var(--schema-wash); color: var(--schema); }
+.tag.trap { background: var(--trap-wash); color: var(--trap); }
+.tag.custom { background: var(--cream); color: var(--ink-soft); border-color: var(--line); }
+.tag.suggest { background: transparent; border-style: dashed; border-color: currentColor; padding-right: 10px; }
+.tag button { border: 0; background: none; color: inherit; padding: 0; width: 28px; height: 28px; border-radius: 50%; font-weight: 700; }
+.tag button:hover { background: rgba(0,0,0,.07); }
+.suggest-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; font-size: .82rem; color: var(--muted); }
+.suggest-row .act { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 2px 12px; min-height: 32px; font-size: .8rem; font-weight: 600; color: var(--ink-soft); }
+.drop-hint { font-size: .85rem; color: var(--muted); }
+
+.palette h3 { font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1.5px solid transparent; border-radius: 999px; padding: 6px 12px; font-size: .85rem; font-weight: 600; min-height: 38px; user-select: none; -webkit-user-select: none; cursor: grab; touch-action: none; text-align: left; line-height: 1.25; }
+.chip.belief { background: var(--belief-wash); color: var(--belief); }
+.chip.schema { background: var(--schema-wash); color: var(--schema); }
+.chip.trap { background: var(--trap-wash); color: var(--trap); }
+.chip.custom { background: var(--cream); color: var(--ink-soft); border-color: var(--line); }
+.chip.selected { border-color: var(--coral); box-shadow: 0 0 0 3px var(--coral-wash); }
+.chip small { font-weight: 500; opacity: .8; display: block; font-size: .72rem; }
+.ghost { position: fixed; z-index: 50; pointer-events: none; transform: translate(-50%, -120%); box-shadow: 0 8px 20px rgba(0,0,0,.18); }
+.howto { font-size: .85rem; color: var(--ink-soft); background: var(--cream); border-radius: 10px; padding: 10px 12px; }
+.addtag { display: flex; gap: 6px; }
+.addtag input { flex: 1; min-width: 0; min-height: 42px; border: 1.5px solid var(--line); border-radius: 10px; padding: 0 10px; font: inherit; font-size: .9rem; }
+.addtag button { min-height: 42px; border-radius: 10px; border: 0; background: var(--sage-deep); color: #fff; padding: 0 14px; font-weight: 600; }
+
+.trend { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; align-items: center; font-size: .9rem; }
+.bars { display: flex; gap: 4px; align-items: flex-end; height: 34px; }
+.bars i { width: 14px; border-radius: 3px 3px 0 0; background: var(--sage); display: block; }
+.bars i.now { background: var(--coral); }
+.trend-key { font-size: .78rem; color: var(--muted); }
+.save-row { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+.saved { background: var(--sage-wash); border-radius: 12px; padding: 12px 14px; font-size: .92rem; color: var(--sage-deep); }
+.audit { display: flex; gap: 8px; align-items: flex-start; font-size: .82rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+.audit .lock { margin-top: 3px; }
+
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--sage-deep); color: #fff; padding: 12px 18px; border-radius: 12px; font-weight: 600; max-width: calc(100% - 32px); box-shadow: 0 8px 24px rgba(0,0,0,.18); z-index: 60; }
+/* Tabs + history */
+.tabs { display: flex; gap: 6px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.tabs button { background: none; border: 0; border-bottom: 3px solid transparent; padding: 10px 14px; min-height: 44px; font-weight: 600; color: var(--muted); }
+.tabs button.on { color: var(--ink); border-bottom-color: var(--coral); }
+.hist { display: flex; flex-direction: column; gap: 22px; }
+.obs { display: flex; flex-direction: column; gap: 10px; }
+.ob { display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--line); border-left: 4px solid var(--coral); border-radius: 8px; padding: 12px 14px; }
+.ob.up { border-left-color: var(--coral); } .ob.down { border-left-color: var(--sage); } .ob.steady { border-left-color: var(--secure); }
+.ob .arrow { font-weight: 700; font-size: 1.1rem; line-height: 1.3; width: 18px; text-align: center; }
+.ob.up .arrow { color: var(--coral-deep); } .ob.down .arrow { color: var(--sage-deep); } .ob.steady .arrow { color: var(--secure); }
+.byline { font-size: .78rem; color: var(--muted); }
+.grid8 { overflow-x: auto; }
+.topic-table { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 520px; }
+.topic-table th { text-align: left; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; padding: 6px 4px; border-bottom: 1px solid var(--line); }
+.topic-table th.wk { text-align: center; font-variant-numeric: tabular-nums; }
+.topic-table td { padding: 8px 4px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.topic-table td.cell { text-align: center; }
+.dot { display: inline-block; border-radius: 50%; background: var(--coral); opacity: .85; }
+.dot.zero { width: 6px; height: 6px; background: var(--line); opacity: 1; }
+.charts { display: flex; flex-wrap: wrap; gap: 16px; }
+.chart { flex: 1 1 260px; min-width: 0; border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart .lbl { font-size: .78rem; color: var(--muted); display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+.weeks { display: flex; flex-direction: column; gap: 8px; }
+.wk-row { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--paper); width: 100%; text-align: left; color: inherit; }
+.wk-row:hover { border-color: var(--sage); }
+.wk-row .when { font-weight: 700; min-width: 130px; font-variant-numeric: tabular-nums; }
+.wk-row .head { flex: 1 1 260px; min-width: 0; color: var(--ink-soft); font-size: .92rem; }
+.src { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; font-size: .75rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--secure-wash); color: var(--secure); }
+.src i { width: 8px; height: 8px; border-radius: 50%; background: #2F9E62; display: inline-block; }
+.vitals { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .84rem; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 8px; }
+.vitals b { font-variant-numeric: tabular-nums; }
+.wide { flex-basis: 100%; }
+.stagekey { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .8rem; color: var(--ink-soft); }
+.stagekey span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+.wk-detail { border: 1px dashed var(--sage); border-radius: 12px; padding: 12px 14px; font-size: .92rem; background: var(--cream); display: flex; flex-direction: column; gap: 6px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="lock" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 1 1 6 0v3H9z"/></symbol>
+  <symbol id="shield" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 9.6 8 11 4.6-1.4 8-6 8-11V5l-8-3zm-1.2 13.6-3.5-3.5 1.4-1.4 2.1 2.1 4.9-4.9 1.4 1.4-6.3 6.3z"/></symbol>
+</svg>
+
+<div class="proto"><div class="wrap"><span><b>Prototype.</b> A design concept for therapists to react to. Sample clients, made-up data. Nothing here is saved or sent.</span><span>167 Hours: Between Sessions</span></div></div>
+
+<header class="top"><div class="wrap">
+  <div class="brand"><b>167 Hours</b><span>Clinician portal</span></div>
+  <div class="who" id="who" hidden>
+    <span class="session"><svg class="lock"><use href="#lock"/></svg>Secure session · signs out in <span id="idle">15:00</span></span>
+    <span class="avatar">AM</span><span>Dr. Alex Morgan</span>
+    <button class="linkbtn" type="button" data-go="email">Sign out</button>
+  </div>
+</div></header>
+
+<main>
+
+<!-- 1. Notification email -->
+<section class="view wrap center" id="v-email">
+  <div class="card email">
+    <span class="step-label">Step 1 · The email you get</span>
+    <div class="hdr">
+      <span>From</span><span>167 Hours &lt;briefings@167hours.app&gt;</span>
+      <span>To</span><span>Dr. Alex Morgan</span>
+      <span>Subject</span><span><strong>A client shared a new weekly briefing</strong></span>
+    </div>
+    <p>Hi Dr. Morgan,</p>
+    <p>One of your clients reviewed and shared a between-session briefing ahead of your next session.</p>
+    <p class="muted small">For privacy, this email never contains a client's name or anything they wrote. Sign in to your secure portal to read it.</p>
+    <div><button class="btn primary" type="button" data-go="login">Sign in to read it</button></div>
+    <p class="muted small">This link only works for you and expires in 7 days.</p>
+  </div>
+</section>
+
+<!-- 2. Password -->
+<section class="view wrap center" id="v-login" hidden>
+  <div class="card">
+    <span class="step-label">Step 2 · Secure sign-in</span>
+    <div class="shield" style="color:var(--secure)"><svg width="28" height="28"><use href="#shield"/></svg></div>
+    <h1>Sign in</h1>
+    <div class="field"><label for="em">Email</label><input id="em" type="email" value="dr.morgan@example-practice.com" autocomplete="off"></div>
+    <div class="field"><label for="pw">Password</label><input id="pw" type="password" value="sample-password" autocomplete="off"></div>
+    <button class="btn secure" type="button" data-go="mfa">Continue</button>
+    <ul class="secure-list">
+      <li><svg class="lock"><use href="#lock"/></svg>Encrypted connection</li>
+      <li><svg class="lock"><use href="#lock"/></svg>Two-step verification required for every clinician</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. MFA -->
+<section class="view wrap center" id="v-mfa" hidden>
+  <div class="card">
+    <span class="step-label">Step 3 · Two-step verification</span>
+    <div class="shield" style="color:var(--secure)"><svg width="28" height="28"><use href="#shield"/></svg></div>
+    <h1>Check your phone</h1>
+    <p class="muted">Enter the 6-digit code from your authenticator app, or the code we texted to your phone ending in <strong>4821</strong>.</p>
+    <div class="code" id="code" role="group" aria-label="Six digit verification code">
+      <input inputmode="numeric" maxlength="1" aria-label="Digit 1"><input inputmode="numeric" maxlength="1" aria-label="Digit 2"><input inputmode="numeric" maxlength="1" aria-label="Digit 3"><input inputmode="numeric" maxlength="1" aria-label="Digit 4"><input inputmode="numeric" maxlength="1" aria-label="Digit 5"><input inputmode="numeric" maxlength="1" aria-label="Digit 6">
+    </div>
+    <div class="timer"><svg class="ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#E7EFF7" stroke-width="3"/><circle id="ringfill" cx="12" cy="12" r="10" fill="none" stroke="#2E5E8C" stroke-width="3" stroke-dasharray="62.8" stroke-dashoffset="0" transform="rotate(-90 12 12)"/></svg><span>New code in <span id="secs">30</span>s</span></div>
+    <label class="check"><input type="checkbox">Trust this device for 30 days</label>
+    <button class="btn secure" type="button" id="verify">Verify</button>
+    <div class="verifying" id="verifying" hidden><span class="spinner"></span>Verifying…</div>
+    <p class="muted small">Prototype: tap Verify and a sample code fills in.</p>
+  </div>
+</section>
+
+<!-- 4. Caseload -->
+<section class="view wrap page" id="v-caseload" hidden>
+  <div class="stack">
+    <span class="step-label">Step 4 · Your clients</span>
+    <h1>Clients sharing with you</h1>
+  </div>
+  <div class="banner"><svg class="lock"><use href="#lock"/></svg><span>You only see clients who have personally invited you, and only the briefings they've reviewed and approved. You can't search for or open anyone else's information. Entries a client marks private never reach you.</span></div>
+  <div class="clients" id="clients"></div>
+</section>
+
+<!-- 5. Briefing -->
+<section class="view wrap page" id="v-brief" hidden>
+  <button class="linkbtn" type="button" data-go="caseload">&larr; All clients</button>
+  <div class="conf"><span><b>Confidential</b> · Shared with Dr. Alex Morgan only</span><span id="b-conf2"></span></div>
+  <div class="brief-head">
+    <div class="stack"><span class="step-label">Step 5 · The weekly briefing</span><h1 id="b-name"></h1></div>
+    <div class="facts" id="b-facts"></div>
+  </div>
+  <div class="tabs" role="tablist"><button type="button" role="tab" data-tab="week" class="on">This week</button><button type="button" role="tab" data-tab="history">History and trends</button></div>
+  <div class="hist" id="tab-history" hidden></div>
+  <div class="layout" id="tab-week">
+    <div class="main">
+      <div class="note" id="b-note"></div>
+      <div class="block">
+        <div class="stack"><h2>Your session plan</h2>
+        <p class="muted small">Starts with the suggested starting points. Drag cards by the handle (or use the arrows) to put them in the order you'd like to cover them. Add any entry below with "Add to session plan."</p></div>
+        <div class="first" id="b-first"></div>
+        <div class="picks" id="b-picks"></div>
+        <label class="small" for="pnotes"><strong>Private notes</strong> <span class="muted">(only you see these)</span></label>
+        <textarea id="pnotes" placeholder="Anything you want to remember going into the session."></textarea>
+      </div>
+      <div class="block">
+        <div class="stack"><h2>The week, entry by entry</h2><p class="drop-hint">Drag a tag onto an entry, or tap a tag and then tap the entry.</p></div>
+        <div id="entry-list"></div>
+      </div>
+      <div class="block">
+        <h2>Save</h2>
+        <p class="muted small">Saves your session plan, private notes, and tags. Your tags are for your understanding. They're private to you, and they help future briefings highlight when these themes come up again. The AI never names a core belief on its own, and nothing here is used to coach your client.</p>
+        <div class="save-row"><button class="btn primary" type="button" id="save">Save</button></div>
+        <div class="saved" id="saved" hidden></div>
+        <div class="audit"><svg class="lock"><use href="#lock"/></svg><span id="audit"></span></div>
+      </div>
+    </div>
+    <aside class="side">
+      <div class="block palette">
+        <h2>Tags</h2>
+        <div class="howto">Drag a tag onto an entry. Or tap a tag, then tap the entry. Tap × on an entry's tag to remove it.</div>
+        <h3>Core beliefs (CBT)</h3><div class="chips" data-group="belief"></div>
+        <h3>Schemas</h3><div class="chips" data-group="schema"></div>
+        <h3>Thinking traps</h3><div class="chips" data-group="trap"></div>
+        <h3>Your own</h3><div class="chips" data-group="custom"></div>
+        <form class="addtag" id="addtag"><input id="newtag" placeholder="Add your own tag" aria-label="New tag name"><button type="submit">Add</button></form>
+      </div>
+      <div class="block">
+        <h2>Themes you're tracking</h2>
+        <p class="muted small">Times each theme you've tagged showed up, last four weeks.</p>
+        <div class="trend" id="trend"></div>
+        <p class="trend-key"><span style="color:var(--coral)">■</span> this week &nbsp; <span style="color:var(--sage)">■</span> earlier weeks</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+</main>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function () {
+  var TAGS = {
+    belief: [['Helpless', 'I can’t cope'], ['Unlovable', 'I’ll be left'], ['Worthless', 'I’m not enough']],
+    schema: [['Abandonment'], ['Defectiveness / shame'], ['Self-sacrifice'], ['Failure'], ['Subjugation'], ['Unrelenting standards'], ['Mistrust']],
+    trap: [['Catastrophizing'], ['Mind reading'], ['All-or-nothing'], ['Fortune telling'], ['Should statements'], ['Personalization'], ['Labeling'], ['Discounting the positive']],
+    custom: []
+  };
+
+  var CLIENTS = [
+    { id: 'kim', name: 'Kim R.', next: 'Thu, Nov 5 · 4:00 PM', period: 'Oct 29 to Nov 4', count: 23, priv: 2, status: 'new', hand: 'Raised hand Tue',
+      note: 'A week shaped by a work review and a quiet stretch from her sister. Two urges to drink, neither acted on. She raised her hand Tuesday night and talked with a specialist. You tagged <em>Unlovable</em> last week; it came up again four times. Starting points are ranked by how often and how strongly each came up.',
+      picks: [
+        ['“They’re going to realize I’m a fraud”', 'The performance review Friday. Mostly good feedback, one note about deadlines, and she spent the weekend sure she’d be let go.', 'Why it may be first: it came up on four days and was behind both urges.'],
+        ['Her sister going quiet', 'No reply for three days. “She’s done with me. Everyone gets there eventually.”', 'Why it may matter: matches a theme you tagged last week.'],
+        ['Saying no to her manager', 'She turned down a weekend project for the first time. “I felt sick doing it, but I did it.”', 'Why it may matter: a first for her, and she was proud of it.']],
+      entries: [
+        { day: 'Thursday, Oct 29', t: '9:40 pm', type: 'thought', q: 'Sister still hasn’t texted back. She’s done with me. Everyone gets there eventually.', f: { Feeling: 'hurt, 7/10', Trigger: 'no reply for 3 days' }, tags: [], suggest: ['Unlovable'] },
+        { day: 'Friday, Oct 30', t: '2:15 pm', type: 'event', q: 'Review went fine, honestly good. But she said I need to tighten deadlines and that’s all I can hear.', f: { Feeling: 'anxious, 6/10' }, tags: [], suggest: [] },
+        { day: 'Friday, Oct 30', t: '11:50 pm', type: 'thought', q: 'They’re going to realize I’m a fraud. I’ll be the first one cut.', f: { Feeling: 'dread, 8/10', Thought: 'I’ll be let go' }, flag: true, tags: [], suggest: [] },
+        { day: 'Saturday, Oct 31', t: '6:05 pm', type: 'urge', q: 'Wanted a drink so bad tonight. Called Jess instead and we watched a movie on the phone.', f: { Urge: 'drink, 7/10', 'Acted on it': 'No', Helped: 'calling a friend' }, tags: [], suggest: [] },
+        { day: 'Monday, Nov 2', t: '8:30 am', type: 'win', q: 'Told my manager no on the weekend project. I felt sick doing it, but I did it.', f: { Feeling: 'shaky, then proud' }, flag: true, tags: [], suggest: [] },
+        { day: 'Tuesday, Nov 3', t: '10:20 pm', type: 'feeling', q: 'If I’m not useful to people, why would anyone keep me around?', f: { Feeling: 'empty, 8/10' }, tags: [], suggest: ['Unlovable'] },
+        { day: 'Tuesday, Nov 3', t: '10:45 pm', type: 'note', q: 'Raised my hand. Talked to a specialist for a while. Felt less alone. Got my safety plan out, only needed the first two steps.', f: { Note: 'specialist check-in' }, flag: true, tags: [], suggest: [] },
+        { day: 'Wednesday, Nov 4', t: '7:10 am', type: 'sleep', q: 'Slept maybe 5 hours. Woke up at 4 replaying the review.', f: { Sleep: '5 hours' }, tags: [], suggest: [] }],
+      trend: { 'Unlovable': [1, 3, 2], 'Catastrophizing': [2, 2, 1], 'Self-sacrifice': [3, 2, 2] } },
+
+    { id: 'marcus', name: 'Marcus T.', next: 'Mon, Nov 9 · 10:00 AM', period: 'Nov 1 to Nov 7', count: 11, priv: 0, status: 'new',
+      note: 'A quieter week, mostly about co-parenting. A tense handoff with his ex on Sunday, and two urges to place a bet during football games, one acted on (a small one). Good time with his daughter midweek. You tagged <em>Mistrust</em> two weeks ago; it showed up around the handoff.',
+      picks: [
+        ['The Sunday handoff', 'His ex arrived 40 minutes late. “She does it on purpose to make me look like the bad guy in front of Ava.”', 'Why it may be first: the strongest feelings of the week, and it fed both urges.'],
+        ['The bet he placed', 'A $20 bet on Sunday night after the handoff. “I told myself it didn’t count because it was small.”', 'Why it may matter: the first one he’s acted on in five weeks.'],
+        ['Wednesday with Ava', 'Pancakes and homework at his place. “First time in a while I felt like a good dad.”', 'Why it may matter: a bright spot he named himself.']],
+      entries: [
+        { day: 'Sunday, Nov 1', t: '5:40 pm', type: 'event', q: 'She showed up 40 minutes late to the handoff. She does it on purpose to make me look like the bad guy in front of Ava.', f: { Feeling: 'angry, 8/10' }, flag: true, tags: [], suggest: ['Mistrust'] },
+        { day: 'Sunday, Nov 1', t: '9:15 pm', type: 'urge', q: 'Put twenty on the late game. Told myself it didn’t count because it was small.', f: { Urge: 'bet, 8/10', 'Acted on it': 'Yes, $20' }, flag: true, tags: [], suggest: [] },
+        { day: 'Monday, Nov 2', t: '7:30 am', type: 'thought', q: 'I’m back at square one. Five weeks for nothing.', f: { Feeling: 'ashamed, 7/10' }, tags: [], suggest: [] },
+        { day: 'Wednesday, Nov 4', t: '8:10 pm', type: 'win', q: 'Pancakes and homework with Ava. First time in a while I felt like a good dad.', f: { Feeling: 'content' }, tags: [], suggest: [] },
+        { day: 'Thursday, Nov 5', t: '8:50 pm', type: 'urge', q: 'Thursday game, the app was right there. Deleted it off my phone instead.', f: { Urge: 'bet, 6/10', 'Acted on it': 'No', Helped: 'deleting the app' }, tags: [], suggest: [] },
+        { day: 'Saturday, Nov 7', t: '11:00 am', type: 'feeling', q: 'Everyone’s always waiting for me to screw up. Might as well not disappoint them.', f: { Feeling: 'resentful, 6/10' }, tags: [], suggest: ['Mistrust'] }],
+      trend: { 'Mistrust': [2, 1, 1], 'All-or-nothing': [1, 2, 1] } },
+
+    { id: 'priya', name: 'Priya S.', next: 'Wed, Nov 11 · 6:30 PM', period: 'Nov 3 to Nov 9', count: 17, priv: 1, status: 'read',
+      note: 'Midterm week. Two panic episodes, both late at night while studying, both eased with the breathing she uses. Sleep was short most nights. Several entries about her advisor’s comments. You tagged <em>Unrelenting standards</em> last week; it showed up on five days.',
+      picks: [
+        ['“Anything less than an A means I don’t belong here”', 'Her advisor called a draft “a solid start.” She heard it as failing.', 'Why it may be first: came up on five days, and both panic episodes followed it.'],
+        ['The two panic episodes', 'Tuesday and Thursday after midnight. Racing heart, sure she was going to faint. Breathing helped both times, about 15 minutes.', 'Why it may matter: same time of night, same trigger.'],
+        ['Skipping her sister’s birthday call', 'Stayed in the library instead. “I’ll make it up to her when I’m caught up.”', 'Why it may matter: she said she’s been saying that for months.']],
+      entries: [
+        { day: 'Monday, Nov 3', t: '4:20 pm', type: 'event', q: 'Advisor said my draft is a solid start. Solid start means it’s bad. Anything less than an A means I don’t belong here.', f: { Feeling: 'humiliated, 7/10' }, flag: true, tags: [], suggest: ['Unrelenting standards'] },
+        { day: 'Tuesday, Nov 4', t: '12:40 am', type: 'feeling', q: 'Heart racing, couldn’t breathe, sure I was going to faint at my desk. Did the 4-7-8 breathing for about 15 minutes.', f: { Feeling: 'panic, 9/10', Helped: 'breathing' }, flag: true, tags: [], suggest: [] },
+        { day: 'Wednesday, Nov 5', t: '8:00 pm', type: 'thought', q: 'Everyone in my cohort has it figured out. They can all tell I’m behind.', f: { Feeling: 'anxious, 6/10' }, tags: [], suggest: [] },
+        { day: 'Thursday, Nov 6', t: '1:15 am', type: 'feeling', q: 'Another one. Same as Tuesday. Breathing helped faster this time.', f: { Feeling: 'panic, 8/10', Helped: 'breathing' }, tags: [], suggest: [] },
+        { day: 'Saturday, Nov 8', t: '3:00 pm', type: 'event', q: 'Skipped the call for my sister’s birthday to stay at the library. I’ll make it up to her when I’m caught up.', f: { Feeling: 'guilty, 5/10' }, tags: [], suggest: [] },
+        { day: 'Sunday, Nov 9', t: '10:00 am', type: 'sleep', q: 'Averaged maybe 5 hours all week. Today I slept until 9 and felt almost human.', f: { Sleep: '5 to 9 hours' }, tags: [], suggest: [] }],
+      trend: { 'Unrelenting standards': [2, 3, 4], 'Mind reading': [1, 1, 2] } }
+  ];
+
+  var HIST = {
+    kim: { weeks: ['Sep 17', 'Sep 24', 'Oct 1', 'Oct 8', 'Oct 15', 'Oct 22', 'Oct 29'],
+      obs: [
+        ['up', 'Her sister has come up three weeks in a row', 'Mentioned 1, 3, then 5 times. Before that, not since mid-September. Each time it\u2019s about not hearing back.'],
+        ['up', 'Work worry is climbing', 'Rose steadily since the review was announced in early October, and both urges this week followed work entries.'],
+        ['down', 'Urges are easing', '4 urges four weeks ago, 2 this week, none acted on in the last three weeks.'],
+        ['steady', 'Sleep is still short', 'About 5 to 6 hours most nights for six weeks running.']],
+      topics: [['Her sister', [0, 0, 0, 0, 1, 3, 5]], ['Work and the review', [1, 0, 1, 2, 3, 4, 6]], ['Drinking urges', [3, 4, 4, 3, 2, 2, 2]], ['Her mom', [2, 1, 2, 0, 1, 0, 1]], ['Saying no / boundaries', [0, 0, 1, 1, 0, 2, 2]]],
+      mood: [6.8, 7.1, 6.5, 6.2, 6.6, 7.0, 7.3], sleep: [6.0, 5.5, 6.0, 6.0, 5.5, 5.5, 5.0],
+      device: { name: 'Apple Watch', sleep: [5.9, 5.4, 6.2, 6.0, 5.5, 5.1, 4.8], awakeLong: [1, 1, 0, 1, 2, 2, 3], stages: { deep: 0.8, light: 2.9, rem: 1.1, awake: 1.4 }, stretches: [['Thursday night', '1:10 to 2:05 am', '55m', null], ['Friday night', '2:40 to 4:15 am', '1h 35m', '\u201CCan\u2019t sleep. Keep rehearsing what I\u2019ll say if they let me go.\u201D (2:55 am)'], ['Tuesday night', '4:02 to 5:20 am', '1h 18m', '\u201CWoke up at 4 replaying the review.\u201D']], note: 'Her watch shows less sleep than she reports most weeks, and long awake stretches have become more common since the review was announced. Two of the three this week line up with entries about work.' },
+      urges: [[3, 1], [4, 1], [4, 0], [3, 0], [2, 0], [2, 0], [2, 0]],
+      heads: ['Mom\u2019s birthday and old family stuff', 'A hard week for urges; one drink Saturday', 'New job tasks; first mention of the review', 'Quieter; good weekend with friends', 'Sister didn\u2019t come to dinner', 'Sister silence and the review date set', 'Review week; raised hand Tuesday'] },
+    marcus: { weeks: ['Sep 20', 'Sep 27', 'Oct 4', 'Oct 11', 'Oct 18', 'Oct 25', 'Nov 1'],
+      obs: [
+        ['up', 'Handoffs with his ex keep setting things off', 'Four of the last five weeks, the hardest entries came within a few hours of a handoff.'],
+        ['up', 'First bet in five weeks', 'Urges had dropped from 5 a week to 1. This week: 2, and one was acted on, right after Sunday\u2019s handoff.'],
+        ['down', 'Time with Ava is going well', 'Positive entries about his daughter rose from 0 to 2 or 3 a week since early October.']],
+      topics: [['His ex / co-parenting', [2, 1, 3, 2, 3, 2, 3]], ['Gambling urges', [5, 4, 3, 2, 1, 1, 2]], ['Ava', [0, 0, 1, 2, 2, 3, 2]], ['Money', [3, 2, 2, 1, 1, 1, 2]]],
+      mood: [6.2, 5.8, 5.9, 5.1, 4.8, 4.9, 6.4], sleep: [6.5, 7.0, 7.0, 7.0, 7.0, 7.0, 6.5],
+      device: { name: 'Oura Ring', sleep: [6.4, 6.9, 7.1, 7.2, 7.0, 6.8, 5.9], awakeLong: [1, 0, 0, 0, 0, 0, 2], stages: { deep: 1.2, light: 3.3, rem: 1.4, awake: 0.9 }, stretches: [['Sunday night', '2:00 to 3:05 am', '1h 5m', null], ['Thursday night', '1:30 to 2:20 am', '50m', null]], note: 'Sleep held steady for a month, then dropped the night of the handoff and the bet.' },
+      urges: [[5, 2], [4, 1], [3, 0], [2, 0], [1, 0], [1, 0], [2, 1]],
+      heads: ['Court date for custody schedule', 'Two bets after payday', 'Started deleting apps', 'Good week; coached Ava\u2019s game', 'Quiet; working overtime', 'Tense call about holidays', 'Late handoff; first bet in five weeks'] },
+    priya: { weeks: ['Sep 22', 'Sep 29', 'Oct 6', 'Oct 13', 'Oct 20', 'Oct 27', 'Nov 3'],
+      obs: [
+        ['up', 'Panic episodes are clustering late at night', 'All five episodes in the last month happened after midnight while studying.'],
+        ['up', 'Her advisor comes up more and more', 'From once in late September to five times this week, almost always about a comment she read as criticism.'],
+        ['steady', 'Breathing keeps working', 'She used it every time. Episodes have gone from about 30 minutes to about 15.'],
+        ['down', 'Less contact with family', 'Calls with her sister went from weekly to none in three weeks.']],
+      topics: [['Her advisor', [1, 1, 2, 2, 3, 4, 5]], ['Panic episodes', [0, 1, 0, 1, 2, 1, 2]], ['Her sister / family', [3, 2, 2, 1, 1, 0, 1]], ['Sleep and exhaustion', [1, 2, 2, 3, 3, 4, 4]]],
+      mood: [5.2, 5.6, 5.4, 6.0, 6.3, 6.6, 6.9], sleep: [7.0, 6.5, 6.5, 6.0, 6.0, 5.5, 5.5],
+      device: { name: 'Whoop', sleep: [6.9, 6.4, 6.2, 5.8, 5.4, 5.0, 5.1], awakeLong: [0, 1, 1, 1, 2, 2, 2], stages: { deep: 0.9, light: 2.8, rem: 1.0, awake: 1.1 }, stretches: [['Monday night', '12:35 to 1:30 am', '55m', '\u201CHeart racing, couldn\u2019t breathe, sure I was going to faint at my desk.\u201D'], ['Wednesday night', '12:55 to 1:50 am', '55m', '\u201CAnother one. Same as Tuesday. Breathing helped faster this time.\u201D']], note: 'Sleep has dropped about two hours a night since September. Both long awake stretches this week were panic episodes she wrote about as they happened.' },
+      urges: [],
+      heads: ['Settling into the semester', 'First panic episode in months', 'Grant application stress', 'Advisor meeting went badly', 'Two panic episodes; stopped calling home', 'Thesis draft due', 'Midterms and the \u201Csolid start\u201D comment'] }
+  };
+  var current = null, selected = null, toastTimer;
+  function $(s, r) { return (r || document).querySelector(s); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function groupOf(n) { for (var g in TAGS) for (var i = 0; i < TAGS[g].length; i++) if (TAGS[g][i][0] === n) return g; return 'custom'; }
+  function toast(m) { var t = $('#toast'); t.textContent = m; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.hidden = true; }, 2400); }
+  function nowStr() { var d = new Date(); var h = d.getHours(), m = d.getMinutes(); return ((h % 12) || 12) + ':' + (m < 10 ? '0' : '') + m + (h < 12 ? ' AM' : ' PM'); }
+
+  // Views
+  function go(v) {
+    document.querySelectorAll('.view').forEach(function (s) { s.hidden = s.id !== 'v-' + v; });
+    var inside = (v === 'caseload' || v === 'brief');
+    $('#who').hidden = !inside;
+    if (inside) idleReset();
+    if (v === 'mfa') startMfa();
+    window.scrollTo(0, 0);
+  }
+  document.addEventListener('click', function (e) {
+    var g = e.target.closest('[data-go]'); if (g) go(g.dataset.go);
+    var c = e.target.closest('[data-client]'); if (c) openClient(c.dataset.client);
+  });
+
+  // MFA
+  var mfaTimer;
+  function startMfa() {
+    var boxes = $('#code').querySelectorAll('input');
+    boxes.forEach(function (b) { b.value = ''; b.classList.remove('filled'); });
+    $('#verifying').hidden = true; $('#verify').hidden = false;
+    var s = 30; clearInterval(mfaTimer);
+    function tick() { $('#secs').textContent = s; $('#ringfill').setAttribute('stroke-dashoffset', String(62.8 * (1 - s / 30))); s = s <= 1 ? 30 : s - 1; }
+    tick(); mfaTimer = setInterval(tick, 1000);
+    boxes[0].focus();
+  }
+  $('#code').addEventListener('input', function (e) {
+    var b = e.target; b.value = b.value.replace(/\D/g, '').slice(0, 1); b.classList.toggle('filled', !!b.value);
+    if (b.value && b.nextElementSibling) b.nextElementSibling.focus();
+  });
+  $('#verify').addEventListener('click', function () {
+    var boxes = $('#code').querySelectorAll('input'), digits = '416702', k = 0;
+    $('#verify').hidden = true;
+    var fill = setInterval(function () {
+      if (k < 6) { if (!boxes[k].value) boxes[k].value = digits[k]; boxes[k].classList.add('filled'); k++; return; }
+      clearInterval(fill); $('#verifying').hidden = false;
+      setTimeout(function () { clearInterval(mfaTimer); go('caseload'); }, 900);
+    }, 90);
+  });
+
+  // Idle timer
+  var idleLeft = 900, idleInt;
+  function idleReset() { idleLeft = 900; if (!idleInt) idleInt = setInterval(function () { idleLeft = Math.max(0, idleLeft - 1); var m = Math.floor(idleLeft / 60), s = idleLeft % 60; $('#idle').textContent = m + ':' + (s < 10 ? '0' : '') + s; }, 1000); }
+  ['pointerdown', 'keydown', 'scroll'].forEach(function (ev) { document.addEventListener(ev, function () { if (!$('#who').hidden) idleLeft = 900; }, { passive: true }); });
+
+  // Caseload
+  function renderClients() {
+    var box = $('#clients'); box.innerHTML = '';
+    CLIENTS.forEach(function (c) {
+      var b = el('button', 'client'); b.type = 'button'; b.dataset.client = c.id;
+      b.appendChild(el('span', 'name', c.name));
+      b.appendChild(el('span', 'meta', 'Next session ' + c.next + ' · ' + c.count + ' entries this week'));
+      b.appendChild(el('span', 'pill ' + (c.status === 'new' ? 'new' : 'read'), c.status === 'new' ? 'New briefing' : 'Read'));
+      if (c.hand) b.appendChild(el('span', 'pill hand', c.hand));
+      box.appendChild(b);
+    });
+  }
+
+  function openClient(id) {
+    current = CLIENTS.filter(function (c) { return c.id === id; })[0];
+    current.status = 'read'; renderClients();
+    $('#b-name').textContent = current.name;
+    $('#b-conf2').textContent = 'Shared by ' + current.name + ' · ' + current.period;
+    var f = $('#b-facts'); f.innerHTML = '';
+    [current.period, current.count + ' entries, ' + (current.priv ? current.priv + ' kept private' : 'none kept private'), 'Next session ' + current.next].forEach(function (t) { f.appendChild(el('span', null, t)); });
+    $('#b-note').innerHTML = '<strong>A note before you read.</strong> ' + current.note;
+    if (!current.plan) current.plan = current.picks.map(function (k) { return { title: k[0], body: k[1], why: k[2], src: 'suggested' }; });
+    $('#b-first').textContent = current.name.split(' ')[0] + ' always chooses first. This plan is for when they aren\u2019t sure where to start.';
+    $('#pnotes').value = current.notes || '';
+    renderPlan();
+    $('#saved').hidden = true;
+    $('#audit').textContent = 'Opened by Dr. Alex Morgan at ' + nowStr() + '. Every view is logged, and ' + current.name.split(' ')[0] + ' can see who opened their briefing and when.';
+    selected = null; renderPalette(); renderEntries(); renderTrend(); renderHistory(); showTab('week');
+    go('brief');
+  }
+
+  // Tabs + history
+  function showTab(t) {
+    document.querySelectorAll('.tabs button').forEach(function (b) { var on = b.dataset.tab === t; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
+    $('#tab-week').hidden = t !== 'week'; $('#tab-history').hidden = t !== 'history';
+  }
+  document.querySelectorAll('.tabs button').forEach(function (b) { b.addEventListener('click', function () { showTab(b.dataset.tab); }); });
+  function lineChart(vals, min, max, color, vals2) {
+    var w = 300, h = 90, pad = 8, n = vals.length;
+    var pts = vals.map(function (v, i) { return [pad + i * (w - 2 * pad) / (n - 1), h - pad - (v - min) / (max - min) * (h - 2 * pad)]; });
+    var d = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+    var dots = pts.map(function (p, i) { return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (i === n - 1 ? 4.5 : 3) + '" fill="' + (i === n - 1 ? '#C9623F' : color) + '"/>'; }).join('');
+    var d2 = '';
+    if (vals2) { d2 = vals2.map(function (v, i) { var x = pad + i * (w - 2 * pad) / (n - 1), y = h - pad - (v - min) / (max - min) * (h - 2 * pad); return (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }).join(' '); d2 = '<path d="' + d2 + '" fill="none" stroke="#9A958C" stroke-width="2" stroke-dasharray="5 4"/>'; }
+    return '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img">' + d2 + '<line x1="' + pad + '" x2="' + (w - pad) + '" y1="' + (h - pad) + '" y2="' + (h - pad) + '" stroke="#E3DDD2"/><path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linejoin="round"/>' + dots + '</svg>';
+  }
+  function renderHistory() {
+    var H = HIST[current.id], box = $('#tab-history'), first = current.name.split(' ')[0], n = H.weeks.length;
+    var html = '';
+    html += '<div class="block"><h2>What\u2019s changed</h2><p class="byline">Noticed by 167 Hours across the last ' + n + ' weeks of ' + first + '\u2019s entries. Observations, not conclusions. For your judgment.</p><div class="obs">';
+    H.obs.forEach(function (o) { html += '<div class="ob ' + o[0] + '"><span class="arrow">' + (o[0] === 'up' ? '\u2197' : o[0] === 'down' ? '\u2198' : '\u2192') + '</span><div><h3>' + o[1] + '</h3><p class="small muted">' + o[2] + '</p></div></div>'; });
+    html += '</div></div>';
+    html += '<div class="block"><h2>Recurring topics</h2><p class="byline">How often each came up, week by week. Bigger dot, more mentions.</p><div class="grid8"><table class="topic-table"><thead><tr><th>Topic</th>';
+    H.weeks.forEach(function (w, i) { html += '<th class="wk">' + (i === n - 1 ? 'This wk' : w) + '</th>'; });
+    html += '</tr></thead><tbody>';
+    H.topics.forEach(function (t) {
+      html += '<tr><td>' + t[0] + '</td>';
+      t[1].forEach(function (v) { var sz = 6 + v * 3.2; html += '<td class="cell">' + (v ? '<span class="dot" title="' + v + ' mentions" style="width:' + sz + 'px;height:' + sz + 'px"></span>' : '<span class="dot zero"></span>') + '</td>'; });
+      html += '</tr>';
+    });
+    html += '</tbody></table></div></div>';
+    html += '<div class="charts">';
+    html += '<div class="chart"><h3>Average intensity of hard moments</h3>' + lineChart(H.mood, 4, 8, '#6E8B74') + '<div class="lbl"><span>' + H.weeks[0] + '</span><span>This week: ' + H.mood[n - 1].toFixed(1) + ' / 10</span></div></div>';
+    var D = H.device;
+    html += '<div class="chart"><h3>Sleep, average hours a night</h3><span class="src"><i></i>From ' + D.name + ' \u00B7 synced this morning</span>' + lineChart(D.sleep, 4, 8, '#2E5E8C', H.sleep) + '<div class="lbl"><span><span style="color:#2E5E8C">\u2014</span> ' + D.name + ' &nbsp;<span style="color:#9A958C">- -</span> what ' + first + ' said</span><span>This week: ' + D.sleep[n - 1].toFixed(1) + ' hrs</span></div></div>';
+    if (H.urges.length) {
+      html += '<div class="chart"><h3>Urges, and how many were acted on</h3><svg viewBox="0 0 300 90" role="img">';
+      H.urges.forEach(function (u, i) { var x = 14 + i * 40, hh = u[0] * 14, ah = u[1] * 14; html += '<rect x="' + x + '" y="' + (82 - hh) + '" width="24" height="' + hh + '" rx="3" fill="#E6EDE4"/>' + (ah ? '<rect x="' + x + '" y="' + (82 - ah) + '" width="24" height="' + ah + '" rx="3" fill="#C9623F"/>' : '') + '<text x="' + (x + 12) + '" y="' + (78 - hh) + '" font-size="10" text-anchor="middle" fill="#6B6760">' + u[0] + '</text>'; });
+      html += '</svg><div class="lbl"><span><span style="color:#C9623F">\u25A0</span> acted on &nbsp;<span style="color:#9DB59F">\u25A0</span> not acted on</span><span>' + H.weeks[0] + ' to now</span></div></div>';
+    }
+    html += '</div>';
+    var SC = { awake: '#EFE7DC', rem: '#A9CDEB', light: '#5BA4DC', deep: '#2E5E8C' };
+    var st = D.stages, stTot = st.deep + st.light + st.rem + st.awake;
+    var bar = '<svg viewBox="0 0 600 34" role="img" aria-label="Average sleep stages this week">', x0 = 0;
+    ['deep', 'light', 'rem', 'awake'].forEach(function (k) { var w = st[k] / stTot * 600; bar += '<rect x="' + x0.toFixed(1) + '" y="4" width="' + w.toFixed(1) + '" height="26" fill="' + SC[k] + '"' + (k === 'awake' ? ' stroke="#D9CFC2"' : '') + '/>'; x0 += w; });
+    bar += '</svg>';
+    html += '<div class="block"><div class="stack"><h2>Sleep this week, from ' + first + '’s ' + D.name + '</h2><span class="src"><i></i>Shared by ' + first + ' · sleep only · synced daily · ' + first + ' can turn this off anytime</span></div>';
+    html += '<div class="charts"><div class="chart"><h3>Average night: ' + D.sleep[n - 1].toFixed(1) + ' hours asleep</h3>' + bar + '<div class="stagekey"><span style="--c:#2E5E8C">Deep ' + st.deep.toFixed(1) + 'h</span><span style="--c:#5BA4DC">Light ' + st.light.toFixed(1) + 'h</span><span style="--c:#A9CDEB">REM ' + st.rem.toFixed(1) + 'h</span><span style="--c:#EFE7DC">Awake ' + st.awake.toFixed(1) + 'h</span></div></div>';
+    html += '<div class="chart"><h3>Nights with a long awake stretch</h3><svg viewBox="0 0 300 90" role="img">';
+    D.awakeLong.forEach(function (v, i) { var x = 14 + i * 40, hh = Math.max(v * 22, 2); html += '<rect x="' + x + '" y="' + (82 - hh) + '" width="24" height="' + hh + '" rx="3" fill="' + (i === n - 1 ? '#C9623F' : '#9DB59F') + '"/><text x="' + (x + 12) + '" y="' + (78 - hh) + '" font-size="10" text-anchor="middle" fill="#6B6760">' + v + '</text>'; });
+    html += '</svg><div class="lbl"><span>Awake 45+ minutes in the night</span><span>' + H.weeks[0] + ' to now</span></div></div></div>';
+    html += '<div class="stack"><h3>' + D.stretches.length + ' long awake stretch' + (D.stretches.length === 1 ? '' : 'es') + ' this week, and what was going on</h3><p class="byline">Matched by time against ' + first + '’s journal. Only entries ' + first + ' already shared appear here.</p></div>';
+    html += '<div class="obs">';
+    D.stretches.forEach(function (r) {
+      html += '<div class="ob ' + (r[3] ? 'up' : 'steady') + '"><span class="arrow">☾</span><div><h3>' + r[0] + ', ' + r[1] + ' · awake ' + r[2] + '</h3><p class="small muted">' + (r[3] ? 'Talking with 167 Hours at the time: ' + r[3] : 'No journal entries during this stretch.') + '</p></div></div>';
+    });
+    html += '</div>';
+    html += '<div class="vitals"><span>' + D.note + '</span></div><p class="byline">Sleep only. No heart rate or other health data is shared. ' + first + ' chose to connect this and can turn it off anytime. Planned: Apple Watch and Apple Health, Oura, Whoop, Fitbit and Garmin.</p></div>';
+    html += '<div class="block"><h2>Past briefings</h2><p class="byline">Every briefing ' + first + ' shared with you, with your tags and plan from that week.</p><div class="weeks" id="wk-list"></div></div>';
+    box.innerHTML = html;
+    var list = $('#wk-list');
+    for (var i = n - 1; i >= 0; i--) (function (i) {
+      var row = el('button', 'wk-row'); row.type = 'button';
+      row.appendChild(el('span', 'when', 'Week of ' + H.weeks[i]));
+      row.appendChild(el('span', 'head', H.heads[i]));
+      row.appendChild(el('span', 'pill ' + (i === n - 1 ? 'new' : 'read'), i === n - 1 ? 'This week' : 'Session held'));
+      var det = el('div', 'wk-detail'); det.hidden = true;
+      det.appendChild(el('p', null, i === n - 1 ? 'This is the current briefing. Open the \u201CThis week\u201D tab to read it.' : 'Prototype: the full briefing from this week would open here, along with the tags you added and the session plan you saved.'));
+      row.addEventListener('click', function () { if (i === n - 1) { showTab('week'); window.scrollTo(0, 0); } else det.hidden = !det.hidden; });
+      list.appendChild(row); list.appendChild(det);
+    })(i);
+  }
+
+  // Session plan: reorder by handle drag or arrows
+  $('#pnotes').addEventListener('input', function () { if (current) current.notes = this.value; });
+  function movePlan(from, to) { if (to < 0 || to >= current.plan.length || from === to) return; var it = current.plan.splice(from, 1)[0]; current.plan.splice(to, 0, it); renderPlan(); }
+  function renderPlan() {
+    var box = $('#b-picks'); box.innerHTML = '';
+    current.plan.forEach(function (it, i) {
+      var d = el('div', 'pick'); d.dataset.i = i;
+      var h = el('button', 'handle', '\u2261'); h.type = 'button'; h.setAttribute('aria-label', 'Drag to reorder');
+      d.appendChild(h);
+      var b = el('div', 'pick-body');
+      b.appendChild(el('div', 'pick-src' + (it.src === 'mine' ? ' mine' : ''), it.src === 'mine' ? 'Added by you' : 'Suggested'));
+      b.appendChild(el('h3', null, (i + 1) + '. ' + it.title));
+      if (it.body) b.appendChild(el('p', null, it.body));
+      if (it.why) b.appendChild(el('p', 'why', it.why));
+      d.appendChild(b);
+      var c = el('div', 'pick-ctrl');
+      var up = el('button', null, '\u2191'); up.type = 'button'; up.setAttribute('aria-label', 'Move up'); up.disabled = i === 0; up.addEventListener('click', function () { movePlan(i, i - 1); });
+      var dn = el('button', null, '\u2193'); dn.type = 'button'; dn.setAttribute('aria-label', 'Move down'); dn.disabled = i === current.plan.length - 1; dn.addEventListener('click', function () { movePlan(i, i + 1); });
+      c.appendChild(up); c.appendChild(dn);
+      if (it.src === 'mine') { var rm = el('button', null, '\u00D7'); rm.type = 'button'; rm.setAttribute('aria-label', 'Remove from plan'); rm.addEventListener('click', function () { current.plan.splice(i, 1); renderPlan(); renderEntries(); }); c.appendChild(rm); }
+      d.appendChild(c);
+      var pd = null;
+      h.addEventListener('pointerdown', function (ev) { pd = { from: i }; h.setPointerCapture(ev.pointerId); d.classList.add('dragging'); });
+      h.addEventListener('pointermove', function (ev) {
+        if (!pd) return;
+        var u = document.elementFromPoint(ev.clientX, ev.clientY), t = u && u.closest('.pick');
+        document.querySelectorAll('.pick.target').forEach(function (n) { n.classList.remove('target'); });
+        if (t && t !== d) { t.classList.add('target'); pd.to = +t.dataset.i; }
+      });
+      h.addEventListener('pointerup', function () { if (!pd) return; var f = pd.from, to = pd.to; pd = null; d.classList.remove('dragging'); if (to != null) movePlan(f, to); });
+      h.addEventListener('pointercancel', function () { pd = null; d.classList.remove('dragging'); });
+      box.appendChild(d);
+    });
+  }
+  function inPlan(en) { return current.plan.some(function (p) { return p.entry === en; }); }
+
+  // Palette with pointer drag (mouse, finger, pen) and tap-to-select
+  var drag = null;
+  function renderPalette() {
+    document.querySelectorAll('.chips').forEach(function (box) {
+      box.innerHTML = '';
+      TAGS[box.dataset.group].forEach(function (t) {
+        var c = el('button', 'chip ' + box.dataset.group); c.type = 'button'; c.dataset.tag = t[0];
+        c.appendChild(document.createTextNode(t[0]));
+        if (t[1]) c.appendChild(el('small', null, '“' + t[1] + '”'));
+        if (selected === t[0]) c.classList.add('selected');
+        c.addEventListener('pointerdown', function (ev) { drag = { name: t[0], group: box.dataset.group, x: ev.clientX, y: ev.clientY, moved: false, ghost: null }; c.setPointerCapture(ev.pointerId); });
+        c.addEventListener('pointermove', function (ev) {
+          if (!drag) return;
+          if (!drag.moved && Math.hypot(ev.clientX - drag.x, ev.clientY - drag.y) > 6) { drag.moved = true; drag.ghost = el('span', 'chip ghost ' + drag.group, drag.name); document.body.appendChild(drag.ghost); }
+          if (drag.moved) {
+            drag.ghost.style.left = ev.clientX + 'px'; drag.ghost.style.top = ev.clientY + 'px';
+            var under = document.elementFromPoint(ev.clientX, ev.clientY), card = under && under.closest('.entry');
+            document.querySelectorAll('.entry.over').forEach(function (n) { if (n !== card) n.classList.remove('over'); });
+            if (card) card.classList.add('over');
+          }
+        });
+        function end(ev) {
+          if (!drag) return;
+          var d = drag; drag = null;
+          if (d.ghost) d.ghost.remove();
+          document.querySelectorAll('.entry.over').forEach(function (n) { n.classList.remove('over'); });
+          if (d.moved) {
+            var under = document.elementFromPoint(ev.clientX, ev.clientY), card = under && under.closest('.entry');
+            if (card) addTag(+card.dataset.i, d.name);
+          } else {
+            selected = (selected === d.name) ? null : d.name; renderPalette(); armEntries();
+            if (selected) toast('Now tap an entry to tag it “' + selected + '”');
+          }
+        }
+        c.addEventListener('pointerup', end);
+        c.addEventListener('pointercancel', function () { if (drag && drag.ghost) drag.ghost.remove(); drag = null; });
+        c.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selected = (selected === t[0]) ? null : t[0]; renderPalette(); armEntries(); } });
+        box.appendChild(c);
+      });
+    });
+  }
+  $('#addtag').addEventListener('submit', function (e) {
+    e.preventDefault(); var v = $('#newtag').value.trim(); if (!v) return;
+    if (!TAGS.custom.some(function (t) { return t[0].toLowerCase() === v.toLowerCase(); })) TAGS.custom.push([v]);
+    $('#newtag').value = ''; renderPalette(); toast('Added “' + v + '” to your tags');
+  });
+
+  function addTag(i, name) {
+    var en = current.entries[i];
+    if (en.tags.indexOf(name) === -1) en.tags.push(name);
+    en.suggest = en.suggest.filter(function (s) { return s !== name; });
+    renderEntries(); renderTrend(); toast('Tagged “' + name + '”');
+  }
+  function armEntries() { document.querySelectorAll('.entry').forEach(function (e) { e.classList.toggle('armed', !!selected); }); }
+  function renderEntries() {
+    var list = $('#entry-list'); list.innerHTML = ''; var lastDay = null;
+    current.entries.forEach(function (en, i) {
+      if (en.day !== lastDay) { list.appendChild(el('p', 'day', en.day)); lastDay = en.day; }
+      var card = el('div', 'entry'); card.tabIndex = 0; card.dataset.i = i;
+      var top = el('div', 'entry-top');
+      top.appendChild(el('span', null, en.t)); top.appendChild(el('span', 'type ' + en.type, en.type));
+      if (en.flag) top.appendChild(el('span', 'flagged', '⚑ ' + current.name.split(' ')[0] + ' wants to bring this up'));
+      card.appendChild(top);
+      card.appendChild(el('p', null, '“' + en.q + '”'));
+      var fl = el('div', 'fields');
+      Object.keys(en.f).forEach(function (k) { var s = el('span'); s.appendChild(el('b', null, k + ': ')); s.appendChild(document.createTextNode(en.f[k])); fl.appendChild(s); });
+      card.appendChild(fl);
+      if (en.suggest.length) {
+        var sr = el('div', 'suggest-row');
+        sr.appendChild(document.createTextNode('May match a theme you tagged before:'));
+        en.suggest.forEach(function (s) {
+          sr.appendChild(el('span', 'tag suggest ' + groupOf(s), s));
+          var yes = el('button', 'act', 'Confirm'); yes.type = 'button'; yes.addEventListener('click', function (ev) { ev.stopPropagation(); addTag(i, s); });
+          var no = el('button', 'act', 'Not this one'); no.type = 'button'; no.addEventListener('click', function (ev) { ev.stopPropagation(); en.suggest = en.suggest.filter(function (x) { return x !== s; }); renderEntries(); });
+          sr.appendChild(yes); sr.appendChild(no);
+        });
+        card.appendChild(sr);
+      }
+      var ap = el('button', 'addplan' + (inPlan(en) ? ' on' : ''), inPlan(en) ? '\u2713 In session plan' : '+ Add to session plan'); ap.type = 'button';
+      ap.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        if (inPlan(en)) current.plan = current.plan.filter(function (p) { return p.entry !== en; });
+        else { current.plan.push({ title: '\u201C' + (en.q.length > 90 ? en.q.slice(0, 88) + '\u2026' : en.q) + '\u201D', body: en.day + ', ' + en.t, src: 'mine', entry: en }); toast('Added to your session plan'); }
+        renderPlan(); renderEntries();
+      });
+      card.appendChild(ap);
+      var tg = el('div', 'tags');
+      en.tags.forEach(function (name) {
+        var t = el('span', 'tag ' + groupOf(name), name);
+        var x = el('button', null, '×'); x.type = 'button'; x.setAttribute('aria-label', 'Remove ' + name);
+        x.addEventListener('click', function (ev) { ev.stopPropagation(); en.tags = en.tags.filter(function (n) { return n !== name; }); renderEntries(); renderTrend(); });
+        t.appendChild(x); tg.appendChild(t);
+      });
+      card.appendChild(tg);
+      card.addEventListener('click', function () { if (selected) addTag(i, selected); });
+      card.addEventListener('keydown', function (ev) { if ((ev.key === 'Enter' || ev.key === ' ') && selected) { ev.preventDefault(); addTag(i, selected); } });
+      list.appendChild(card);
+    });
+    armEntries();
+  }
+  function renderTrend() {
+    var box = $('#trend'); box.innerHTML = '';
+    var counts = {}; current.entries.forEach(function (en) { en.tags.forEach(function (t) { counts[t] = (counts[t] || 0) + 1; }); });
+    var names = Object.keys(current.trend); Object.keys(counts).forEach(function (n) { if (names.indexOf(n) === -1) names.push(n); });
+    if (!names.length) { box.appendChild(el('span', 'muted small', 'Tag an entry to start tracking a theme.')); return; }
+    names.forEach(function (n) {
+      var hist = (current.trend[n] || [0, 0, 0]).concat([counts[n] || 0]);
+      box.appendChild(el('span', null, n));
+      var b = el('span', 'bars'); b.setAttribute('aria-label', n + ': ' + hist.join(', ') + ' over four weeks');
+      hist.forEach(function (v, k) { var i = el('i', k === 3 ? 'now' : ''); i.style.height = Math.max(3, Math.round(Math.min(v, 5) / 5 * 34)) + 'px'; b.appendChild(i); });
+      box.appendChild(b);
+    });
+  }
+  $('#save').addEventListener('click', function () {
+    var all = {}; current.entries.forEach(function (en) { en.tags.forEach(function (t) { all[t] = 1; }); });
+    var list = Object.keys(all), s = $('#saved');
+    s.textContent = list.length
+      ? 'Saved (prototype). Your session plan and notes are ready for ' + current.next + '. Future briefings will highlight when these come up: ' + list.join(', ') + '.'
+      : 'Saved (prototype). Your session plan and notes are ready for ' + current.next + '.';
+    s.hidden = false;
+  });
+
+  renderClients(); go('email');
+})();
+</script>
+</body>
+</html>

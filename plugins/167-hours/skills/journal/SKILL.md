@@ -85,3 +85,11 @@ Read `report_timing` from `profiles` along with `next_session_at` (if the column
 When the current time has reached their chosen report time before the next session, and no summary has been saved for this period yet, offer once, warmly, near the end of your reply: "It's about time to put together your summary for [therapist]. Want me to build it now?" If they say yes, follow the weekly-report skill. If they say later, don't ask again in this chat.
 
 If `next_session_at` is in the past, ask when the next one is and update `profiles`.
+
+## Checking for updates
+
+This copy of 167 Hours is **version 0.2.0**. Once per chat, the first time this skill is used, quietly fetch https://167hours.app/version.json (use your web fetch tool if you have one; if not, skip this). If its `version` is newer than 0.2.0, add one short, friendly line at the end of your reply, only once in the chat:
+
+"A new version of 167 Hours is available: [whats_new]. Updating takes a minute: [how_to_update]"
+
+Never interrupt a hard moment for this. If the person is upset or in crisis, skip the update note entirely. Never mention the check when there's nothing new.

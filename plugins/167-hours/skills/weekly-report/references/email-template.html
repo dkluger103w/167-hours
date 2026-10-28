@@ -1,0 +1,55 @@
+<!--
+  167 Hours email template. Use this as the htmlBody of the Gmail or Outlook
+  draft. Email apps strip <style> blocks, so every style here is inline: keep
+  them exactly as they are. Fill every {{PLACEHOLDER}}. This is the SHORT
+  version for reading in an inbox; the full report is the PDF.
+  Repeat the blocks marked REPEAT as needed. Remove a whole block when empty.
+  Never include entries marked private.
+-->
+<div style="max-width:640px;margin:0 auto;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.55;color:#1f2a2b;">
+
+  <p style="margin:0 0 16px;">Hi {{THERAPIST_FIRST_OR_TITLE}},</p>
+  <p style="margin:0 0 16px;">Here's my between-session summary ahead of our session on {{NEXT_SESSION}}. The full version is in the attached PDF.</p>
+
+  <div style="border-top:3px solid #2f6b66;padding-top:10px;margin:24px 0 4px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#2f6b66;font-weight:bold;">Between Sessions</div>
+  <div style="font-family:Georgia,serif;font-size:24px;line-height:1.2;margin:0 0 6px;">Between-session summary</div>
+  <div style="font-size:13px;color:#5b6766;margin:0 0 18px;">{{PERIOD}} &middot; {{ENTRY_COUNT}} entries &middot; Next session {{NEXT_SESSION}}</div>
+
+  <div style="background:#e8f1ef;border-radius:6px;padding:14px 16px;margin:0 0 22px;">
+    <strong>A note before you read.</strong> {{NOTE_BEFORE_YOU_READ}}
+  </div>
+
+  <div style="font-family:Georgia,serif;font-size:19px;color:#2f6b66;border-bottom:1px solid #d9dfdb;padding-bottom:4px;margin:0 0 10px;">The week in brief</div>
+  <p style="margin:0 0 22px;">{{WEEK_IN_BRIEF}}</p>
+
+  <div style="font-family:Georgia,serif;font-size:19px;color:#2f6b66;border-bottom:1px solid #d9dfdb;padding-bottom:4px;margin:0 0 6px;">Suggested starting points</div>
+  <div style="font-size:12px;color:#5b6766;margin:0 0 10px;">Ranked by how often and how strongly each came up. For your judgment.</div>
+  <!-- REPEAT for each starting point (up to three) -->
+  <div style="border:1px solid #d9dfdb;border-left:4px solid #2f6b66;border-radius:4px;padding:12px 14px;margin:0 0 10px;">
+    <div style="font-weight:bold;margin:0 0 4px;">{{N}}. {{PICK_TITLE}}</div>
+    <div style="margin:0 0 6px;">{{PICK_BODY}}</div>
+    <div style="font-size:13px;color:#5b6766;">Why it may matter: {{PICK_WHY}}</div>
+  </div>
+  <!-- END REPEAT -->
+  <div style="font-size:13px;color:#5b6766;font-style:italic;margin:0 0 22px;">Also present: {{ALSO_PRESENT}}</div>
+
+  <div style="font-family:Georgia,serif;font-size:19px;color:#2f6b66;border-bottom:1px solid #d9dfdb;padding-bottom:4px;margin:0 0 10px;">What I want to bring up</div>
+  <!-- REPEAT for each flagged item -->
+  <p style="margin:0 0 10px;"><strong>{{ITEM_TITLE}}.</strong> {{ITEM_TEXT_WITH_QUOTES}}</p>
+  <!-- END REPEAT -->
+
+  <div style="font-family:Georgia,serif;font-size:19px;color:#2f6b66;border-bottom:1px solid #d9dfdb;padding-bottom:4px;margin:22px 0 10px;">Urges</div>
+  <!-- REPEAT for each urge -->
+  <p style="margin:0 0 8px;"><span style="color:#5b6766;">{{WHEN}}</span> &middot; {{URGE}} &middot; <strong>Acted on it:</strong> {{ACTED}}</p>
+  <!-- END REPEAT -->
+
+  <div style="font-family:Georgia,serif;font-size:19px;color:#2f6b66;border-bottom:1px solid #d9dfdb;padding-bottom:4px;margin:22px 0 10px;">My questions for you</div>
+  <!-- REPEAT for each question -->
+  <p style="margin:0 0 8px;">&bull; {{QUESTION}}</p>
+  <!-- END REPEAT -->
+
+  <p style="margin:24px 0 4px;">See you {{SESSION_DAY}}.</p>
+  <p style="margin:0 0 24px;">{{CLIENT_FIRST_NAME}}</p>
+
+  <div style="border-top:1px solid #d9dfdb;padding-top:10px;font-size:12px;color:#5b6766;">Prepared with an AI assistant from what I shared during the week, and reviewed by me before sending. Not a clinical assessment. {{FEEDBACK_NOTE}}</div>
+</div>

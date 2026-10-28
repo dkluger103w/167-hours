@@ -6,7 +6,7 @@
       "name": "167-hours",
       "source": "./plugins/167-hours",
       "description": "167 Hours: Between Sessions. A private journal for the week between therapy sessions, with a summary for your therapist.",
-      "version": "0.1.0"
+      "version": "0.2.0"
     }
   ]
 }
