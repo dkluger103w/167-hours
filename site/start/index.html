@@ -122,47 +122,78 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
 .noholdback { font-family: var(--display); font-weight: 700; font-size: clamp(1.25rem, 3vw, 1.5rem); line-height: 1.3; color: #13233A; }
 .ask { background: #FFF8D6; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
 .ask ul { margin: 0; padding-left: 1.15em; display: flex; flex-direction: column; gap: 6px; }
+
+/* ---- One card at a time ---- */
+body { background: #EEF2F7; }
+.wiz-top { position: sticky; top: 0; z-index: 5; background: #FFFFFF; border-bottom: 1px solid #D8E0EA; padding-top: env(safe-area-inset-top, 0px); }
+.wiz-inner { max-width: 760px; margin: 0 auto; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 20px; }
+.wiz-prog { flex: 1 1 200px; display: flex; align-items: center; gap: 12px; font-size: .88rem; font-weight: 600; color: #4E5D70; white-space: nowrap; }
+.wiz-prog .bar i { background: #13233A; }
+.wiz { max-width: 760px; margin: 0 auto; padding: 20px max(12px, env(safe-area-inset-right, 0px)) 40px max(12px, env(safe-area-inset-left, 0px)); }
+.card { background: #FFFFFF; border-radius: 22px; padding: clamp(18px, 4.5vw, 36px); display: flex; flex-direction: column; gap: 18px; }
+.card-count { font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: #4E5D70; }
+.card-count:empty { display: none; }
+.card h2 { font-size: clamp(1.6rem, 6.5vw, 2.3rem); line-height: 1.1; }
+.card-body { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.card-body > ul, .help ul, .more-body ul { margin: 0; padding-left: 1.15em; display: flex; flex-direction: column; gap: 8px; }
+.card-body h3 { font-size: 1.12rem; margin-top: 4px; }
+.card-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn.outline { background: #FFFFFF; color: #13233A; border: 2px solid #13233A; }
+.btn.outline:hover { background: #EEF2F7; }
+.nav { display: flex; gap: 10px; justify-content: space-between; align-items: center; border-top: 1px solid #D8E0EA; padding-top: 18px; }
+.nav [data-next] { margin-left: auto; min-height: 52px; padding: 0 26px; font-size: 1.02rem; text-align: center; justify-content: center; }
+.btn.back { background: none; color: #4E5D70; border: 0; padding: 0 6px; }
+.computer { background: #FFF8D6; border-radius: 14px; padding: 14px 16px; }
+.phone-note { display: none; background: #13233A; color: #FFFFFF; border-radius: 12px; padding: 12px 14px; font-weight: 600; }
+.phone-note.show { display: block; }
+.card .rule { margin: 0; }
+.card .rule .rule-h { font-family: var(--display); font-weight: 700; font-size: 1.6rem; color: #FFFFFF; }
+.need { grid-template-columns: 1fr; }
+.nda { border: 1px solid #D8E0EA; border-radius: 14px; padding: 16px 18px; max-height: 46vh; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: .95rem; background: #FBFCFD; }
+.nda ul { margin: 0; padding-left: 1.15em; display: flex; flex-direction: column; gap: 6px; }
+.nda .small { font-size: .85rem; color: #4E5D70; }
+.sign { display: flex; flex-direction: column; gap: 12px; }
+.sign label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: .95rem; }
+.sign input:not([type=checkbox]) { font: 400 1rem var(--body); padding: 12px 14px; border: 1.5px solid #D8E0EA; border-radius: 10px; min-height: 48px; }
+.sign input:focus { outline: 3px solid #6B7F99; outline-offset: 1px; }
+.sign .check { flex-direction: row; align-items: flex-start; gap: 10px; font-weight: 500; }
+.sign .check input { width: 22px; height: 22px; margin-top: 2px; flex: 0 0 auto; }
+.card-err { background: #FDECEA; color: #8A1F11; border-radius: 10px; padding: 10px 14px; font-size: .95rem; }
+details.more { border: 1px solid #D8E0EA; border-radius: 14px; padding: 2px 16px; }
+details.more + details.more { border-top: 1px solid #D8E0EA; }
+details.more > summary { font-weight: 700; }
+.more-body { display: flex; flex-direction: column; gap: 12px; padding-bottom: 14px; }
+.more-body.help { border: 0; padding: 0 0 8px; background: none; }
+.more-body .help { padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px; }
+footer { margin-top: 0; }
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .nda { max-height: none; overflow: visible; }
+  .nav { flex-direction: column-reverse; align-items: stretch; }
+  .nav [data-next] { margin-left: 0; width: 100%; }
+  .btn.back { align-self: center; min-height: 40px; }
+  .card-links .btn { width: 100%; justify-content: center; }
+  .wiz-top .brand b { font-size: 1.3rem; }
+  .say { grid-template-columns: 1fr; }
+  .flow-card, .see > div { flex-basis: 100%; }
+}
 </style>
 </head>
 <body>
-<header class="wrap">
-  <a class="brand" href="/"><b>167 Hours</b><span>Between Sessions</span></a>
+<header class="wiz-top">
+  <div class="wiz-inner">
+    <a class="brand" href="/"><b>167 Hours</b><span>Tester setup</span></a>
+    <div class="wiz-prog"><span id="wiz-count">Step 1</span><div class="bar"><i id="wiz-bar"></i></div></div>
+  </div>
 </header>
-
-<main class="wrap">
-  <div class="hero">
-    <span class="eyebrow">Tester setup</span>
-    <h1>Let's get you <mark class="h1">set up</mark>.</h1>
-    <p class="lede">Thank you for testing 167 Hours. It means a lot. You'll do this setup once, on a computer. After that, you just talk to Claude, from your phone or anywhere.</p>
-    <div class="meta"><span><strong>About 15 minutes</strong></span><span><strong>7 steps</strong></span><span>Claude does the technical parts for you</span></div>
-  </div>
-
-  <div class="rule">
-    <span class="eyebrow">The one rule</span>
-    <h2 style="color:#fff">You need a <mark class="h2">therapist.</mark></h2>
-    <p>167 Hours supports the therapy you already have. It never replaces it.</p>
-  </div>
-
-  <section aria-labelledby="need-h">
-    <h2 id="need-h">Before you start</h2>
-    <ul class="need">
-      <li>You're 18 or older</li>
-      <li>You're seeing a therapist right now</li>
-      <li>A paid Claude plan (Pro or higher). If you were given a 167 Hours card, use it for this.</li>
-      <li>A computer for setup. The claude.ai website in your browser is all you need; no app to install.</li>
-    </ul>
-  </section>
-
-  <section aria-labelledby="steps-h">
-    <h2 id="steps-h">Setup</h2>
-    <div class="progress"><div class="bar"><i id="bar"></i></div><span id="count">Step 1 of 7</span></div>
-
-    <ol class="steps">
-      <li class="step privacy" data-step="privacy">
-        <div class="num" aria-hidden="true"></div>
-        <div class="step-head"><h3>First, your privacy, in plain English</h3><span class="time">2 min read</span></div>
-        <div class="step-body">
-          <p class="lede">This test is built so that <mark class="h2">nobody at 167 Hours can see anything you write</mark>. Here's how it works.</p>
+<main class="wiz">
+  <section class="card" data-step="privacy" hidden>
+    <p class="card-count"></p>
+    <h2>Your privacy, in plain English</h2>
+    <div class="card-body">
+      <div class="computer"><strong>Best on a computer.</strong> Please do this one-time setup in a web browser on a laptop or desktop. It's much easier there. After that, you'll use the Claude app on your phone every day.</div>
+      <p class="phone-note" id="phone-note">Looks like you're on a phone. You're welcome to read along, but we strongly recommend switching to a computer before you start the setup steps.</p>
+      <p class="lede">This test is built so that <mark class="h2">nobody at 167 Hours can see anything you write</mark>. Here's how it works.</p>
     <div class="flow">
       <div class="flow-card">
         <span class="flow-n">1</span>
@@ -199,94 +230,182 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
         <li><strong>We will never ask what you talk about with your therapist.</strong></li>
       </ul>
     </div>
-          <div class="actions"><button class="btn ghost" type="button" data-done data-label="I've read this and I understand →">Mark done</button></div>
-        </div>
-      </li>
-
-      <li class="step" data-step="supabase">
-        <div class="num" aria-hidden="true"></div>
-        <div class="step-head"><h3>Make a free Supabase account</h3><span class="time">3 min</span></div>
-        <div class="step-body">
-          <p>Supabase is where your journal is stored. It's your own private account, so nobody else can see what's in it, including us.</p>
-          <ul>
-            <li>Click <strong>Start your project</strong> and sign up with your email (or Google). You don't need a GitHub account.</li>
-            <li><strong>Choose a password and save it.</strong> Let your browser or password app save it when it offers. You'll need it if you ever sign back in to Supabase.</li>
-            <li>If you sign up with email, Supabase shows <strong>"Check your email."</strong> Open your inbox and click the link within 10 minutes to finish signing up.</li>
-            <li>Next, Supabase shows <strong>"Create a new organization."</strong> Fill it in like this:
-              <ul>
-                <li><strong>Name:</strong> Supabase fills in something like "you@email.com's Org." You can leave it, or change it to your first name. It doesn't matter.</li>
-                <li><strong>Type:</strong> choose <strong>Personal</strong>.</li>
-                <li><strong>Plan:</strong> choose <strong>Free - $0/month</strong>. You won't be asked for a credit card.</li>
-                <li>Click the green <strong>Create organization</strong> button.</li>
-              </ul>
-            </li>
-          </ul>
-          <figure class="shot"><img src="/start/img/supabase-check-email.png" alt="Supabase sign-up screen saying Check your email, we sent you a link to finish signing up" loading="lazy"><figcaption>After you sign up, Supabase asks you to check your email.</figcaption></figure>
-          <figure class="shot"><img src="/start/img/supabase-create-org.png" alt="Supabase Create a new organization form with Name, Type set to Personal, and Plan set to Free" loading="lazy"><figcaption>Create your organization: Type <strong>Personal</strong>, Plan <strong>Free</strong>, then <strong>Create organization</strong>.</figcaption></figure>
-          <figure class="shot"><img src="/start/img/supabase-new-project-cancel.png" alt="Supabase Create new project form with database password, region and security options, and Cancel and Create new project buttons" loading="lazy"><figcaption>You'll see this form next. <strong>Don't fill it in.</strong> Click <strong>Cancel</strong> at the bottom.</figcaption></figure>
-          <figure class="shot"><img src="/start/img/supabase-done-empty.png" alt="Supabase Projects page with no projects yet and a Create a project box" loading="lazy"><figcaption><strong>You're done with Supabase when you see this:</strong> an empty Projects page. Leave it empty and move on to the next step.</figcaption></figure>
-          <ul>
-            <li><strong>Stop at "Create a new project." Don't fill it in.</strong> Right after you create your organization, Supabase opens a form asking for a project name, a database password, and a region. Skip all of it: scroll to the bottom and click <strong>Cancel</strong>. Claude creates your project for you later, in the "Let Claude set everything up" step.</li>
-          </ul>
-          <div class="actions">
-            <a class="btn primary" href="https://supabase.com/dashboard/sign-up" target="_blank" rel="noopener">Open Supabase</a>
-            <button class="btn ghost" type="button" data-done>Mark done</button>
-          </div>
-        </div>
-      </li>
-
-      <li class="step" data-step="download">
-        <div class="num" aria-hidden="true"></div>
-        <div class="step-head"><h3>Download the 167 Hours plugin</h3><span class="time">1 min</span></div>
-        <div class="step-body">
-          <p>This small file teaches Claude how 167 Hours works. Save it somewhere easy to find, like your Downloads folder.</p>
+    </div>
+    
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      
+      <button type="button" class="btn primary" data-next>I've read this and I understand &rarr;</button>
+    </div>
+  </section>
+  <section class="card" data-step="nda" hidden>
+    <p class="card-count"></p>
+    <h2>Keep the test confidential</h2>
+    <div class="card-body">
+      <p class="lede">167 Hours is an unreleased product, and you're one of a small group seeing it early. Please read this and sign by typing your name.</p>
+      <div class="nda" tabindex="0" aria-label="Tester confidentiality agreement">
+        <h3>Tester confidentiality agreement</h3>
+        <p><strong>What's confidential.</strong> The 167 Hours plugin, its instructions and prompts, the setup steps, the clinician portal, designs, features, plans, and anything else we share with you about the product or this test ("Confidential Information").</p>
+        <p><strong>What you agree to.</strong></p>
+        <ul>
+          <li>Keep Confidential Information private, and use it only to take part in this test.</li>
+          <li>Don't share, post, or forward the plugin file, this setup page, or your access code. If you know someone who'd like to test, send them to us instead.</li>
+          <li>Don't copy, take apart, or reuse the plugin or its instructions to build something else.</li>
+          <li>Don't post screenshots, recordings, or reviews of 167 Hours publicly until it launches, unless we say it's OK in writing.</li>
+          <li>If we ask, delete the plugin and any copies of it.</li>
+        </ul>
+        <p><strong>What this does not cover.</strong> Your own life and your own words. Your journal, your reports, and anything you talk about in therapy belong to you, and you can share them with your therapist or anyone you choose. It also doesn't cover anything that's already public or that you knew before this test.</p>
+        <p><strong>Your feedback.</strong> If you send us feedback or ideas, we can use them to improve 167 Hours without owing you anything for them. We will never use your journal content, which we can't see anyway.</p>
+        <p><strong>How long it lasts.</strong> Two years from today, or until the information becomes public, whichever comes first.</p>
+        <p class="small">Your typed name below is your electronic signature. We keep a record of your name, email and the date you signed. Nothing else.</p>
+      </div>
+      <form class="sign" name="tester-nda" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="tester-nda">
+        <input type="hidden" name="agreement-version" value="2026-10-29">
+        <p hidden><label>Leave empty <input name="bot-field"></label></p>
+        <label>Full name <input name="name" autocomplete="name" required></label>
+        <label>Email <input name="email" type="email" autocomplete="email" required></label>
+        <label class="check"><input type="checkbox" name="agreed" value="yes" required> I have read and agree to the tester confidentiality agreement.</label>
+      </form>
+    </div>
+    
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      <button type="button" class="btn back" data-back>&larr; Back</button>
+      <button type="button" class="btn primary" data-next data-sign>Sign and continue &rarr;</button>
+    </div>
+  </section>
+  <section class="card" data-step="before" hidden>
+    <p class="card-count"></p>
+    <h2>Before you start</h2>
+    <div class="card-body">
+      <div class="rule"><span class="eyebrow">The one rule</span><p class="rule-h">You need a <mark class="h2">therapist.</mark></p><p>167 Hours supports the therapy you already have. It never replaces it.</p></div>
+      <p>To do the setup, you'll need:</p>
+      <ul class="need">
+        <li>To be 18 or older</li>
+        <li>To be seeing a therapist right now</li>
+        <li>A paid Claude plan (Pro or higher). If you were given a 167 Hours card, use it for this.</li>
+        <li>A computer with a web browser. No app to install.</li>
+        <li>About 15 minutes</li>
+      </ul>
+    </div>
+    
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      <button type="button" class="btn back" data-back>&larr; Back</button>
+      <button type="button" class="btn primary" data-next>Next &rarr;</button>
+    </div>
+  </section>
+  <section class="card" data-step="supabase" hidden>
+    <p class="card-count"></p>
+    <h2>Make a free Supabase account</h2>
+    <div class="card-body">
+      <p>Supabase is where your journal is stored. It's your own private account, so nobody else can see what's in it, including us.</p>
+      <ul>
+        <li>Click <strong>Open Supabase</strong> below and sign up with your email (or Google). You don't need a GitHub account.</li>
+        <li><strong>Choose a password and save it.</strong> Let your browser or password app save it when it offers. You'll need it if you ever sign back in to Supabase.</li>
+        <li>If you sign up with email, Supabase shows <strong>"Check your email."</strong> Open your inbox and click the link within 10 minutes.</li>
+      </ul>
+      <figure class="shot"><img src="/start/img/supabase-check-email.png" alt="Supabase sign-up screen saying Check your email, we sent you a link to finish signing up" loading="lazy"><figcaption>After you sign up, Supabase asks you to check your email.</figcaption></figure>
+      <p class="where">Keep the Supabase tab open. The next step happens right there.</p>
+    </div>
+    <div class="card-links"><a class="btn outline" href="https://supabase.com/dashboard/sign-up" target="_blank" rel="noopener">Open Supabase &#8599;</a></div>
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      <button type="button" class="btn back" data-back>&larr; Back</button>
+      <button type="button" class="btn primary" data-next>Next &rarr;</button>
+    </div>
+  </section>
+  <section class="card" data-step="supabase-org" hidden>
+    <p class="card-count"></p>
+    <h2>Create your Supabase organization</h2>
+    <div class="card-body">
+      <p>Right after you confirm your email, Supabase shows <strong>"Create a new organization."</strong> Fill it in like this:</p>
+      <ul>
+        <li><strong>Name:</strong> leave what Supabase fills in, or change it to your first name. It doesn't matter.</li>
+        <li><strong>Type:</strong> choose <strong>Personal</strong>.</li>
+        <li><strong>Plan:</strong> choose <strong>Free - $0/month</strong>. You won't be asked for a credit card.</li>
+        <li>Click the green <strong>Create organization</strong> button.</li>
+      </ul>
+      <figure class="shot"><img src="/start/img/supabase-create-org.png" alt="Supabase Create a new organization form with Name, Type set to Personal, and Plan set to Free" loading="lazy"><figcaption>Create your organization: Type <strong>Personal</strong>, Plan <strong>Free</strong>, then <strong>Create organization</strong>.</figcaption></figure>
+    </div>
+    
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      <button type="button" class="btn back" data-back>&larr; Back</button>
+      <button type="button" class="btn primary" data-next>Next &rarr;</button>
+    </div>
+  </section>
+  <section class="card" data-step="supabase-cancel" hidden>
+    <p class="card-count"></p>
+    <h2>Skip the project form</h2>
+    <div class="card-body">
+      <p>Next, Supabase opens a <strong>"Create a new project"</strong> form. <strong>Don't fill it in.</strong> Scroll to the bottom and click <strong>Cancel</strong>. Claude creates your project for you in a later step.</p>
+      <figure class="shot"><img src="/start/img/supabase-new-project-cancel.png" alt="Supabase Create new project form with database password, region and security options, and Cancel and Create new project buttons" loading="lazy"><figcaption>You'll see this form next. <strong>Don't fill it in.</strong> Click <strong>Cancel</strong> at the bottom.</figcaption></figure>
+      <figure class="shot"><img src="/start/img/supabase-done-empty.png" alt="Supabase Projects page with no projects yet and a Create a project box" loading="lazy"><figcaption><strong>You're done with Supabase when you see this:</strong> an empty Projects page. Leave it empty and move on to the next step.</figcaption></figure>
+    </div>
+    
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      <button type="button" class="btn back" data-back>&larr; Back</button>
+      <button type="button" class="btn primary" data-next>Next &rarr;</button>
+    </div>
+  </section>
+  <section class="card" data-step="download" hidden>
+    <p class="card-count"></p>
+    <h2>Download the 167 Hours plugin</h2>
+    <div class="card-body">
+      <p>This small file teaches Claude how 167 Hours works. Save it somewhere easy to find, like your Downloads folder.</p>
           <p class="where">If the button doesn't download anything, ask the person who invited you to send you the file. It's called <strong>167-hours.plugin</strong>.</p>
-          <div class="actions">
-            <a class="btn primary" href="/167-hours.plugin" download>Download plugin</a>
-            <button class="btn ghost" type="button" data-done>Mark done</button>
-          </div>
-        </div>
-      </li>
-
-      <li class="step" data-step="install">
-        <div class="num" aria-hidden="true"></div>
-        <div class="step-head"><h3>Add the plugin to Claude</h3><span class="time">2 min</span></div>
-        <div class="step-body">
-          <ul>
+    </div>
+    <div class="card-links"><a class="btn outline" href="/167-hours.plugin" download>Download plugin</a></div>
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      <button type="button" class="btn back" data-back>&larr; Back</button>
+      <button type="button" class="btn primary" data-next>Next &rarr;</button>
+    </div>
+  </section>
+  <section class="card" data-step="install" hidden>
+    <p class="card-count"></p>
+    <h2>Add the plugin to Claude</h2>
+    <div class="card-body">
+      <ul>
             <li>Click <strong>Open Plugins page</strong> below. It opens Claude's <strong>Customize</strong> page on the <strong>Plugins</strong> tab. Sign in if asked.</li>
             <li>At the top right, click the <strong>+ Add</strong> button, then <strong>Upload plugin</strong>. (Skip the "Build for the Claude Directory" box; that's for publishing plugins.)</li>
             <li>Click to choose a file, pick <strong>167-hours.plugin</strong> from your Downloads, then click <strong>Upload</strong>.</li>
             <li>You'll see the <strong>167 hours</strong> plugin page with its switch turned on. That's it.</li>
           </ul>
           <p class="where"><strong>Don't see a Plugins page?</strong> Plugins only show up on a paid plan. If you just upgraded, refresh the page, or sign out and back in. You can also find it yourself: open the left sidebar (the icon at the top left), click <strong>Customize</strong>, then <strong>Plugins</strong>.</p>
-          <div class="actions">
-            <a class="btn primary" href="https://claude.ai/customize/plugins" target="_blank" rel="noopener">Open Plugins page</a>
-            <button class="btn ghost" type="button" data-done>Mark done</button>
-          </div>
-        </div>
-      </li>
-
-      <li class="step" data-step="settings">
-        <div class="num" aria-hidden="true"></div>
-        <div class="step-head"><h3>Turn on two Claude settings</h3><span class="time">1 min</span></div>
-        <div class="step-body">
-          <p>These let Claude save your journal and make your therapist's summary without stopping to ask about every little thing.</p>
+    </div>
+    <div class="card-links"><a class="btn outline" href="https://claude.ai/customize/plugins" target="_blank" rel="noopener">Open Plugins page &#8599;</a></div>
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      <button type="button" class="btn back" data-back>&larr; Back</button>
+      <button type="button" class="btn primary" data-next>Next &rarr;</button>
+    </div>
+  </section>
+  <section class="card" data-step="settings" hidden>
+    <p class="card-count"></p>
+    <h2>Turn on two Claude settings</h2>
+    <div class="card-body">
+      <p>These let Claude save your journal and make your therapist's summary without stopping to ask about every little thing.</p>
           <ul>
             <li>Click <strong>Open Capabilities</strong> below (or in Claude: your name in the bottom left, then <strong>Settings</strong>, then <strong>Capabilities</strong>). Under <strong>Visuals</strong>, make sure <strong>Artifacts</strong> is on. Under <strong>Code execution and file creation</strong>, make sure <strong>Run code in the cloud</strong> is on. These are what let 167 Hours work and make the summary PDF. Leave the other settings as they are.</li>
             <li>Start a <strong>new chat</strong>. At the bottom of the chat box, next to the model name, there's a setting that says <strong>Manual</strong>. Click it and choose <strong>Auto</strong>. Without this, Claude asks permission for every step of setup.</li>
           </ul>
-          <div class="actions">
-            <a class="btn primary" href="https://claude.ai/settings/capabilities" target="_blank" rel="noopener">Open Capabilities</a>
-            <button class="btn ghost" type="button" data-done>Mark done</button>
-          </div>
-        </div>
-      </li>
-
-      <li class="step" data-step="setup">
-        <div class="num" aria-hidden="true"></div>
-        <div class="step-head"><h3>Let Claude set everything up</h3><span class="time">5 min</span></div>
-        <div class="step-body">
-          <p>In that new chat (with <strong>Auto</strong> on), send this message:</p>
+    </div>
+    <div class="card-links"><a class="btn outline" href="https://claude.ai/settings/capabilities" target="_blank" rel="noopener">Open Capabilities &#8599;</a></div>
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      <button type="button" class="btn back" data-back>&larr; Back</button>
+      <button type="button" class="btn primary" data-next>Next &rarr;</button>
+    </div>
+  </section>
+  <section class="card" data-step="setup" hidden>
+    <p class="card-count"></p>
+    <h2>Let Claude set everything up</h2>
+    <div class="card-body">
+      <p>In that new chat (with <strong>Auto</strong> on), send this message:</p>
           <div class="copy"><code id="c1">set up 167 Hours</code><button type="button" data-copy="c1">Copy</button></div>
           <p>Claude asks for your therapist's name and confirms you're 18 or older. Then here's what you'll see:</p>
           <ul>
@@ -297,46 +416,46 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
             <li>It asks a few questions: what to call you, your time zone, when your sessions are, when you want your summary ready, your therapist's email, and which email you use. Then it offers to make a safety plan. "Later" is fine.</li>
           </ul>
           <p class="where">If a box pops up saying "Claude wants to use..." from Supabase, click <strong>Always allow</strong>. With Auto on, you shouldn't see many of these.</p>
-          <div class="actions"><button class="btn ghost" type="button" data-done>Mark done</button></div>
-        </div>
-      </li>
-
-      <li class="step" data-step="project">
-        <div class="num" aria-hidden="true"></div>
-        <div class="step-head"><h3>Pin your journal chat</h3><span class="time">1 min</span></div>
-        <div class="step-body">
-          <p>The chat where you just did setup is now your journal. Keep using that one chat, every time, on your phone or computer. That way 167 Hours is always on.</p>
+    </div>
+    
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      <button type="button" class="btn back" data-back>&larr; Back</button>
+      <button type="button" class="btn primary" data-next>Next &rarr;</button>
+    </div>
+  </section>
+  <section class="card" data-step="project" hidden>
+    <p class="card-count"></p>
+    <h2>Pin your journal chat</h2>
+    <div class="card-body">
+      <p>The chat where you just did setup is now your journal. Keep using that one chat, every time, on your phone or computer. That way 167 Hours is always on.</p>
           <ul>
             <li>Rename it <strong>167 Hours</strong>: tap or click the chat's title at the top (or the <strong>...</strong> menu) and choose <strong>Rename</strong>.</li>
             <li>Pin it: in the same menu, choose <strong>Pin</strong>, so it stays at the top of your chat list.</li>
             <li>From now on, open the pinned <strong>167 Hours</strong> chat whenever you want to talk. Long chats are fine; Claude condenses older parts on its own.</li>
           </ul>
           <p class="where">Started a different chat by accident? Just say "save this to 167 Hours" and it will.</p>
-          <div class="actions"><button class="btn ghost" type="button" data-done>Mark done</button></div>
-        </div>
-      </li>
-    </ol>
-    <div class="alldone" id="alldone" hidden>
-      <h3>You're all set.</h3>
-      <p>Open your pinned <strong>167 Hours</strong> chat in Claude any time, on your phone or computer, and just talk. The tips below cover reports, keeping things private, and updates.</p>
-      <button type="button" id="restart">Start the steps over</button>
+    </div>
+    
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      <button type="button" class="btn back" data-back>&larr; Back</button>
+      <button type="button" class="btn primary" data-next>Finish setup &rarr;</button>
     </div>
   </section>
-
-  <section aria-labelledby="use-h">
-    <h2 id="use-h">Using it</h2>
-    <p class="lede">Just talk. Type or use voice, any time, about anything: a rough morning, an argument, an urge, a win, how you slept. The important parts are saved quietly in the background.</p>
-    <div class="say">
+  <section class="card" data-step="done" hidden>
+    <p class="card-count"></p>
+    <h2>You're all <mark class="h3">set</mark>.</h2>
+    <div class="card-body">
+      <p class="lede">Open your pinned <strong>167 Hours</strong> chat in Claude any time, on your phone or computer, and just talk. Type or use voice, about anything: a rough morning, an argument, an urge, a win, how you slept. The important parts are saved quietly in the background.</p>
+      <h3>Things you can say</h3>
+      <div class="say">
       <div><q>Keep that private</q><p>Keeps something out of your therapist's summary.</p></div>
       <div><q>Debrief my session</q><p>Right after therapy, captures what you covered and any homework.</p></div>
       <div><q>Build my report</q><p>Before your session. You see it first. If you connect Gmail or Outlook, it's saved as a ready-to-send draft to your therapist, with the summary in the email. Drag in the PDF if you want it attached. 167 Hours never sends anything; you always press send.</p></div>
       <div><q>Show my safety plan</q><p>Any time you need it.</p></div>
     </div>
-  </section>
-
-  <section id="drafts" aria-labelledby="drafts-h">
-    <h2 id="drafts-h">Finding your summary email</h2>
-    <p class="lede">When you say "build my report" and approve it, 167 Hours saves an email to your therapist as a <strong>draft</strong>. A draft is an email that's written but not sent. It waits in your Drafts folder until you open it and press send.</p>
+      <details class="more"><summary>Finding your summary email</summary><div class="more-body"><p class="lede">When you say "build my report" and approve it, 167 Hours saves an email to your therapist as a <strong>draft</strong>. A draft is an email that's written but not sent. It waits in your Drafts folder until you open it and press send.</p>
     <div class="help">
       <p><strong>Gmail</strong></p>
       <ul>
@@ -358,12 +477,8 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
         <li><strong>On a computer:</strong> click the PDF in the Claude chat to download it, open your draft, and drag the file from your Downloads folder into the email.</li>
       </ul>
       <p class="where">Look for the subject <strong>"Between-session summary"</strong>. Open it, check that the "To" line is your therapist, drag in the PDF from the chat if you want it attached, and press send. Nothing is ever sent for you.</p>
-    </div>
-  </section>
-
-  <section id="update" aria-labelledby="update-h">
-    <h2 id="update-h">Updating 167 Hours</h2>
-    <p class="lede">When there's a new version, Claude will mention it in your journal chat, and we'll email you. Your journal entries are never affected; they stay in your own Supabase account.</p>
+    </div></div></details>
+      <details class="more"><summary>Updating 167 Hours</summary><div class="more-body"><p class="lede">When there's a new version, Claude will mention it in your journal chat, and we'll email you. Your journal entries are never affected; they stay in your own Supabase account.</p>
     <div class="help">
       <ul>
         <li>Download the new plugin: <a href="/167-hours.plugin">167-hours.plugin</a></li>
@@ -372,13 +487,8 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
         <li>Click <strong>Upload</strong>. When it asks <strong>"Replace existing plugin?"</strong>, click <strong>Replace</strong>. That's it.</li>
       </ul>
       <p class="where">No rush. The older version keeps working; you can update whenever it's convenient.</p>
-    </div>
-  </section>
-
-  <section aria-labelledby="help-h">
-    <h2 id="help-h">If you get stuck</h2>
-    <div class="help">
-      <details>
+    </div></div></details>
+      <details class="more"><summary>If you get stuck</summary><div class="more-body help"><details>
         <summary>How do I use the 167 Hours card?</summary>
         <p>If you were sent card details for testing, use them to pay for Claude Pro. In Claude, open Settings, then Billing (or click Upgrade), choose the Pro plan billed monthly, and enter the card. It covers three months. After that, you can switch to your own card in the same place or cancel. The card only works for Claude, so it won't go through anywhere else.</p>
       </details>
@@ -401,75 +511,73 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
       <details>
         <summary>Who can see what I write?</summary>
         <p>Your entries are stored in your own Supabase account, not a shared database. The 167 Hours team can't see them. Your therapist sees only the summaries you choose to send.</p>
-      </details>
+      </details></div></details>
+    </div>
+    
+    <p class="card-err" hidden></p>
+    <div class="nav">
+      <button type="button" class="btn back" data-back>&larr; Back</button>
+      <button type="button" class="btn back" data-next>Start the steps over</button>
     </div>
   </section>
 </main>
-
 <footer>
   <div class="wrap">
     <p><strong>167 Hours is not a crisis service.</strong> If you're in danger or thinking about harming yourself, call or text <strong>988</strong> (Suicide and Crisis Lifeline, US), or call <strong>911</strong>.</p>
     <p>167 Hours: Between Sessions. Early tester version.</p>
   </div>
 </footer>
-
 <script>
 (function () {
-  var KEY = '167h-setup-done';
-  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
-  var done = {}, open = null;
-  try { done = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { done = {}; }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} }
-  function current() { for (var i = 0; i < steps.length; i++) if (!done[steps[i].dataset.step]) return i; return -1; }
-  function render(scroll) {
-    var n = 0, cur = current();
-    steps.forEach(function (s, i) {
-      var d = !!done[s.dataset.step];
-      if (d) n++;
-      s.classList.toggle('done', d);
-      var isCur = i === cur, isOpen = isCur || open === i;
-      s.hidden = !d && !isCur;                       /* future steps stay hidden */
-      s.classList.toggle('collapsed', d && open !== i);
-      var b = s.querySelector('[data-done]');
-      if (b) {
-        b.textContent = d ? 'Not done yet' : (b.dataset.label || (i === steps.length - 1 ? 'Done, finish setup' : 'Done, next step \u2192'));
-        b.className = d ? 'btn ghost' : 'btn primary next';
-      }
-    });
-    document.getElementById('count').textContent = (cur === -1 ? 'All ' + steps.length + ' steps done' : 'Step ' + (cur + 1) + ' of ' + steps.length);
-    document.getElementById('bar').style.width = (n / steps.length * 100) + '%';
-    document.getElementById('alldone').hidden = cur !== -1;
-    if (scroll) {
-      var t = cur === -1 ? document.getElementById('alldone') : steps[cur];
-      try { t.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) { t.scrollIntoView(); }
-    }
+  var KEY = '167h-wizard', SIGNED = '167h-nda-signed';
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var N = cards.length, last = N - 1, i = 0;
+  try { i = Math.min(last, Math.max(0, parseInt(localStorage.getItem(KEY) || '0', 10) || 0)); } catch (e) {}
+  function signed() { try { return !!localStorage.getItem(SIGNED); } catch (e) { return false; } }
+  if (i > 1 && !signed()) i = 1;
+  function show(k, scroll) {
+    i = k; try { localStorage.setItem(KEY, String(i)); } catch (e) {}
+    cards.forEach(function (c, n) { c.hidden = n !== i; });
+    var label = i === last ? 'All done' : 'Step ' + (i + 1) + ' of ' + last;
+    document.getElementById('wiz-count').textContent = label;
+    document.getElementById('wiz-bar').style.width = ((i === last ? last : i) / last * 100) + '%';
+    var cc = cards[i].querySelector('.card-count'); cc.textContent = i === last ? '' : label;
+    if (scroll) window.scrollTo(0, 0);
   }
-  steps.forEach(function (s, i) {
-    var b = s.querySelector('[data-done]');
-    if (b) b.addEventListener('click', function () {
-      var was = !!done[s.dataset.step];
-      done[s.dataset.step] = !was; save();
-      open = null; render(!was);
-    });
-    var head = s.querySelector('.step-head');
-    head.addEventListener('click', function () {
-      if (!done[s.dataset.step]) return;
-      open = (open === i) ? null : i; render(false);
+  function err(c, msg) { var e = c.querySelector('.card-err'); e.textContent = msg; e.hidden = !msg; }
+  cards.forEach(function (c, n) {
+    var nx = c.querySelector('[data-next]'), bk = c.querySelector('[data-back]');
+    if (bk) bk.addEventListener('click', function () { show(n - 1, true); });
+    nx.addEventListener('click', function () {
+      if (n === last) { show(0, true); return; }
+      if (!nx.hasAttribute('data-sign')) { show(n + 1, true); return; }
+      if (signed()) { show(n + 1, true); return; }
+      var f = c.querySelector('form');
+      if (!f.reportValidity()) return;
+      nx.disabled = true; err(c, '');
+      var body = new URLSearchParams(new FormData(f)).toString();
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
+        .then(function (r) {
+          if (!r.ok) throw new Error(r.status);
+          try { localStorage.setItem(SIGNED, new Date().toISOString()); } catch (e) {}
+          show(n + 1, true);
+        })
+        .catch(function () { err(c, "That didn't go through. Check your connection and try again. If it keeps failing, email dek@167hours.app."); })
+        .then(function () { nx.disabled = false; });
     });
   });
-  document.getElementById('restart').addEventListener('click', function () { done = {}; save(); open = null; render(true); });
+  if (signed()) { var sc = document.querySelector('[data-step="nda"]'); sc.querySelector('form').hidden = true; sc.querySelector('[data-next]').innerHTML = 'Signed. Continue &rarr;'; }
+  if (window.matchMedia && window.matchMedia('(max-width: 820px) and (pointer: coarse)').matches) document.getElementById('phone-note').classList.add('show');
   document.querySelectorAll('[data-copy]').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var el = document.getElementById(btn.dataset.copy);
-      var text = el.textContent;
+      var el = document.getElementById(btn.dataset.copy), text = el.textContent;
       function ok() { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1800); }
-      function fallback() { var r = document.createRange(); r.selectNodeContents(el); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); btn.textContent = 'Selected. Press Ctrl+C'; }
+      function fallback() { var r = document.createRange(); r.selectNodeContents(el); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected. Press Ctrl+C'; }
       try { navigator.clipboard.writeText(text).then(ok, fallback); } catch (e) { fallback(); }
     });
   });
-  render(false);
+  show(i, false);
 })();
 </script>
-
 </body>
 </html>
