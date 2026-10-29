@@ -103,4 +103,4 @@ This copy of 167 Hours is **version 0.2.1**. Once per chat, the first time this 
 
 "A new version of 167 Hours is available: [whats_new]. Updating takes a minute: [how_to_update]"
 
-Never interrupt a hard moment for this. If the person is upset or in crisis, skip the update note entirely. Never mention the check when there's nothing new.
+Only skip it if the person is in real distress or crisis (for example, safety concerns, panic, or deep upset). An ordinary tired or rough day is fine: add the note as a separate last line, after your actual reply. If you skip it, add it to a later reply in the same chat when things are calmer. Never mention the check when there's nothing new.
