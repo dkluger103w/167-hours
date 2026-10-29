@@ -149,6 +149,7 @@ body { background: #EEF2F7; }
 .card .rule { margin: 0; }
 .card .rule .rule-h { font-family: var(--display); font-weight: 700; font-size: 1.6rem; color: #FFFFFF; }
 .need { grid-template-columns: 1fr; }
+.next-up { border-left: 4px solid #FFE04A; padding: 4px 0 4px 12px; }
 .nda-short { background: #13233A; color: #FFFFFF; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
 .nda-short .eyebrow { color: #FFE04A; }
 .nda-short p { color: #EEF2F7; }
@@ -233,6 +234,7 @@ footer { margin-top: 0; }
         <li><strong>We will never ask what you talk about with your therapist.</strong></li>
       </ul>
     </div>
+    <p class="next-up"><strong>Next: a short confidentiality agreement.</strong> You'll be asked not to discuss 167 Hours with anyone outside this test.</p>
     </div>
     
     <p class="card-err" hidden></p>
@@ -376,12 +378,15 @@ footer { margin-top: 0; }
     <h2>Add the plugin to Claude</h2>
     <div class="card-body">
       <ul>
-            <li>Click <strong>Open Plugins page</strong> below. It opens Claude's <strong>Customize</strong> page on the <strong>Plugins</strong> tab. Sign in if asked.</li>
-            <li>At the top right, click the <strong>+ Add</strong> button, then <strong>Upload plugin</strong>. (Skip the "Build for the Claude Directory" box; that's for publishing plugins.)</li>
+            <li>Click <strong>Open Plugins page</strong> below. It opens Claude in a new browser tab. Sign in if asked.</li>
+            <li>You'll land on the <strong>Customize</strong> page with <strong>Plugins</strong> selected. It usually opens on the <strong>Discover</strong> tab, full of plugins from other companies. <strong>Ignore those.</strong></li>
+            <li>Click <strong>Yours</strong>, right next to Discover. This is where your plugins live. It may be empty, or show one or two from Anthropic. That's fine.</li>
+            <li>At the top right, click the white <strong>+ Add</strong> button, then <strong>Upload plugin</strong>. (Skip the "Build for the Claude Directory" box; that's for publishing plugins.)</li>
             <li>Click to choose a file, pick <strong>167-hours.plugin</strong> from your Downloads, then click <strong>Upload</strong>.</li>
-            <li>You'll see the <strong>167 hours</strong> plugin page with its switch turned on. That's it.</li>
+            <li>You'll see the <strong>167 hours</strong> plugin page with its switch turned on. Back on <strong>Yours</strong>, 167 hours is now in your list. That's it.</li>
           </ul>
-          <p class="where"><strong>Don't see a Plugins page?</strong> Plugins only show up on a paid plan. If you just upgraded, refresh the page, or sign out and back in. You can also find it yourself: open the left sidebar (the icon at the top left), click <strong>Customize</strong>, then <strong>Plugins</strong>.</p>
+          <p class="where"><strong>If the button doesn't work, or you get lost:</strong> in Claude, open the left sidebar (the icon at the top left), click <strong>Customize</strong>, then the <strong>Plugins</strong> tab, then <strong>Yours</strong>.</p>
+          <p class="where"><strong>Don't see a Plugins page?</strong> Plugins only show up on a paid plan. If you just upgraded, refresh the page, or sign out and back in.</p>
     </div>
     <div class="card-links"><a class="btn outline" href="https://claude.ai/customize/plugins" target="_blank" rel="noopener">Open Plugins page &#8599;</a></div>
     <p class="card-err" hidden></p>
