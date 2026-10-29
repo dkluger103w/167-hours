@@ -94,6 +94,34 @@ mark.h1{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//ww
 h1, h2, h3, .brand b { letter-spacing: -0.015em; }
 .num { font-weight: 700; }
 .rule mark { color: #FFE04A; background: none !important; padding: 0; margin: 0; }
+.shot { margin: 4px 0; display: flex; flex-direction: column; gap: 6px; }
+.shot img { max-width: 100%; width: 440px; border-radius: 10px; border: 1px solid #D8E0EA; display: block; }
+.shot figcaption { font-size: .85rem; color: #4E5D70; }
+.step.collapsed { padding: 12px 20px; cursor: pointer; }
+.step.collapsed .step-body { display: none; }
+.step.collapsed .num { grid-row: auto; width: 32px; height: 32px; }
+.step.collapsed .step-head h3::after { content: "  \00B7  Show again"; font-weight: 500; font-size: .85rem; color: var(--ink-soft); }
+.step.collapsed .time { display: none; }
+.btn.next { font-size: 1.02rem; }
+.alldone { background: #13233A; color: #fff; border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.alldone h3 { color: #fff; font-size: 1.4rem; }
+.alldone p { color: #C9D3E0; }
+.alldone button { align-self: flex-start; background: none; border: 0; color: #FFE04A; font-weight: 700; padding: 6px 0; cursor: pointer; }
+[hidden] { display: none !important; }
+.privacy .step-body { gap: 16px; }
+.privacy .lede { font-size: 1.05rem; }
+.flow { display: flex; flex-wrap: wrap; gap: 12px; }
+.flow-card { flex: 1 1 210px; min-width: 0; background: #EEF2F7; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.flow-card h3 { font-size: 1.05rem; }
+.flow-card p { font-size: .95rem; color: #4E5D70; }
+.flow-n { width: 30px; height: 30px; border-radius: 50%; background: #13233A; color: #fff; display: grid; place-items: center; font-weight: 700; font-size: .9rem; }
+.see { display: flex; flex-wrap: wrap; gap: 12px; }
+.see > div { flex: 1 1 260px; min-width: 0; border: 1.5px solid #13233A; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 6px; }
+.see h3 { font-size: 1.1rem; }
+.see p { font-size: .95rem; color: #4E5D70; }
+.noholdback { font-family: var(--display); font-weight: 700; font-size: clamp(1.25rem, 3vw, 1.5rem); line-height: 1.3; color: #13233A; }
+.ask { background: #FFF8D6; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.ask ul { margin: 0; padding-left: 1.15em; display: flex; flex-direction: column; gap: 6px; }
 </style>
 </head>
 <body>
@@ -105,8 +133,8 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
   <div class="hero">
     <span class="eyebrow">Tester setup</span>
     <h1>Let's get you <mark class="h1">set up</mark>.</h1>
-    <p class="lede">Thanks for testing 167 Hours. You'll do this once, on a computer. After that, you just talk to Claude, from your phone or anywhere.</p>
-    <div class="meta"><span><strong>About 15 minutes</strong></span><span><strong>6 steps</strong></span><span>Claude does the technical parts for you</span></div>
+    <p class="lede">Thank you for testing 167 Hours. It means a lot. You'll do this setup once, on a computer. After that, you just talk to Claude, from your phone or anywhere.</p>
+    <div class="meta"><span><strong>About 15 minutes</strong></span><span><strong>7 steps</strong></span><span>Claude does the technical parts for you</span></div>
   </div>
 
   <div class="rule">
@@ -127,9 +155,54 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
 
   <section aria-labelledby="steps-h">
     <h2 id="steps-h">Setup</h2>
-    <div class="progress"><div class="bar"><i id="bar"></i></div><span id="count">0 of 6 done</span></div>
+    <div class="progress"><div class="bar"><i id="bar"></i></div><span id="count">Step 1 of 7</span></div>
 
     <ol class="steps">
+      <li class="step privacy" data-step="privacy">
+        <div class="num" aria-hidden="true"></div>
+        <div class="step-head"><h3>First, your privacy, in plain English</h3><span class="time">2 min read</span></div>
+        <div class="step-body">
+          <p class="lede">This test is built so that <mark class="h2">nobody at 167 Hours can see anything you write</mark>. Here's how it works.</p>
+    <div class="flow">
+      <div class="flow-card">
+        <span class="flow-n">1</span>
+        <h3>Your Claude account</h3>
+        <p>You talk to Claude using your own account: the one you already have, upgraded to Pro, or a new one if you've never used Claude. Your conversations live there, the same as any Claude chat you have today.</p>
+      </div>
+      <div class="flow-card">
+        <span class="flow-n">2</span>
+        <h3>Your own private database</h3>
+        <p>What matters from your week is saved in a free Supabase account that <strong>you</strong> create and only you can sign in to. We never get a login, a password, or a copy.</p>
+      </div>
+      <div class="flow-card">
+        <span class="flow-n">3</span>
+        <h3>Your therapist, only when you say so</h3>
+        <p>Before a session, you get a summary to read first. You decide what's in it, and you send it yourself. Nothing is ever sent for you.</p>
+      </div>
+    </div>
+    <div class="see">
+      <div>
+        <h3>What we can see: nothing.</h3>
+        <p>Not your conversations, not your journal, not your reports. We have no access to your Claude account or your database. It couldn't be more private.</p>
+      </div>
+      <div>
+        <h3>Same privacy as using Claude today.</h3>
+        <p>Claude, made by Anthropic, handles your chats under the same privacy terms as any conversation you already have with it. 167 Hours doesn't add anyone new to that picture.</p>
+      </div>
+    </div>
+    <p class="noholdback">So please don't hold back. Talk the way you would if nobody else were reading, because nobody else is.</p>
+    <div class="ask">
+      <h3>What we might ask you</h3>
+      <ul>
+        <li>Now and then, simple questions: how often you're using it, what's working, what's annoying.</li>
+        <li>If you're ever comfortable sharing one of your reports with us, we'd love to see it, and we'll help remove names and details first. That's completely optional.</li>
+        <li><strong>We will never ask what you talk about with your therapist.</strong></li>
+      </ul>
+    </div>
+          <div class="actions"><button class="btn ghost" type="button" data-done data-label="I've read this and I understand →">Mark done</button></div>
+        </div>
+      </li>
+
       <li class="step" data-step="supabase">
         <div class="num" aria-hidden="true"></div>
         <div class="step-head"><h3>Make a free Supabase account</h3><span class="time">3 min</span></div>
@@ -137,9 +210,23 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
           <p>Supabase is where your journal is stored. It's your own private account, so nobody else can see what's in it, including us.</p>
           <ul>
             <li>Click <strong>Start your project</strong> and sign up with your email (or Google). You don't need a GitHub account.</li>
-            <li>If you sign up with email, click the confirmation link Supabase emails you.</li>
-            <li>If it asks you to create an organization, name it anything (your first name is fine) and pick the <strong>Free</strong> plan.</li>
-            <li><strong>Don't create a project.</strong> If Supabase asks you to, skip it or close that screen. Claude creates it for you in step 5.</li>
+            <li><strong>Choose a password and save it.</strong> Let your browser or password app save it when it offers. You'll need it if you ever sign back in to Supabase.</li>
+            <li>If you sign up with email, Supabase shows <strong>"Check your email."</strong> Open your inbox and click the link within 10 minutes to finish signing up.</li>
+            <li>Next, Supabase shows <strong>"Create a new organization."</strong> Fill it in like this:
+              <ul>
+                <li><strong>Name:</strong> Supabase fills in something like "you@email.com's Org." You can leave it, or change it to your first name. It doesn't matter.</li>
+                <li><strong>Type:</strong> choose <strong>Personal</strong>.</li>
+                <li><strong>Plan:</strong> choose <strong>Free - $0/month</strong>. You won't be asked for a credit card.</li>
+                <li>Click the green <strong>Create organization</strong> button.</li>
+              </ul>
+            </li>
+          </ul>
+          <figure class="shot"><img src="/start/img/supabase-check-email.png" alt="Supabase sign-up screen saying Check your email, we sent you a link to finish signing up" loading="lazy"><figcaption>After you sign up, Supabase asks you to check your email.</figcaption></figure>
+          <figure class="shot"><img src="/start/img/supabase-create-org.png" alt="Supabase Create a new organization form with Name, Type set to Personal, and Plan set to Free" loading="lazy"><figcaption>Create your organization: Type <strong>Personal</strong>, Plan <strong>Free</strong>, then <strong>Create organization</strong>.</figcaption></figure>
+          <figure class="shot"><img src="/start/img/supabase-new-project-cancel.png" alt="Supabase Create new project form with database password, region and security options, and Cancel and Create new project buttons" loading="lazy"><figcaption>You'll see this form next. <strong>Don't fill it in.</strong> Click <strong>Cancel</strong> at the bottom.</figcaption></figure>
+          <figure class="shot"><img src="/start/img/supabase-done-empty.png" alt="Supabase Projects page with no projects yet and a Create a project box" loading="lazy"><figcaption><strong>You're done with Supabase when you see this:</strong> an empty Projects page. Leave it empty and move on to the next step.</figcaption></figure>
+          <ul>
+            <li><strong>Stop at "Create a new project." Don't fill it in.</strong> Right after you create your organization, Supabase opens a form asking for a project name, a database password, and a region. Skip all of it: scroll to the bottom and click <strong>Cancel</strong>. Claude creates your project for you later, in the "Let Claude set everything up" step.</li>
           </ul>
           <div class="actions">
             <a class="btn primary" href="https://supabase.com/dashboard/sign-up" target="_blank" rel="noopener">Open Supabase</a>
@@ -204,7 +291,7 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
           <p>Claude asks for your therapist's name and confirms you're 18 or older. Then here's what you'll see:</p>
           <ul>
             <li><strong>A Supabase card with a Connect button</strong> appears in the chat. Click <strong>Connect</strong>.</li>
-            <li><strong>An "Authorize Claude" page</strong> opens. Check that the <strong>Organization</strong> is the one you made in step 1, then click <strong>Authorize Claude</strong>. You'll come back to the chat.</li>
+            <li><strong>An "Authorize Claude" page</strong> opens. Check that the <strong>Organization</strong> is the one you made when you created your Supabase account, then click <strong>Authorize Claude</strong>. You'll come back to the chat.</li>
             <li>If the card now says <strong>Connected</strong> with a <strong>Use</strong> button, click <strong>Use</strong>, then type <strong>"It's connected, go ahead."</strong></li>
             <li>Claude builds your private journal on its own. This takes a minute or two.</li>
             <li>It asks a few questions: what to call you, your time zone, when your sessions are, when you want your summary ready, your therapist's email, and which email you use. Then it offers to make a safety plan. "Later" is fine.</li>
@@ -229,6 +316,11 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
         </div>
       </li>
     </ol>
+    <div class="alldone" id="alldone" hidden>
+      <h3>You're all set.</h3>
+      <p>Open your pinned <strong>167 Hours</strong> chat in Claude any time, on your phone or computer, and just talk. The tips below cover reports, keeping things private, and updates.</p>
+      <button type="button" id="restart">Start the steps over</button>
+    </div>
   </section>
 
   <section aria-labelledby="use-h">
@@ -325,25 +417,47 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
 (function () {
   var KEY = '167h-setup-done';
   var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
-  var done = {};
+  var done = {}, open = null;
   try { done = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { done = {}; }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} }
-  function render() {
-    var n = 0;
-    steps.forEach(function (s) {
+  function current() { for (var i = 0; i < steps.length; i++) if (!done[steps[i].dataset.step]) return i; return -1; }
+  function render(scroll) {
+    var n = 0, cur = current();
+    steps.forEach(function (s, i) {
       var d = !!done[s.dataset.step];
-      s.classList.toggle('done', d);
-      var b = s.querySelector('[data-done]');
-      if (b) b.textContent = d ? 'Done. Undo' : 'Mark done';
       if (d) n++;
+      s.classList.toggle('done', d);
+      var isCur = i === cur, isOpen = isCur || open === i;
+      s.hidden = !d && !isCur;                       /* future steps stay hidden */
+      s.classList.toggle('collapsed', d && open !== i);
+      var b = s.querySelector('[data-done]');
+      if (b) {
+        b.textContent = d ? 'Not done yet' : (b.dataset.label || (i === steps.length - 1 ? 'Done, finish setup' : 'Done, next step \u2192'));
+        b.className = d ? 'btn ghost' : 'btn primary next';
+      }
     });
-    document.getElementById('count').textContent = n + ' of ' + steps.length + ' done';
+    document.getElementById('count').textContent = (cur === -1 ? 'All ' + steps.length + ' steps done' : 'Step ' + (cur + 1) + ' of ' + steps.length);
     document.getElementById('bar').style.width = (n / steps.length * 100) + '%';
+    document.getElementById('alldone').hidden = cur !== -1;
+    if (scroll) {
+      var t = cur === -1 ? document.getElementById('alldone') : steps[cur];
+      try { t.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) { t.scrollIntoView(); }
+    }
   }
-  steps.forEach(function (s) {
+  steps.forEach(function (s, i) {
     var b = s.querySelector('[data-done]');
-    if (b) b.addEventListener('click', function () { done[s.dataset.step] = !done[s.dataset.step]; save(); render(); });
+    if (b) b.addEventListener('click', function () {
+      var was = !!done[s.dataset.step];
+      done[s.dataset.step] = !was; save();
+      open = null; render(!was);
+    });
+    var head = s.querySelector('.step-head');
+    head.addEventListener('click', function () {
+      if (!done[s.dataset.step]) return;
+      open = (open === i) ? null : i; render(false);
+    });
   });
+  document.getElementById('restart').addEventListener('click', function () { done = {}; save(); open = null; render(true); });
   document.querySelectorAll('[data-copy]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var el = document.getElementById(btn.dataset.copy);
@@ -353,7 +467,7 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
       try { navigator.clipboard.writeText(text).then(ok, fallback); } catch (e) { fallback(); }
     });
   });
-  render();
+  render(false);
 })();
 </script>
 
