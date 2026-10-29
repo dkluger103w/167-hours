@@ -84,6 +84,7 @@ header.top .wrap { padding-block: 12px; display: flex; align-items: center; just
 .secure-list { list-style: none; margin: 0; padding: 12px 14px; background: var(--secure-wash); border-radius: 12px; display: flex; flex-direction: column; gap: 6px; font-size: .85rem; color: #234766; }
 .secure-list li { display: flex; gap: 8px; align-items: flex-start; }
 .secure-list .lock { margin-top: 3px; }
+.code-err { color: #8A1F11; background: #FDECEA; border-radius: 10px; padding: 8px 12px; font-size: .92rem; margin: 0; }
 .verifying { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--secure); }
 .spinner { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid var(--secure-wash); border-top-color: var(--secure); animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -290,15 +291,15 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
     <span class="step-label">Step 2 · Two-step verification</span>
     <div class="shield" style="color:var(--secure)"><svg width="28" height="28"><use href="#shield"/></svg></div>
     <h1>Check your phone</h1>
-    <p class="muted">Enter the 6-digit code from your authenticator app, or the code we texted to your phone ending in <strong>4821</strong>.</p>
-    <div class="code" id="code" role="group" aria-label="Six digit verification code">
-      <input inputmode="numeric" maxlength="1" aria-label="Digit 1"><input inputmode="numeric" maxlength="1" aria-label="Digit 2"><input inputmode="numeric" maxlength="1" aria-label="Digit 3"><input inputmode="numeric" maxlength="1" aria-label="Digit 4"><input inputmode="numeric" maxlength="1" aria-label="Digit 5"><input inputmode="numeric" maxlength="1" aria-label="Digit 6">
+    <p class="muted">Enter your 4-digit verification code.</p>
+    <div class="code" id="code" role="group" aria-label="Four digit verification code">
+      <input inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 1"><input inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2"><input inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3"><input inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 4">
     </div>
     <div class="timer"><svg class="ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#E7EFF7" stroke-width="3"/><circle id="ringfill" cx="12" cy="12" r="10" fill="none" stroke="#2E5E8C" stroke-width="3" stroke-dasharray="62.8" stroke-dashoffset="0" transform="rotate(-90 12 12)"/></svg><span>New code in <span id="secs">30</span>s</span></div>
     <label class="check"><input type="checkbox">Trust this device for 30 days</label>
     <button class="btn secure" type="button" id="verify">Verify</button>
     <div class="verifying" id="verifying" hidden><span class="spinner"></span>Verifying…</div>
-    <p class="muted small">Prototype: tap Verify and a sample code fills in.</p>
+    <p class="code-err" id="code-err" role="alert" hidden>That code didn't work. Please try again.</p>
   </div>
 </section>
 
@@ -469,6 +470,8 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
 
   // Views
   function go(v) {
+    var ok = false; try { ok = sessionStorage.getItem('167p') === '1'; } catch (e) {}
+    if ((v === 'caseload' || v === 'brief') && !ok) v = 'mfa';
     document.querySelectorAll('.view').forEach(function (s) { s.hidden = s.id !== 'v-' + v; });
     var inside = (v === 'caseload' || v === 'brief');
     $('#who').hidden = !inside;
@@ -496,14 +499,43 @@ h1, h2, h3, .brand b { letter-spacing: -0.015em; }
     var b = e.target; b.value = b.value.replace(/\D/g, '').slice(0, 1); b.classList.toggle('filled', !!b.value);
     if (b.value && b.nextElementSibling) b.nextElementSibling.focus();
   });
+  var CODE_HASH = 'b912b4176482e0c602e840af42e2b57af77c33cde2630cdc1467c5a9665af986';
+  function sha256(t) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)).then(function (b) {
+      return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    });
+  }
+  $('#code').addEventListener('keydown', function (e) {
+    var b = e.target;
+    if (e.key === 'Backspace' && !b.value && b.previousElementSibling) { b.previousElementSibling.focus(); b.previousElementSibling.value = ''; b.previousElementSibling.classList.remove('filled'); e.preventDefault(); }
+    if (e.key === 'Enter') $('#verify').click();
+  });
+  $('#code').addEventListener('paste', function (e) {
+    var t = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 4), boxes = $('#code').querySelectorAll('input');
+    if (!t) return; e.preventDefault();
+    for (var i = 0; i < boxes.length; i++) { boxes[i].value = t[i] || ''; boxes[i].classList.toggle('filled', !!boxes[i].value); }
+    boxes[Math.min(t.length, boxes.length - 1)].focus();
+  });
   $('#verify').addEventListener('click', function () {
-    var boxes = $('#code').querySelectorAll('input'), digits = '416702', k = 0;
-    $('#verify').hidden = true;
-    var fill = setInterval(function () {
-      if (k < 6) { if (!boxes[k].value) boxes[k].value = digits[k]; boxes[k].classList.add('filled'); k++; return; }
-      clearInterval(fill); $('#verifying').hidden = false;
-      setTimeout(function () { clearInterval(mfaTimer); go('caseload'); }, 900);
-    }, 90);
+    var boxes = $('#code').querySelectorAll('input'), entered = '';
+    boxes.forEach(function (b) { entered += b.value; });
+    $('#code-err').hidden = true;
+    if (entered.length < boxes.length) { $('#code-err').textContent = 'Please enter all 4 digits.'; $('#code-err').hidden = false; return; }
+    $('#verify').hidden = true; $('#verifying').hidden = false;
+    sha256(entered).then(function (h) {
+      setTimeout(function () {
+        if (h === CODE_HASH) {
+          try { sessionStorage.setItem('167p', '1'); } catch (e) {}
+          clearInterval(mfaTimer); go('caseload');
+        } else {
+          $('#verifying').hidden = true; $('#verify').hidden = false;
+          $('#code-err').textContent = "That code didn't work. Please try again.";
+          $('#code-err').hidden = false;
+          boxes.forEach(function (b) { b.value = ''; b.classList.remove('filled'); });
+          boxes[0].focus();
+        }
+      }, 700);
+    });
   });
 
   // Idle timer

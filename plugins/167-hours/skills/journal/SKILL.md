@@ -111,4 +111,4 @@ Then set `update_notified_at = now()`. If they say they've updated, or ask you t
 
 Only skip the note if the person is in real distress or crisis (for example, safety concerns, panic, or deep upset); leave `update_notified_at` unchanged so it comes up another time. An ordinary tired or rough day is fine. Never mention the check when there's nothing new.
 
-If they ask "is there an update?" or "what version am I on?", check right away and tell them.
+If they ask "is there an update?", "what version am I on?", or "what's new?", check right away (fetch version.json fresh; don't rely on an earlier fetch in this chat) and tell them their version, the latest version, and what's new in plain words. If they're on the latest, say so and briefly describe what it does.

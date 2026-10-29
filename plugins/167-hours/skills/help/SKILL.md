@@ -20,6 +20,7 @@ You don't have to do anything differently. Talk to me the way you normally would
 - "Save this to 167 Hours": if you started a different chat by accident.
 - "Remember when I talked about...": I'll look it up.
 - "Call you [name]": give me a name, or change it.
+- "What's new?": tells you your version and what's changed.
 - "Help": shows this again.
 
 **Where to talk**
