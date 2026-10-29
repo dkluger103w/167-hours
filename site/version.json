@@ -1,7 +1,7 @@
 {
-  "version": "0.2.0",
-  "released": "2026-10-27",
-  "whats_new": "Your therapist's summary now uses the full 167 Hours report format, you can pick when it's ready, and if you connect Gmail or Outlook it's saved as a draft for you.",
+  "version": "0.2.1",
+  "released": "2026-10-29",
+  "whats_new": "You can now give your 167 Hours companion a name, say \"help\" any time to see how everything works, and setup is smoother.",
   "download": "https://167hours.app/167-hours.plugin",
-  "how_to_update": "https://167hours.app/start#update"
+  "how_to_update": "https://167hours.app/start"
 }

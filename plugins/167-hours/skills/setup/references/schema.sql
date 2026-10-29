@@ -32,6 +32,7 @@ create table public.profiles (
   session_cycle_days int not null default 7 check (session_cycle_days between 1 and 60),
   timezone text not null default 'America/New_York',
   report_timing text,
+  companion_name text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

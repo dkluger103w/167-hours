@@ -150,6 +150,8 @@ body { background: #EEF2F7; }
 .card .rule .rule-h { font-family: var(--display); font-weight: 700; font-size: 1.6rem; color: #FFFFFF; }
 .need { grid-template-columns: 1fr; }
 .next-up { border-left: 4px solid #FFE04A; padding: 4px 0 4px 12px; }
+.how { background: #EEF2F7; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.how ul { margin: 0; padding-left: 1.15em; display: flex; flex-direction: column; gap: 6px; }
 .nda-short { background: #13233A; color: #FFFFFF; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
 .nda-short .eyebrow { color: #FFE04A; }
 .nda-short p { color: #EEF2F7; }
@@ -382,9 +384,17 @@ footer { margin-top: 0; }
             <li>You'll land on the <strong>Customize</strong> page with <strong>Plugins</strong> selected. It usually opens on the <strong>Discover</strong> tab, full of plugins from other companies. <strong>Ignore those.</strong></li>
             <li>Click <strong>Yours</strong>, right next to Discover. This is where your plugins live. It may be empty, or show one or two from Anthropic. That's fine.</li>
             <li>At the top right, click the white <strong>+ Add</strong> button, then <strong>Upload plugin</strong>. (Skip the "Build for the Claude Directory" box; that's for publishing plugins.)</li>
-            <li>Click to choose a file, pick <strong>167-hours.plugin</strong> from your Downloads, then click <strong>Upload</strong>.</li>
-            <li>You'll see the <strong>167 hours</strong> plugin page with its switch turned on. Back on <strong>Yours</strong>, 167 hours is now in your list. That's it.</li>
+            <li>Click to choose a file and pick <strong>167-hours.plugin</strong> from your Downloads. If you downloaded it more than once, it may be called something like <strong>167-hours (1).plugin</strong>. That's fine.</li>
+            <li>You'll see a note that says <strong>"Only upload plugins you trust."</strong> Claude shows that for every plugin you upload yourself. Under <strong>Preview</strong>, check that it says <strong>167-hours</strong>, then click <strong>Upload</strong>.</li>
           </ul>
+          <figure class="shot"><img src="/start/img/plugin-upload.png" alt="Claude's Upload a plugin screen with the 167-hours plugin file chosen, a preview describing 167 Hours, and Upload and Cancel buttons" loading="lazy"><figcaption>Check the preview says <strong>167-hours</strong>, then click <strong>Upload</strong>.</figcaption></figure>
+          <ul>
+            <li>You'll see the <strong>167 hours</strong> plugin page, with the switch at the top right turned on (blue). Back on <strong>Yours</strong>, 167 hours is now in your list.</li>
+            <li>On the right it says <strong>"Can send data to other services"</strong> and <strong>Supabase</strong>. That's your own private Supabase database from the earlier steps, and nothing else.</li>
+            <li><strong>Don't click "Try in chat" yet.</strong> Turn on the two settings in the next step first.</li>
+          </ul>
+          <figure class="shot"><img src="/start/img/plugin-installed.png" alt="The 167 hours plugin page in Claude showing version 0.2.0, 5 skills, the Supabase connector, and the switch turned on" loading="lazy"><figcaption>Installed: <strong>167 hours</strong>, switch on. Leave "Try in chat" for later.</figcaption></figure>
+          
           <p class="where"><strong>If the button doesn't work, or you get lost:</strong> in Claude, open the left sidebar (the icon at the top left), click <strong>Customize</strong>, then the <strong>Plugins</strong> tab, then <strong>Yours</strong>.</p>
           <p class="where"><strong>Don't see a Plugins page?</strong> Plugins only show up on a paid plan. If you just upgraded, refresh the page, or sign out and back in.</p>
     </div>
@@ -401,8 +411,20 @@ footer { margin-top: 0; }
     <div class="card-body">
       <p>These let Claude save your journal and make your therapist's summary without stopping to ask about every little thing.</p>
           <ul>
-            <li>Click <strong>Open Capabilities</strong> below (or in Claude: your name in the bottom left, then <strong>Settings</strong>, then <strong>Capabilities</strong>). Under <strong>Visuals</strong>, make sure <strong>Artifacts</strong> is on. Under <strong>Code execution and file creation</strong>, make sure <strong>Run code in the cloud</strong> is on. These are what let 167 Hours work and make the summary PDF. Leave the other settings as they are.</li>
-            <li>Start a <strong>new chat</strong>. At the bottom of the chat box, next to the model name, there's a setting that says <strong>Manual</strong>. Click it and choose <strong>Auto</strong>. Without this, Claude asks permission for every step of setup.</li>
+            <li>Click <strong>Open Capabilities</strong> below (or in Claude: your name in the bottom left, then <strong>Settings</strong>, then <strong>Capabilities</strong>). These are usually on already. Just check them:
+              <ul>
+                <li>Under <strong>Code execution and file creation</strong>: <strong>Run code in the cloud</strong> should be on (blue). If it's off, click it.</li>
+                <li>Under <strong>Visuals</strong>: <strong>Artifacts</strong> should be on. It may look gray and dim. That's normal; it's locked on while "Run code in the cloud" is on.</li>
+                <li>Leave everything else as it is.</li>
+              </ul>
+            </li>
+          </ul>
+          <figure class="shot"><img src="/start/img/capabilities.png" alt="Claude Capabilities settings showing Artifacts locked on and Run code in the cloud turned on" loading="lazy"><figcaption><strong>Run code in the cloud</strong> on (blue). Artifacts on, shown dimmed because it's locked on.</figcaption></figure>
+          <ul>
+            <li>Start a <strong>brand-new chat</strong>: click <strong>+ New</strong> at the top of the left sidebar. If you already have other chats in Claude, that's fine. Just don't reuse an old one. This new chat will become your 167 Hours journal.</li>
+            <li>Just under the chat box, on the right, next to the model name (like <strong>Opus 5.5</strong>), it says <strong>Auto</strong> or <strong>Manual</strong>. If it says <strong>Manual</strong>, click it and choose <strong>Auto</strong>. Without this, Claude asks permission for every step of setup.</li>
+            <li>Check the model, just left of Auto. It should say <strong>Opus 5.5</strong>. If it says something else, click it and choose <strong>Opus 5.5</strong>. It's the most capable model and works best for 167 Hours. Leave the effort setting next to it (like <strong>Medium</strong>) as it is.</li>
+            <li>Leave the <strong>Project</strong> menu on the left alone.</li>
           </ul>
     </div>
     <div class="card-links"><a class="btn outline" href="https://claude.ai/settings/capabilities" target="_blank" rel="noopener">Open Capabilities &#8599;</a></div>
@@ -418,11 +440,15 @@ footer { margin-top: 0; }
     <div class="card-body">
       <p>In that new chat (with <strong>Auto</strong> on), send this message:</p>
           <div class="copy"><code id="c1">set up 167 Hours</code><button type="button" data-copy="c1">Copy</button></div>
+          <figure class="shot"><img src="/start/img/setup-message.png" alt="A new Claude chat with set up 167 Hours typed in the message box, Opus 5.5 and Auto shown underneath" loading="lazy"><figcaption>Type or paste <strong>set up 167 Hours</strong>, check it says <strong>Opus 5.5</strong> and <strong>Auto</strong>, then press the send arrow.</figcaption></figure>
           <p>Claude asks for your therapist's name and confirms you're 18 or older. Then here's what you'll see:</p>
           <ul>
             <li><strong>A Supabase card with a Connect button</strong> appears in the chat. Click <strong>Connect</strong>.</li>
-            <li><strong>An "Authorize Claude" page</strong> opens. Check that the <strong>Organization</strong> is the one you made when you created your Supabase account, then click <strong>Authorize Claude</strong>. You'll come back to the chat.</li>
-            <li>If the card now says <strong>Connected</strong> with a <strong>Use</strong> button, click <strong>Use</strong>, then type <strong>"It's connected, go ahead."</strong></li>
+            <li><strong>If Supabase asks you to sign in first,</strong> that's normal. It happens when this browser isn't already signed in to Supabase. Sign in the same way you did when you made your account: with your email and the password you saved, or with <strong>Continue with Google</strong> if that's how you signed up. Then the Authorize page appears.</li>
+            <li><strong>An "Authorize Claude" page</strong> opens (sometimes in a new browser tab or window). Under <strong>Organization</strong>, check it shows the one you made earlier (usually your email followed by <strong>'s Org</strong>). The permissions say <strong>Read + Write</strong>; that lets Claude build your journal inside your own Supabase account. Click the green <strong>Authorize Claude</strong> button. You'll come back to the chat.
+              <figure class="shot"><img src="/start/img/supabase-authorize.png" alt="Supabase Authorize Claude page showing the organization, permissions, and a green Authorize Claude button" loading="lazy"><figcaption>Check the organization is yours, then click <strong>Authorize Claude</strong>.</figcaption></figure>
+            </li>
+            <li>Back in the chat, the card now says <strong>Connected</strong> with a <strong>Use</strong> button. Click <strong>Use</strong>. That sends "Use Supabase for this" for you, so there's nothing to type.</li>
             <li>Claude builds your private journal on its own. This takes a minute or two.</li>
             <li>It asks a few questions: what to call you, your time zone, when your sessions are, when you want your summary ready, your therapist's email, and which email you use. Then it offers to make a safety plan. "Later" is fine.</li>
           </ul>
@@ -441,7 +467,7 @@ footer { margin-top: 0; }
     <div class="card-body">
       <p>The chat where you just did setup is now your journal. Keep using that one chat, every time, on your phone or computer. That way 167 Hours is always on.</p>
           <ul>
-            <li>Rename it <strong>167 Hours</strong>: tap or click the chat's title at the top (or the <strong>...</strong> menu) and choose <strong>Rename</strong>.</li>
+            <li>Rename it <strong>167 Hours</strong> (or "167 Hours" plus the name you gave it): tap or click the chat's title at the top (or the <strong>...</strong> menu) and choose <strong>Rename</strong>.</li>
             <li>Pin it: in the same menu, choose <strong>Pin</strong>, so it stays at the top of your chat list.</li>
             <li>From now on, open the pinned <strong>167 Hours</strong> chat whenever you want to talk. Long chats are fine; Claude condenses older parts on its own.</li>
           </ul>
@@ -458,13 +484,25 @@ footer { margin-top: 0; }
     <p class="card-count"></p>
     <h2>You're all <mark class="h3">set</mark>.</h2>
     <div class="card-body">
-      <p class="lede">Open your pinned <strong>167 Hours</strong> chat in Claude any time, on your phone or computer, and just talk. Type or use voice, about anything: a rough morning, an argument, an urge, a win, how you slept. The important parts are saved quietly in the background.</p>
+      <p class="lede">Open your pinned <strong>167 Hours</strong> chat in Claude any time, on your phone or computer, and just talk.</p>
+      <div class="how">
+        <h3>How it works</h3>
+        <ul>
+          <li><strong>You don't change a thing.</strong> Talk to Claude the way you already would: about anything, any time, typing or voice.</li>
+          <li><strong>You lead.</strong> 167 Hours won't quiz you, coach you, or give you homework. It listens.</li>
+          <li><strong>It quietly saves what matters</strong> for your therapist in the background, so they see what your week was really like.</li>
+          <li><strong>Get it on your phone.</strong> It's your choice, but most people use the free <strong>Claude</strong> app from the App Store or Google Play. Sign in with the same Claude account and your pinned <strong>167 Hours</strong> chat is right there. Tap the microphone to talk.</li>
+          <li><strong>Give it a name if you like.</strong> Setup asks if you'd like to name your 167 Hours companion. You can also say <strong>"call you [name]"</strong> any time to set or change it.</li>
+          <li><strong>Forget something?</strong> Just say <strong>"help"</strong> in your 167 Hours chat and it'll explain everything again.</li>
+        </ul>
+      </div>
       <h3>Things you can say</h3>
       <div class="say">
       <div><q>Keep that private</q><p>Keeps something out of your therapist's summary.</p></div>
       <div><q>Debrief my session</q><p>Right after therapy, captures what you covered and any homework.</p></div>
       <div><q>Build my report</q><p>Before your session. You see it first. If you connect Gmail or Outlook, it's saved as a ready-to-send draft to your therapist, with the summary in the email. Drag in the PDF if you want it attached. 167 Hours never sends anything; you always press send.</p></div>
       <div><q>Show my safety plan</q><p>Any time you need it.</p></div>
+      <div><q>Help</q><p>Shows how 167 Hours works and everything you can say.</p></div>
     </div>
       <details class="more"><summary>Finding your summary email</summary><div class="more-body"><p class="lede">When you say "build my report" and approve it, 167 Hours saves an email to your therapist as a <strong>draft</strong>. A draft is an email that's written but not sent. It waits in your Drafts folder until you open it and press send.</p>
     <div class="help">
@@ -489,11 +527,11 @@ footer { margin-top: 0; }
       </ul>
       <p class="where">Look for the subject <strong>"Between-session summary"</strong>. Open it, check that the "To" line is your therapist, drag in the PDF from the chat if you want it attached, and press send. Nothing is ever sent for you.</p>
     </div></div></details>
-      <details class="more"><summary>Updating 167 Hours</summary><div class="more-body"><p class="lede">When there's a new version, Claude will mention it in your journal chat, and we'll email you. Your journal entries are never affected; they stay in your own Supabase account.</p>
+      <details class="more"><summary>Updating 167 Hours</summary><div class="more-body"><p class="lede">Your copy of 167 Hours doesn't update by itself. When there's a new version, we'll email you, and Claude will usually mention it in your journal chat too. Your journal entries are never affected; they stay in your own Supabase account.</p>
     <div class="help">
       <ul>
         <li>Download the new plugin: <a href="/167-hours.plugin">167-hours.plugin</a></li>
-        <li>In Claude, open <a href="https://claude.ai/customize/plugins" target="_blank" rel="noopener">Customize, then Plugins</a>.</li>
+        <li>In Claude, open <a href="https://claude.ai/customize/plugins" target="_blank" rel="noopener">Customize, then Plugins</a>, and click <strong>Yours</strong>.</li>
         <li>Click <strong>+ Add</strong>, then <strong>Upload plugin</strong>, and choose the file you just downloaded.</li>
         <li>Click <strong>Upload</strong>. When it asks <strong>"Replace existing plugin?"</strong>, click <strong>Replace</strong>. That's it.</li>
       </ul>
@@ -514,6 +552,10 @@ footer { margin-top: 0; }
       <details>
         <summary>Supabase says I've hit my free limit</summary>
         <p>Free Supabase accounts allow two active projects. If you already use Supabase for something else, tell the person who invited you to test and we'll sort it out.</p>
+      </details>
+      <details>
+        <summary>Claude says I've reached a usage limit</summary>
+        <p>Every Claude plan has limits that reset after a few hours. If you hit one, you can wait for it to reset, or, if it keeps happening, switch to <strong>Sonnet 5.5</strong> by clicking the model name under the chat box. Sonnet uses less of your limit and still works well, but we recommend Opus 5.5 when you can. Please let us know it happened; it helps us a lot.</p>
       </details>
       <details>
         <summary>Something else went wrong</summary>
