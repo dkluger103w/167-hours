@@ -99,8 +99,16 @@ If `next_session_at` is in the past, ask when the next one is and update `profil
 
 ## Checking for updates
 
-This copy of 167 Hours is **version 0.2.1**. Once per chat, the first time this skill is used, quietly fetch https://167hours.app/version.json (use your web fetch tool if you have one; if not, skip this). If its `version` is newer than 0.2.1, add one short, friendly line at the end of your reply, only once in the chat:
+This copy of 167 Hours is **version 0.2.2**. People use one pinned chat for weeks, so don't think "once per chat". Use their database to decide when to check:
 
-"A new version of 167 Hours is available: [whats_new]. Updating takes a minute: [how_to_update]"
+1. When you read their profile, look at `update_checked_at` and `update_notified_at`. If those columns don't exist, add them first: `alter table public.profiles add column if not exists update_checked_at timestamptz, add column if not exists update_notified_at timestamptz;`
+2. If `update_checked_at` is empty or more than 24 hours ago, quietly fetch https://167hours.app/version.json (use your web fetch tool; if you don't have one, skip this), then set `update_checked_at = now()`.
+3. If its `version` is newer than 0.2.2, and `update_notified_at` is empty or more than 3 days ago, add one short, friendly line as the last line of your reply, after your actual response:
 
-Only skip it if the person is in real distress or crisis (for example, safety concerns, panic, or deep upset). An ordinary tired or rough day is fine: add the note as a separate last line, after your actual reply. If you skip it, add it to a later reply in the same chat when things are calmer. Never mention the check when there's nothing new.
+"By the way, a new version of 167 Hours is available: [whats_new]. Updating takes a minute: [how_to_update]"
+
+Then set `update_notified_at = now()`. If they say they've updated, or ask you to stop reminding them, set `update_notified_at` to now and don't bring it up again in this chat.
+
+Only skip the note if the person is in real distress or crisis (for example, safety concerns, panic, or deep upset); leave `update_notified_at` unchanged so it comes up another time. An ordinary tired or rough day is fine. Never mention the check when there's nothing new.
+
+If they ask "is there an update?" or "what version am I on?", check right away and tell them.

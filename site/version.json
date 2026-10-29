@@ -1,7 +1,7 @@
 {
-  "version": "0.2.1",
+  "version": "0.2.2",
   "released": "2026-10-29",
-  "whats_new": "You can now give your 167 Hours companion a name, say \"help\" any time to see how everything works, and setup is smoother.",
+  "whats_new": "You can now give your 167 Hours companion a name, say \"help\" any time to see how everything works, setup is smoother, and update reminders work in your pinned chat.",
   "download": "https://167hours.app/167-hours.plugin",
   "how_to_update": "https://167hours.app/start"
 }

@@ -33,6 +33,8 @@ create table public.profiles (
   timezone text not null default 'America/New_York',
   report_timing text,
   companion_name text,
+  update_checked_at timestamptz,
+  update_notified_at timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
