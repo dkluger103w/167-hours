@@ -149,6 +149,9 @@ body { background: #EEF2F7; }
 .card .rule { margin: 0; }
 .card .rule .rule-h { font-family: var(--display); font-weight: 700; font-size: 1.6rem; color: #FFFFFF; }
 .need { grid-template-columns: 1fr; }
+.nda-short { background: #13233A; color: #FFFFFF; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
+.nda-short .eyebrow { color: #FFE04A; }
+.nda-short p { color: #EEF2F7; }
 .nda { border: 1px solid #D8E0EA; border-radius: 14px; padding: 16px 18px; max-height: 46vh; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: .95rem; background: #FBFCFD; }
 .nda ul { margin: 0; padding-left: 1.15em; display: flex; flex-direction: column; gap: 6px; }
 .nda .small { font-size: .85rem; color: #4E5D70; }
@@ -242,13 +245,16 @@ footer { margin-top: 0; }
     <p class="card-count"></p>
     <h2>Keep the test confidential</h2>
     <div class="card-body">
-      <p class="lede">167 Hours is an unreleased product, and you're one of a small group seeing it early. Please read this and sign by typing your name.</p>
+      <p class="lede">167 Hours is an unreleased product, and you're one of a small group seeing it early.</p>
+      <div class="nda-short"><span class="eyebrow">In short</span><p><strong>Please don't talk about 167 Hours with anyone outside this test:</strong> what it is, what it does, or how it works. Don't share the plugin, this page, or your access code. Your own journal and your therapy stay yours, and you can always talk about those with your therapist.</p></div>
+      <p>The full agreement is below. Please read it, then sign by typing your name.</p>
       <div class="nda" tabindex="0" aria-label="Tester confidentiality agreement">
         <h3>Tester confidentiality agreement</h3>
         <p><strong>What's confidential.</strong> The 167 Hours plugin, its instructions and prompts, the setup steps, the clinician portal, designs, features, plans, and anything else we share with you about the product or this test ("Confidential Information").</p>
         <p><strong>What you agree to.</strong></p>
         <ul>
           <li>Keep Confidential Information private, and use it only to take part in this test.</li>
+          <li><strong>Don't discuss what 167 Hours is, what it does, or how it works with anyone outside this test</strong>, including friends, family, coworkers, and other companies. The one exception is your therapist, who can know you're using it and see the summaries you send.</li>
           <li>Don't share, post, or forward the plugin file, this setup page, or your access code. If you know someone who'd like to test, send them to us instead.</li>
           <li>Don't copy, take apart, or reuse the plugin or its instructions to build something else.</li>
           <li>Don't post screenshots, recordings, or reviews of 167 Hours publicly until it launches, unless we say it's OK in writing.</li>
@@ -261,11 +267,11 @@ footer { margin-top: 0; }
       </div>
       <form class="sign" name="tester-nda" method="POST" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="tester-nda">
-        <input type="hidden" name="agreement-version" value="2026-10-29">
+        <input type="hidden" name="agreement-version" value="2026-10-29b">
         <p hidden><label>Leave empty <input name="bot-field"></label></p>
         <label>Full name <input name="name" autocomplete="name" required></label>
         <label>Email <input name="email" type="email" autocomplete="email" required></label>
-        <label class="check"><input type="checkbox" name="agreed" value="yes" required> I have read and agree to the tester confidentiality agreement.</label>
+        <label class="check"><input type="checkbox" name="agreed" value="yes" required> I agree not to discuss or share 167 Hours with anyone outside this test, and I have read and agree to the tester confidentiality agreement.</label>
       </form>
     </div>
     
