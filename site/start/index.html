@@ -527,7 +527,7 @@ footer { margin-top: 0; }
       </ul>
       <p class="where">Look for the subject <strong>"Between-session summary"</strong>. Open it, check that the "To" line is your therapist, drag in the PDF from the chat if you want it attached, and press send. Nothing is ever sent for you.</p>
     </div></div></details>
-      <details class="more"><summary>Updating 167 Hours</summary><div class="more-body"><p class="lede">Your copy of 167 Hours doesn't update by itself. When there's a new version, we'll email you, and Claude will usually mention it in your journal chat too. Your journal entries are never affected; they stay in your own Supabase account.</p>
+      <details class="more" id="update"><summary>Updating 167 Hours</summary><div class="more-body"><p class="lede">Your copy of 167 Hours doesn't update by itself. When there's a new version, we'll email you, and Claude will usually mention it in your journal chat too. Your journal entries are never affected; they stay in your own Supabase account.</p>
     <div class="help">
       <ul>
         <li>Download the new plugin: <a href="/167-hours.plugin">167-hours.plugin</a></li>
@@ -588,6 +588,8 @@ footer { margin-top: 0; }
   try { i = Math.min(last, Math.max(0, parseInt(localStorage.getItem(KEY) || '0', 10) || 0)); } catch (e) {}
   function signed() { try { return !!localStorage.getItem(SIGNED); } catch (e) { return false; } }
   if (i > 1 && !signed()) i = 1;
+  var wantUpdate = location.hash === '#update';
+  if (wantUpdate) i = last;
   function show(k, scroll) {
     i = k; try { localStorage.setItem(KEY, String(i)); } catch (e) {}
     cards.forEach(function (c, n) { c.hidden = n !== i; });
@@ -630,6 +632,7 @@ footer { margin-top: 0; }
     });
   });
   show(i, false);
+  if (wantUpdate) { var u = document.getElementById('update'); u.open = true; setTimeout(function () { u.scrollIntoView(); }, 50); }
 })();
 </script>
 </body>
